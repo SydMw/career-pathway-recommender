@@ -80,7 +80,7 @@ model used in `/predict`.
 
 ## FR8: admin-triggered retraining
 
-The admin dashboard has a "Retrain Model Now" button. It calls `POST /retrain`,
+The admin dashboard has an "Update the AI Model Now" button. It calls `POST /retrain`,
 which pulls all accumulated real student submissions (joined with the
 recommendation they were given) from MySQL, combines them with the synthetic
 baseline dataset, retrains both the Decision Tree and collaborative KNN, and

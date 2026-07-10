@@ -1,104 +1,132 @@
 # AI-Powered Career and Pathway Recommendation System
 
-Final year project (BIT/2024/58087) — implementation matching the architecture
-described in the project report: PHP + MySQL + HTML/CSS/JS web app, with a
-hybrid Python (Scikit-learn) recommendation engine served over an HTTP API.
+**Student:** Mulima W Sydney | **Reg No:** BIT/2024/58087  
+**Institution:** Mount Kenya University — School of Computing and Informatics  
+**Project Type:** Final Year Project
 
-## Architecture
+---
 
-- `database/schema.sql` — MySQL schema (users, pathways, academic_records, recommendations)
-- `ml/generate_data.py` — generates a synthetic ~3,000-row baseline training dataset (swap for real KNEC/school data later)
-- `ml/train_model.py` — trains & benchmarks Decision Tree, Random Forest, KNN; saves the Decision Tree (content-based) and a scaled KNN (collaborative) as production models
-- `ml/api.py` — Flask API: `POST /predict` (hybrid content-based + collaborative recommendation with explanation), `POST /retrain` (FR8), `GET /health`
-- `src/config/` — DB connection, session + CSRF helpers, ML API client
-- `src/controllers/` — auth, student, admin logic
-- `public/` — pages (login, register, student dashboard, admin dashboard) + assets
-- `tests/` — pytest suite covering the ML API and the full PHP web flow (register → submit → recommend → admin visibility)
-- `database/migrations/` — incremental schema changes for databases already imported from an earlier `schema.sql`
+## About This Project
 
-## Recommendation engine
+This system was developed to help Kenyan secondary school students choose the right CBC (Competency Based Curriculum) career pathway based on their academic performance and personal interests. Many students struggle to make this decision without proper guidance, and this system uses artificial intelligence to provide personalised recommendations.
 
-Hybrid model per report Objective 2 / Section 2.4.3:
-- **Content-based (70% weight):** Decision Tree on the student's own scores + stated interest — interpretable, drives the explanation text (FR5).
-- **Collaborative (30% weight):** scaled KNN (k=25) over the training population — surfaces what similar students' profiles led to, e.g. "62% of students with a similar academic profile also pursued STEM."
-- Both probability distributions are blended; the response includes the blended result plus each component's individual prediction for transparency.
+The system recommends one of three pathways:
+- **STEM** — Science, Technology, Engineering and Mathematics
+- **Social Sciences** — Humanities, Business and Social Studies
+- **Arts and Sports Science** — Creative Arts, Performing Arts and Sports
 
-## Setup (XAMPP)
+---
 
-1. Start Apache and MySQL in the XAMPP control panel.
-2. Import the schema:
+## How It Works
+
+A student logs in, enters their scores in five subjects (Mathematics, English, Science, Humanities, and Creative Arts) and selects their main area of interest. The system then uses a hybrid AI model to analyse the data and recommend the most suitable pathway, along with a confidence score and a plain-English explanation of why that pathway was recommended.
+
+The AI combines two techniques:
+- A **Decision Tree** (70% weight) — analyses the student's own scores and interest
+- A **Collaborative KNN** (30% weight) — looks at what similar students were recommended
+
+---
+
+## Technologies Used
+
+| Layer | Technology |
+|---|---|
+| Frontend | HTML, CSS, JavaScript |
+| Backend | PHP (no framework) |
+| Database | MySQL via XAMPP |
+| AI / ML Engine | Python, Scikit-learn, Flask |
+| Testing | pytest |
+
+---
+
+## Project Structure
+
+```
+career_system/
+├── database/          # MySQL schema and migration scripts
+├── ml/                # AI model training scripts and Flask prediction API
+├── public/            # Web pages (login, register, dashboards, reports)
+├── src/
+│   ├── config/        # Database connection, session, CSRF, ML client
+│   └── controllers/   # Business logic for auth, student, admin modules
+└── tests/             # Automated test suite (38 tests)
+```
+
+---
+
+## Features
+
+**For Students:**
+- Register and log in securely
+- Enter academic scores and select an area of interest
+- Receive an AI-generated pathway recommendation with explanation
+- View full recommendation history
+- Print or save their report as a PDF
+
+**For Administrators:**
+- View all registered students and their recommendations
+- Generate printable reports per student and per pathway
+- Reset a student's password
+- Update the AI model with the latest student data
+
+---
+
+## Model Performance
+
+| Model | Accuracy | Precision | Recall | F1 Score |
+|---|---|---|---|---|
+| Decision Tree (used in production) | 84.96% | 85.36% | 84.62% | 84.87% |
+| Random Forest (benchmark) | 89.75% | 89.69% | 89.61% | 89.64% |
+| KNN (benchmark) | 69.26% | 69.43% | 69.02% | 69.12% |
+
+The Decision Tree was chosen as the main model because it is interpretable — it can explain *why* it made a recommendation, which is important for students and parents to trust the result.
+
+---
+
+## How to Run the System
+
+**Requirements:** XAMPP, Python 3.x
+
+1. Start **Apache** and **MySQL** in the XAMPP Control Panel
+2. Import the database:
    ```
    C:\xampp\mysql\bin\mysql.exe -u root < database\schema.sql
    ```
-3. Create an admin account (students self-register via the UI):
-   ```powershell
-   $hash = C:\xampp\php\php.exe -r "echo password_hash('YourPassword', PASSWORD_DEFAULT);"
-   "INSERT INTO career_system.users (full_name, email, password_hash, role) VALUES ('Admin','admin@career.local','$hash','admin');" | C:\xampp\mysql\bin\mysql.exe -u root
-   ```
-4. Install Python deps and train the baseline model:
+3. Install Python dependencies:
    ```
    pip install scikit-learn pandas numpy joblib flask pymysql pytest requests
+   ```
+4. Generate training data and train the AI model:
+   ```
    python ml\generate_data.py
    python ml\train_model.py
    ```
-5. Start the ML API (must be running for recommendations and retraining to work):
+5. Start the AI engine (keep this window open):
    ```
    python ml\api.py
    ```
-6. Visit `http://localhost/career_system/public/login.php`
+6. Open the system in your browser:
+   ```
+   http://localhost/career_system/public/
+   ```
 
-## Running tests
+---
 
-With Apache, MySQL, and `ml\api.py` all running:
+## Running the Tests
+
+With XAMPP and the AI engine running:
 ```
 pytest tests\ -v
 ```
-Covers: ML predict/retrain endpoints, input validation, CSRF rejection, role-based access control (student blocked from admin dashboard), and the full register → submit → recommend → admin-report flow over real HTTP requests.
 
-## Security
+The test suite covers registration, login, lockout, input validation, role-based access, and the full student recommendation flow.
 
-- Passwords hashed with `password_hash` (bcrypt), verified with `password_verify`.
-- All POST forms (login, register, student submission, admin retrain) require a per-session CSRF token, validated with `hash_equals`.
-- All SQL is parameterized via PDO prepared statements.
-- Role-based access enforced server-side (`require_role`) on every protected page, not just hidden in the UI.
-- Login lockout: 5 failed attempts locks the account for 5 minutes (`failed_login_attempts` / `locked_until` columns). Lock times are written/read as explicit UTC so PHP and MySQL clock/timezone settings can't desync the lockout window.
+---
 
-Still not implemented: encryption at rest for stored academic records, and a formal Data Protection Act compliance review — flagged as outstanding against the report's security requirements (Section 2.8.2 / 4.5.2). These are intentionally left for the next phase, see "Known gaps" below.
+## Security Features
 
-## Model performance (current run, see `ml/model/metrics.json` for latest)
-
-| Model | Accuracy | Precision (macro) | Recall (macro) | F1 (macro) |
-|---|---|---|---|---|
-| Decision Tree (content-based, production) | ~84-85% | ~84-85% | ~84% | ~84% |
-| Random Forest (benchmark) | ~88-89% | ~88-89% | ~88% | ~88% |
-| KNN (benchmark, also reused as the collaborative component) | ~67% | ~68% | ~67% | ~67% |
-
-Decision Tree is used as the content-based half of the hybrid for
-interpretability (FR5, Section 3.4.2); the standalone KNN benchmark above is
-unweighted distance voting, distinct from the scaled k=25 collaborative
-model used in `/predict`.
-
-## FR8: admin-triggered retraining
-
-The admin dashboard has an "Update the AI Model Now" button. It calls `POST /retrain`,
-which pulls all accumulated real student submissions (joined with the
-recommendation they were given) from MySQL, combines them with the synthetic
-baseline dataset, retrains both the Decision Tree and collaborative KNN, and
-hot-reloads them into the running Flask process — no restart required.
-
-## Admin module
-
-The admin dashboard ("Administrator Module", FR7) shows:
-- Usage totals (registered students, recommendations issued)
-- Pathway breakdown across all recommendations
-- **Full registered-student roster** — every student, including those who haven't submitted any data yet, with submission count and latest pathway
-- Recent recommendations feed
-- The FR8 retrain trigger
-
-## Known gaps / next steps
-
-- **Real dataset** — model is trained on synthetic data plus whatever real submissions accumulate through the app; not yet validated against actual KNEC/school records (Section 3.3.3).
-- **UAT tooling** — no in-app feedback/survey mechanism for the user acceptance testing described in Section 3.5.
-- **No deployment/hosting setup** — runs locally via XAMPP only; report describes phased deployment to schools.
-- **Diagrams** (DFDs, ERD, use case diagrams) exist only in the report, not as generated artifacts in this repo.
-- **Security hardening incomplete** — see Security section above.
+- Passwords are hashed using bcrypt
+- All forms are protected against CSRF attacks
+- All database queries use parameterised statements (no SQL injection)
+- Role-based access control prevents students from accessing admin pages
+- Failed login attempts trigger a 5-minute account lockout after 5 tries

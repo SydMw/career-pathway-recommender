@@ -15,7 +15,8 @@
     </div>
 </div>
 <div class="container">
-    <div class="card no-print">
+    <div class="card no-print" style="display:flex;gap:12px;align-items:center;flex-wrap:wrap;">
+        <button type="button" onclick="window.history.back()" class="btn-secondary" style="margin-top:0;">&#8592; Close</button>
         <button type="button" onclick="window.print()">Print or Save as PDF</button>
     </div>
 

@@ -1,23 +1,23 @@
 {
   "Decision Tree": {
-    "accuracy": 0.8495867768595041,
-    "macro_precision": 0.8535684066234556,
-    "macro_recall": 0.8462106315503738,
-    "macro_f1": 0.8486756015786329,
-    "cv_accuracy_mean": 0.8254545454545454
+    "accuracy": 0.8521594684385382,
+    "macro_precision": 0.8511731475705275,
+    "macro_recall": 0.8516717967758966,
+    "macro_f1": 0.8506314174745017,
+    "cv_accuracy_mean": 0.8225410583689421
   },
   "Random Forest": {
-    "accuracy": 0.8975206611570248,
-    "macro_precision": 0.896879046879047,
-    "macro_recall": 0.8960590170880754,
-    "macro_f1": 0.8964158034042509,
-    "cv_accuracy_mean": 0.890909090909091
+    "accuracy": 0.8770764119601329,
+    "macro_precision": 0.8784336498792356,
+    "macro_recall": 0.8751568045809074,
+    "macro_f1": 0.876083622139436,
+    "cv_accuracy_mean": 0.8893389201828624
   },
   "KNN": {
-    "accuracy": 0.6925619834710743,
-    "macro_precision": 0.6943336899027477,
-    "macro_recall": 0.6901746049086009,
-    "macro_f1": 0.6912429445622417,
-    "cv_accuracy_mean": 0.6773553719008265
+    "accuracy": 0.6827242524916943,
+    "macro_precision": 0.687478664617598,
+    "macro_recall": 0.6799989132687868,
+    "macro_f1": 0.6818701684084516,
+    "cv_accuracy_mean": 0.6743146804053045
   }
 }

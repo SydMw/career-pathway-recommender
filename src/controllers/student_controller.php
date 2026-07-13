@@ -52,7 +52,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         if (isset($prediction['error'])) {
             error_log('ML service error: ' . $prediction['error']);
             $error = 'The recommendation engine is temporarily unavailable. '
-                . 'Your scores were saved — please try again in a moment.';
+                . 'Your scores were saved, please try again in a moment.';
         } else {
             $pathway_stmt = $pdo->prepare('SELECT pathway_id FROM pathways WHERE name = ?');
             $pathway_stmt->execute([$prediction['pathway']]);

@@ -7,10 +7,13 @@
     <link rel="stylesheet" href="assets/css/style.css">
 </head>
 <body>
-<?php ob_start(); ?>
-<span>Hi, <?= htmlspecialchars($_SESSION['full_name']) ?></span>
-<a href="logout.php">Logout</a>
-<?php $navbar_links = ob_get_clean(); include __DIR__ . '/partials/navbar.php'; ?>
+<?php
+$navbar_greeting = 'Hi, ' . $_SESSION['full_name'];
+$navbar_links = [
+    ['href' => 'logout.php', 'text' => 'Logout'],
+];
+include __DIR__ . '/partials/navbar.php';
+?>
 <div class="container">
     <div class="card no-print">
         <h2>Find Your Recommended Pathway</h2>
@@ -20,22 +23,9 @@
         <?php if ($feedback_error): ?><div class="error"><?= htmlspecialchars($feedback_error) ?></div><?php endif; ?>
         <form method="post" action="student_dashboard.php" id="recommendation-form">
             <?= csrf_field() ?>
-            <?php foreach (array_chunk(SUBJECTS, 2, true) as $pair): ?>
-                <?php if (count($pair) === 2): ?>
-                    <div class="form-row">
-                        <?php foreach ($pair as $field => $label): ?>
-                            <div>
-                                <label for="<?= htmlspecialchars($field) ?>"><?= htmlspecialchars($label) ?></label>
-                                <input type="number" step="0.1" min="0" max="100" id="<?= htmlspecialchars($field) ?>" name="<?= htmlspecialchars($field) ?>" required>
-                            </div>
-                        <?php endforeach; ?>
-                    </div>
-                <?php else: ?>
-                    <?php foreach ($pair as $field => $label): ?>
-                        <label for="<?= htmlspecialchars($field) ?>"><?= htmlspecialchars($label) ?></label>
-                        <input type="number" step="0.1" min="0" max="100" id="<?= htmlspecialchars($field) ?>" name="<?= htmlspecialchars($field) ?>" required>
-                    <?php endforeach; ?>
-                <?php endif; ?>
+            <?php foreach (SUBJECTS as $field => $label): ?>
+                <label for="<?= htmlspecialchars($field) ?>"><?= htmlspecialchars($label) ?></label>
+                <input type="number" step="0.1" min="0" max="100" id="<?= htmlspecialchars($field) ?>" name="<?= htmlspecialchars($field) ?>" required>
             <?php endforeach; ?>
 
             <label for="interest">Primary interest</label>

@@ -7,10 +7,14 @@
     <link rel="stylesheet" href="assets/css/style.css">
 </head>
 <body>
-<?php $navbar_admin = true; ob_start(); ?>
-<a href="admin_dashboard.php">Back to Dashboard</a>
-<a href="logout.php">Logout</a>
-<?php $navbar_links = ob_get_clean(); include __DIR__ . '/partials/navbar.php'; ?>
+<?php
+$navbar_admin = true;
+$navbar_links = [
+    ['href' => 'admin_dashboard.php', 'text' => 'Back to Dashboard'],
+    ['href' => 'logout.php', 'text' => 'Logout'],
+];
+include __DIR__ . '/partials/navbar.php';
+?>
 <div class="container">
     <div class="card no-print" style="position:relative;">
         <button onclick="window.history.back()" class="close-btn no-print" title="Go back">&times;</button>

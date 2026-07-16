@@ -7,10 +7,14 @@
     <link rel="stylesheet" href="assets/css/style.css">
 </head>
 <body>
-<?php $navbar_admin = true; ob_start(); ?>
-<span>Hi, <?= htmlspecialchars($_SESSION['full_name']) ?></span>
-<a href="logout.php">Logout</a>
-<?php $navbar_links = ob_get_clean(); include __DIR__ . '/partials/navbar.php'; ?>
+<?php
+$navbar_admin = true;
+$navbar_greeting = 'Hi, ' . $_SESSION['full_name'];
+$navbar_links = [
+    ['href' => 'logout.php', 'text' => 'Logout'],
+];
+include __DIR__ . '/partials/navbar.php';
+?>
 <div class="container">
     <div class="card no-print">
         <button type="button" onclick="window.print()">Print or Save Report as PDF</button>

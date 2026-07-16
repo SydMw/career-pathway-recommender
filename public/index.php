@@ -13,10 +13,13 @@ if (!empty($_SESSION['user_id'])) {
     <link rel="stylesheet" href="assets/css/style.css">
 </head>
 <body>
-<?php ob_start(); ?>
-<a href="login.php">Login</a>
-<a href="register.php">Register</a>
-<?php $navbar_links = ob_get_clean(); include __DIR__ . '/partials/navbar.php'; ?>
+<?php
+$navbar_links = [
+    ['href' => 'login.php', 'text' => 'Login'],
+    ['href' => 'register.php', 'text' => 'Register'],
+];
+include __DIR__ . '/partials/navbar.php';
+?>
 <div class="container">
     <div class="card">
         <h1>AI-Powered Career and Pathway Recommendation System</h1>

@@ -1,13 +1,26 @@
 <?php
 /**
- * Shared navbar. Set $navbar_admin = true for the "| Admin" brand suffix,
- * and $navbar_links to the right-side HTML (usually built with ob_start())
- * before including this file.
+ * Shared navbar shown at the top of every page.
+ *
+ * Before including this file, set:
+ *   $navbar_admin (optional) - set to true to add "| Admin" to the title
+ *   $navbar_greeting (optional) - a welcome message like "Hi, John"
+ *   $navbar_links - a list of links to show, each with an 'href' and a 'text'
  */
+
+$brand = 'Career Pathway Recommender';
+if (!empty($navbar_admin)) {
+    $brand = $brand . ' | Admin';
+}
 ?>
 <div class="navbar no-print">
-    <div class="brand">Career Pathway Recommender<?= !empty($navbar_admin) ? ' &nbsp;|&nbsp; Admin' : '' ?></div>
+    <div class="brand"><?= htmlspecialchars($brand) ?></div>
     <div>
-        <?= $navbar_links ?? '' ?>
+        <?php if (!empty($navbar_greeting)): ?>
+            <span><?= htmlspecialchars($navbar_greeting) ?></span>
+        <?php endif; ?>
+        <?php foreach ($navbar_links as $link): ?>
+            <a href="<?= htmlspecialchars($link['href']) ?>"><?= htmlspecialchars($link['text']) ?></a>
+        <?php endforeach; ?>
     </div>
 </div>

@@ -7,8 +7,33 @@ require_role('student');
 
 $error = null;
 $result = null;
+$feedback_message = null;
+$feedback_error = null;
 
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['feedback_submit'])) {
+    // Student rates how good a recommendation actually was — a real signal
+    // on recommendation quality, separate from the model's own confidence.
+    require_csrf();
+    $recommendation_id = (int) ($_POST['recommendation_id'] ?? 0);
+    $rating = (int) ($_POST['rating'] ?? 0);
+    $comments = trim($_POST['comments'] ?? '');
+
+    if ($rating < 1 || $rating > 5) {
+        $feedback_error = 'Please choose a rating between 1 and 5.';
+    } else {
+        // Only allow rating a recommendation that actually belongs to this student
+        $own_check = $pdo->prepare('SELECT recommendation_id FROM recommendations WHERE recommendation_id = ? AND user_id = ?');
+        $own_check->execute([$recommendation_id, $_SESSION['user_id']]);
+
+        if ($own_check->fetch()) {
+            $pdo->prepare('INSERT INTO feedback (recommendation_id, rating, comments) VALUES (?, ?, ?)')
+                ->execute([$recommendation_id, $rating, $comments !== '' ? $comments : null]);
+            $feedback_message = 'Thanks for letting us know what you thought.';
+        } else {
+            $feedback_error = 'We could not find that recommendation.';
+        }
+    }
+} elseif ($_SERVER['REQUEST_METHOD'] === 'POST') {
     require_csrf();
     $fields = ['math_score', 'english_score', 'science_score', 'humanities_score', 'creative_arts_score'];
     $scores = [];
@@ -73,6 +98,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     $prediction['explanation'],
                     $prediction['model_used'],
                 ]);
+                $prediction['recommendation_id'] = (int) $pdo->lastInsertId();
             }
 
             $result = $prediction; // FR5: displayed with explanation

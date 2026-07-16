@@ -59,3 +59,15 @@ CREATE TABLE recommendations (
 
 CREATE INDEX idx_academic_user ON academic_records(user_id);
 CREATE INDEX idx_recommendation_user ON recommendations(user_id);
+
+-- D4: Student feedback on a recommendation's quality — a real signal on
+-- whether a recommendation was actually good, independent of the model's
+-- own confidence score
+CREATE TABLE feedback (
+    feedback_id INT AUTO_INCREMENT PRIMARY KEY,
+    recommendation_id INT NOT NULL,
+    rating TINYINT NOT NULL COMMENT '1 (poor) to 5 (excellent)',
+    comments TEXT,
+    submitted_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (recommendation_id) REFERENCES recommendations(recommendation_id) ON DELETE CASCADE
+);

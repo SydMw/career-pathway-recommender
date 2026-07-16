@@ -3,6 +3,8 @@
 require __DIR__ . '/../config/db.php';
 require __DIR__ . '/../config/session.php';
 require __DIR__ . '/../config/ml_client.php';
+require __DIR__ . '/../config/helpers.php';
+require __DIR__ . '/../config/constants.php';
 require_role('student');
 
 $error = null;
@@ -35,9 +37,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['feedback_submit'])) {
     }
 } elseif ($_SERVER['REQUEST_METHOD'] === 'POST') {
     require_csrf();
-    $fields = ['math_score', 'english_score', 'science_score', 'humanities_score', 'creative_arts_score'];
     $scores = [];
-    foreach ($fields as $f) {
+    foreach (array_keys(SUBJECTS) as $f) {
         $val = filter_input(INPUT_POST, $f, FILTER_VALIDATE_FLOAT);
         if ($val === false || $val === null || $val < 0 || $val > 100) {
             $error = 'All scores must be numbers between 0 and 100.';
@@ -46,9 +47,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['feedback_submit'])) {
         $scores[$f] = $val;
     }
     $interest = strtolower(trim($_POST['interest'] ?? ''));
-    $allowed_interests = ['technology', 'business', 'science', 'arts', 'sports', 'humanities'];
 
-    if (!$error && !in_array($interest, $allowed_interests, true)) {
+    if (!$error && !in_array($interest, ALLOWED_INTERESTS, true)) {
         $error = 'Please select a valid interest.';
     }
 

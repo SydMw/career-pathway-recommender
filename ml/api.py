@@ -14,6 +14,7 @@ import pandas as pd
 import pymysql
 from flask import Flask, jsonify, request
 
+from features import FEATURES
 from train_model import train_and_save
 
 app = Flask(__name__)
@@ -31,15 +32,6 @@ collab_knn = joblib.load("ml/model/collab_knn.joblib")
 # collaborative filtering nudges the result toward what similar students chose.
 CONTENT_WEIGHT = 0.7
 COLLAB_WEIGHT = 0.3
-
-FEATURES = [
-    "math_score",
-    "english_score",
-    "science_score",
-    "humanities_score",
-    "creative_arts_score",
-    "interest_encoded",
-]
 
 
 def build_explanation(scores, interest, predicted_pathway):

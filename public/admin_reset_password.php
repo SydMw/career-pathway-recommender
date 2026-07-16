@@ -7,14 +7,11 @@
     <link rel="stylesheet" href="assets/css/style.css">
 </head>
 <body>
-<div class="navbar no-print">
-    <div class="brand">Career Pathway Recommender &nbsp;|&nbsp; Admin</div>
-    <div>
-        <a href="admin_student_report.php?id=<?= (int) $student['user_id'] ?>">Back to Student Report</a>
-        <a href="admin_dashboard.php">Dashboard</a>
-        <a href="logout.php">Logout</a>
-    </div>
-</div>
+<?php $navbar_admin = true; ob_start(); ?>
+<a href="admin_student_report.php?id=<?= (int) $student['user_id'] ?>">Back to Student Report</a>
+<a href="admin_dashboard.php">Dashboard</a>
+<a href="logout.php">Logout</a>
+<?php $navbar_links = ob_get_clean(); include __DIR__ . '/partials/navbar.php'; ?>
 <div class="container">
     <div class="card auth-card">
         <h2>Reset Password</h2>

@@ -2,6 +2,7 @@
 // Administrator Module: per-student printable report (FR7)
 require __DIR__ . '/../config/db.php';
 require __DIR__ . '/../config/session.php';
+require __DIR__ . '/../config/helpers.php';
 require_role('admin');
 
 $student_id = filter_input(INPUT_GET, 'id', FILTER_VALIDATE_INT);

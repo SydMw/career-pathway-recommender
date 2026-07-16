@@ -7,13 +7,10 @@
     <link rel="stylesheet" href="assets/css/style.css">
 </head>
 <body>
-<div class="navbar no-print">
-    <div class="brand">Career Pathway Recommender &nbsp;|&nbsp; Admin</div>
-    <div>
-        <span>Hi, <?= htmlspecialchars($_SESSION['full_name']) ?></span>
-        <a href="logout.php">Logout</a>
-    </div>
-</div>
+<?php $navbar_admin = true; ob_start(); ?>
+<span>Hi, <?= htmlspecialchars($_SESSION['full_name']) ?></span>
+<a href="logout.php">Logout</a>
+<?php $navbar_links = ob_get_clean(); include __DIR__ . '/partials/navbar.php'; ?>
 <div class="container">
     <div class="card no-print">
         <button type="button" onclick="window.print()">Print or Save Report as PDF</button>
@@ -132,11 +129,7 @@
                 <th>Date</th>
             </tr>
             <?php foreach ($recent as $r):
-                $bc = match($r['pathway']) {
-                    'STEM'            => 'badge-stem',
-                    'Social Sciences' => 'badge-social',
-                    default           => 'badge-arts',
-                };
+                $bc = pathway_badge_class($r['pathway']);
             ?>
                 <tr>
                     <td><?= htmlspecialchars($r['full_name']) ?></td>

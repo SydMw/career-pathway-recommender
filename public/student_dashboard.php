@@ -7,13 +7,10 @@
     <link rel="stylesheet" href="assets/css/style.css">
 </head>
 <body>
-<div class="navbar no-print">
-    <div class="brand">Career Pathway Recommender</div>
-    <div>
-        <span>Hi, <?= htmlspecialchars($_SESSION['full_name']) ?></span>
-        <a href="logout.php">Logout</a>
-    </div>
-</div>
+<?php ob_start(); ?>
+<span>Hi, <?= htmlspecialchars($_SESSION['full_name']) ?></span>
+<a href="logout.php">Logout</a>
+<?php $navbar_links = ob_get_clean(); include __DIR__ . '/partials/navbar.php'; ?>
 <div class="container">
     <div class="card no-print">
         <h2>Find Your Recommended Pathway</h2>
@@ -23,38 +20,30 @@
         <?php if ($feedback_error): ?><div class="error"><?= htmlspecialchars($feedback_error) ?></div><?php endif; ?>
         <form method="post" action="student_dashboard.php" id="recommendation-form">
             <?= csrf_field() ?>
-            <div class="form-row">
-                <div>
-                    <label for="math_score">Mathematics score</label>
-                    <input type="number" step="0.1" min="0" max="100" id="math_score" name="math_score" required>
-                </div>
-                <div>
-                    <label for="english_score">English score</label>
-                    <input type="number" step="0.1" min="0" max="100" id="english_score" name="english_score" required>
-                </div>
-            </div>
-            <div class="form-row">
-                <div>
-                    <label for="science_score">Science score</label>
-                    <input type="number" step="0.1" min="0" max="100" id="science_score" name="science_score" required>
-                </div>
-                <div>
-                    <label for="humanities_score">Humanities score</label>
-                    <input type="number" step="0.1" min="0" max="100" id="humanities_score" name="humanities_score" required>
-                </div>
-            </div>
-            <label for="creative_arts_score">Creative Arts / Sports score</label>
-            <input type="number" step="0.1" min="0" max="100" id="creative_arts_score" name="creative_arts_score" required>
+            <?php foreach (array_chunk(SUBJECTS, 2, true) as $pair): ?>
+                <?php if (count($pair) === 2): ?>
+                    <div class="form-row">
+                        <?php foreach ($pair as $field => $label): ?>
+                            <div>
+                                <label for="<?= htmlspecialchars($field) ?>"><?= htmlspecialchars($label) ?></label>
+                                <input type="number" step="0.1" min="0" max="100" id="<?= htmlspecialchars($field) ?>" name="<?= htmlspecialchars($field) ?>" required>
+                            </div>
+                        <?php endforeach; ?>
+                    </div>
+                <?php else: ?>
+                    <?php foreach ($pair as $field => $label): ?>
+                        <label for="<?= htmlspecialchars($field) ?>"><?= htmlspecialchars($label) ?></label>
+                        <input type="number" step="0.1" min="0" max="100" id="<?= htmlspecialchars($field) ?>" name="<?= htmlspecialchars($field) ?>" required>
+                    <?php endforeach; ?>
+                <?php endif; ?>
+            <?php endforeach; ?>
 
             <label for="interest">Primary interest</label>
             <select id="interest" name="interest" required>
                 <option value="">Select your main interest</option>
-                <option value="technology">Technology</option>
-                <option value="science">Science</option>
-                <option value="business">Business</option>
-                <option value="humanities">Humanities</option>
-                <option value="arts">Arts</option>
-                <option value="sports">Sports</option>
+                <?php foreach (ALLOWED_INTERESTS as $i): ?>
+                    <option value="<?= htmlspecialchars($i) ?>"><?= htmlspecialchars(ucfirst($i)) ?></option>
+                <?php endforeach; ?>
             </select>
 
             <button type="submit" id="submit-btn">Get Recommendation</button>
@@ -62,11 +51,7 @@
         <script src="assets/js/student.js"></script>
 
         <?php if ($result):
-            $badge_class = match($result['pathway']) {
-                'STEM'                   => 'badge-stem',
-                'Social Sciences'        => 'badge-social',
-                default                  => 'badge-arts',
-            };
+            $badge_class = pathway_badge_class($result['pathway']);
         ?>
             <div class="result no-print">
                 <h3>
@@ -129,11 +114,7 @@
             <p class="muted">You have not received a recommendation yet. Fill in your scores above and click "Get Recommendation" to get started.</p>
         <?php else: ?>
             <?php foreach ($history as $h):
-                $bc = match($h['pathway']) {
-                    'STEM'            => 'badge-stem',
-                    'Social Sciences' => 'badge-social',
-                    default           => 'badge-arts',
-                };
+                $bc = pathway_badge_class($h['pathway']);
             ?>
                 <div class="result" style="margin-bottom: 16px;">
                     <h3>

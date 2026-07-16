@@ -7,13 +7,10 @@
     <link rel="stylesheet" href="assets/css/style.css">
 </head>
 <body>
-<div class="navbar no-print">
-    <div class="brand">Career Pathway Recommender &nbsp;|&nbsp; Admin</div>
-    <div>
-        <a href="admin_dashboard.php">Back to Dashboard</a>
-        <a href="logout.php">Logout</a>
-    </div>
-</div>
+<?php $navbar_admin = true; ob_start(); ?>
+<a href="admin_dashboard.php">Back to Dashboard</a>
+<a href="logout.php">Logout</a>
+<?php $navbar_links = ob_get_clean(); include __DIR__ . '/partials/navbar.php'; ?>
 <div class="container">
     <div class="card no-print" style="position:relative;">
         <button onclick="window.history.back()" class="close-btn no-print" title="Go back">&times;</button>
@@ -41,11 +38,7 @@
                 <p class="muted">This student has not submitted any academic data yet.</p>
             <?php else: ?>
                 <?php foreach ($history as $h):
-                    $bc = match($h['pathway']) {
-                        'STEM'            => 'badge-stem',
-                        'Social Sciences' => 'badge-social',
-                        default           => 'badge-arts',
-                    };
+                    $bc = pathway_badge_class($h['pathway']);
                 ?>
                     <div class="result" style="margin-bottom: 16px;">
                         <h3>

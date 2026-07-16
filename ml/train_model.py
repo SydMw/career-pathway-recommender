@@ -19,14 +19,7 @@ from sklearn.neighbors import KNeighborsClassifier
 from sklearn.preprocessing import LabelEncoder, StandardScaler
 from sklearn.tree import DecisionTreeClassifier
 
-FEATURES = [
-    "math_score",
-    "english_score",
-    "science_score",
-    "humanities_score",
-    "creative_arts_score",
-    "interest_encoded",
-]
+from features import FEATURES
 
 
 def load_data(df=None):

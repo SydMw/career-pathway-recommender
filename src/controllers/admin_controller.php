@@ -3,6 +3,7 @@
 require __DIR__ . '/../config/db.php';
 require __DIR__ . '/../config/session.php';
 require __DIR__ . '/../config/ml_client.php';
+require __DIR__ . '/../config/helpers.php';
 require_role('admin');
 
 $retrain_result = null;

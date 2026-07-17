@@ -9,6 +9,9 @@
 <body>
 <?php
 $navbar_greeting = 'Hi, ' . $_SESSION['full_name'];
+if (!empty($_SESSION['student_id'])) {
+    $navbar_greeting = $navbar_greeting . ' (' . $_SESSION['student_id'] . ')';
+}
 $navbar_links = [
     ['href' => 'logout.php', 'text' => 'Logout'],
 ];

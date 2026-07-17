@@ -45,6 +45,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             ->execute([$user['user_id']]);
 
         $_SESSION['user_id'] = (int) $user['user_id'];
+        $_SESSION['student_id'] = $user['student_id'];
         $_SESSION['full_name'] = $user['full_name'];
         $_SESSION['role'] = $user['role'];
 

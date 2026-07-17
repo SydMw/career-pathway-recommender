@@ -43,6 +43,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $stmt->execute([$student_id, $full_name, $email, $hash, 'student']);
 
             $_SESSION['user_id'] = (int) $pdo->lastInsertId();
+            $_SESSION['student_id'] = $student_id;
             $_SESSION['full_name'] = $full_name;
             $_SESSION['role'] = 'student';
 

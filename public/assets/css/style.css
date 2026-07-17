@@ -1,22 +1,22 @@
 :root {
-    --primary: rgb(30, 111, 92);
-    --primary-dark: rgb(21, 77, 64);
-    --primary-light: rgb(42, 157, 127);
-    --accent: rgb(244, 162, 97);
+    --primary: seagreen;
+    --primary-dark: darkslategray;
+    --primary-light: mediumseagreen;
+    --accent: sandybrown;
     --bg: rgb(240, 244, 243);
     --card-bg: rgb(255, 255, 255);
     --text: rgb(31, 41, 55);
     --muted: rgb(107, 114, 128);
     --border: rgb(226, 232, 240);
-    --danger: rgb(192, 57, 43);
+    --danger: firebrick;
     --danger-bg: rgb(253, 236, 234);
     --success-bg: rgb(234, 246, 241);
     --success-border: rgb(191, 230, 214);
 
     /* pathway accent colours */
-    --stem: rgb(37, 99, 235);
-    --social: rgb(5, 150, 105);
-    --arts: rgb(217, 119, 6);
+    --stem: royalblue;
+    --social: seagreen;
+    --arts: peru;
 }
 
 * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -128,7 +128,7 @@ textarea {
 input:focus, select:focus, textarea:focus {
     outline: none;
     border-color: var(--primary-light);
-    box-shadow: 0 0 0 3px rgba(42,157,127,0.15);
+    box-shadow: 0 0 0 3px rgba(60,179,113,0.15);
     background: rgb(255, 255, 255);
 }
 
@@ -146,14 +146,14 @@ button, .btn {
     text-decoration: none;
     display: inline-block;
     transition: opacity 0.2s, transform 0.15s, box-shadow 0.2s;
-    box-shadow: 0 2px 8px rgba(30,111,92,0.25);
+    box-shadow: 0 2px 8px rgba(46,139,87,0.25);
     letter-spacing: 0.2px;
 }
 
 button:hover, .btn:hover {
     opacity: 0.92;
     transform: translateY(-1px);
-    box-shadow: 0 4px 16px rgba(30,111,92,0.30);
+    box-shadow: 0 4px 16px rgba(46,139,87,0.30);
 }
 
 button:active, .btn:active { transform: translateY(0); }

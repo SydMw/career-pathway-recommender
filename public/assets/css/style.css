@@ -3,14 +3,14 @@
     --primary-dark: darkslategray;
     --primary-light: mediumseagreen;
     --accent: sandybrown;
-    --bg: rgb(240, 244, 243);
-    --card-bg: rgb(255, 255, 255);
+    --bg: whitesmoke;
+    --card-bg: white;
     --text: rgb(31, 41, 55);
-    --muted: rgb(107, 114, 128);
-    --border: rgb(226, 232, 240);
+    --muted: slategray;
+    --border: lavender;
     --danger: firebrick;
-    --danger-bg: rgb(253, 236, 234);
-    --success-bg: rgb(234, 246, 241);
+    --danger-bg: mistyrose;
+    --success-bg: honeydew;
     --success-border: rgb(191, 230, 214);
 
     /* pathway accent colours */

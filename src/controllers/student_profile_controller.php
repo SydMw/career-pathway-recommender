@@ -42,16 +42,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         if ($current_password === '' || !password_verify($current_password, $current_hash)) {
             $error = 'Current password is incorrect.';
-        } elseif (strlen($new_password) < 8) {
-            $error = 'New password must be at least 8 characters.';
-        } elseif (!preg_match('/[A-Z]/', $new_password)) {
-            $error = 'New password must contain at least one uppercase letter.';
-        } elseif (!preg_match('/[a-z]/', $new_password)) {
-            $error = 'New password must contain at least one lowercase letter.';
-        } elseif (!preg_match('/[0-9]/', $new_password)) {
-            $error = 'New password must contain at least one number.';
-        } elseif (!preg_match('/[\W_]/', $new_password)) {
-            $error = 'New password must contain at least one special character (e.g. ! @ # $).';
+        } elseif (($pw_error = validate_password_strength($new_password, 'New password')) !== null) {
+            $error = $pw_error;
         } elseif ($new_password !== $confirm_password) {
             $error = 'New passwords do not match.';
         } else {

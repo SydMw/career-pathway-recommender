@@ -17,16 +17,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $error = 'All fields are required.';
     } elseif (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
         $error = 'Please enter a valid email address.';
-    } elseif (strlen($password) < 8) {
-        $error = 'Password must be at least 8 characters.';
-    } elseif (!preg_match('/[A-Z]/', $password)) {
-        $error = 'Password must contain at least one uppercase letter.';
-    } elseif (!preg_match('/[a-z]/', $password)) {
-        $error = 'Password must contain at least one lowercase letter.';
-    } elseif (!preg_match('/[0-9]/', $password)) {
-        $error = 'Password must contain at least one number.';
-    } elseif (!preg_match('/[\W_]/', $password)) {
-        $error = 'Password must contain at least one special character (e.g. ! @ # $).';
+    } elseif (($pw_error = validate_password_strength($password)) !== null) {
+        $error = $pw_error;
     } elseif ($password !== $confirm) {
         $error = 'Passwords do not match.';
     } else {

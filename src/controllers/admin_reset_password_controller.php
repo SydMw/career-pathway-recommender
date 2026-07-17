@@ -1,6 +1,7 @@
 <?php
 require __DIR__ . '/../config/db.php';
 require __DIR__ . '/../config/session.php';
+require __DIR__ . '/../config/helpers.php';
 require_role('admin');
 
 $student_id = (int) ($_GET['id'] ?? 0);
@@ -27,16 +28,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $new_password     = $_POST['new_password'] ?? '';
     $confirm_password = $_POST['confirm_password'] ?? '';
 
-    if (strlen($new_password) < 8) {
-        $error = 'Password must be at least 8 characters.';
-    } elseif (!preg_match('/[A-Z]/', $new_password)) {
-        $error = 'Password must include at least one uppercase letter.';
-    } elseif (!preg_match('/[a-z]/', $new_password)) {
-        $error = 'Password must include at least one lowercase letter.';
-    } elseif (!preg_match('/[0-9]/', $new_password)) {
-        $error = 'Password must include at least one number.';
-    } elseif (!preg_match('/[\W_]/', $new_password)) {
-        $error = 'Password must include at least one special character (e.g. ! @ # $).';
+    if (($pw_error = validate_password_strength($new_password)) !== null) {
+        $error = $pw_error;
     } elseif ($new_password !== $confirm_password) {
         $error = 'Passwords do not match. Please try again.';
     } else {

@@ -5,13 +5,13 @@
     --accent: sandybrown;
     --bg: whitesmoke;
     --card-bg: white;
-    --text: rgb(31, 41, 55);
+    --text: black;
     --muted: slategray;
     --border: lavender;
     --danger: firebrick;
     --danger-bg: mistyrose;
     --success-bg: honeydew;
-    --success-border: rgb(191, 230, 214);
+    --success-border: paleturquoise;
 
     /* pathway accent colours */
     --stem: royalblue;

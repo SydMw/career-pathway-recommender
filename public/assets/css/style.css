@@ -303,29 +303,9 @@ table {
     min-width: 600px;
 }
 
-/* Sticky first column — border-collapse must be separate for sticky to work */
-.table-scroll table {
-    border-collapse: separate;
-    border-spacing: 0;
-}
-
 .table-scroll table th,
 .table-scroll table td {
     border-bottom: 1px solid aliceblue;
-}
-
-.table-scroll table th:first-child,
-.table-scroll table td:first-child {
-    position: sticky;
-    left: 0;
-    z-index: 2;
-    background: white;
-    box-shadow: 3px 0 6px rgba(0,0,0,0.08);
-}
-
-.table-scroll table th:first-child {
-    background: ghostwhite;
-    z-index: 3;
 }
 
 th {

@@ -47,7 +47,7 @@ def test_register_login_submit_and_admin_visibility(student_email):
         allow_redirects=True,
         timeout=5,
     )
-    assert "Enter Academic Performance" in reg_resp.text
+    assert "Find Your Recommended Pathway" in reg_resp.text
 
     # Submit academic scores -> expect a STEM-leaning recommendation
     token = extract_csrf(reg_resp.text)
@@ -278,7 +278,7 @@ def test_register_rejects_duplicate_email():
         },
         timeout=5,
     )
-    assert "Enter Academic Performance" in first.text  # first registration succeeded
+    assert "Find Your Recommended Pathway" in first.text  # first registration succeeded
 
     # second registration with the same email, from a fresh session
     session2 = requests.Session()
@@ -323,7 +323,7 @@ def test_student_submission_rejects_out_of_range_scores(field, bad_value):
     payload[field] = bad_value
     resp = session.post(f"{BASE_URL}/student_dashboard.php", data=payload, timeout=5)
     assert "between 0 and 100" in resp.text
-    assert "Recommended Pathway" not in resp.text
+    assert "confidence-bar-wrap" not in resp.text
 
 
 def test_student_submission_rejects_invalid_interest():
@@ -351,7 +351,7 @@ def test_student_submission_rejects_invalid_interest():
         timeout=5,
     )
     assert "valid interest" in resp.text.lower()
-    assert "Recommended Pathway" not in resp.text
+    assert "confidence-bar-wrap" not in resp.text
 
 
 def test_student_cannot_access_admin_dashboard():

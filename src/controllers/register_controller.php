@@ -2,6 +2,7 @@
 // Authentication Module - registration (FR1)
 require __DIR__ . '/../config/db.php';
 require __DIR__ . '/../config/session.php';
+require __DIR__ . '/../config/helpers.php';
 
 $error = null;
 
@@ -35,10 +36,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $error = 'An account with that email already exists.';
         } else {
             $hash = password_hash($password, PASSWORD_DEFAULT);
+            $student_id = generate_student_id($pdo);
             $stmt = $pdo->prepare(
-                'INSERT INTO users (full_name, email, password_hash, role) VALUES (?, ?, ?, ?)'
+                'INSERT INTO users (student_id, full_name, email, password_hash, role) VALUES (?, ?, ?, ?, ?)'
             );
-            $stmt->execute([$full_name, $email, $hash, 'student']);
+            $stmt->execute([$student_id, $full_name, $email, $hash, 'student']);
 
             $_SESSION['user_id'] = (int) $pdo->lastInsertId();
             $_SESSION['full_name'] = $full_name;

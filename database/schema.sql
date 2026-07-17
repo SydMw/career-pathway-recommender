@@ -7,6 +7,7 @@ USE career_system;
 -- D1: User Accounts
 CREATE TABLE users (
     user_id INT AUTO_INCREMENT PRIMARY KEY,
+    student_id VARCHAR(20) UNIQUE,
     full_name VARCHAR(120) NOT NULL,
     email VARCHAR(150) NOT NULL UNIQUE,
     password_hash VARCHAR(255) NOT NULL,

@@ -74,7 +74,7 @@ include __DIR__ . '/partials/navbar.php';
         <div class="table-toolbar no-print">
             <h2 style="margin-bottom:0;">All Registered Students</h2>
             <div class="toolbar-controls">
-                <input type="text" id="student-search" placeholder="Search by name or email..." oninput="filterStudents()">
+                <input type="text" id="student-search" placeholder="Search by student ID, name, or email..." oninput="filterStudents()">
                 <select id="student-pathway-filter" onchange="filterStudents()">
                     <option value="">All pathways</option>
                     <option value="STEM">STEM</option>
@@ -88,11 +88,12 @@ include __DIR__ . '/partials/navbar.php';
         <div class="table-scroll">
         <table id="students-table">
             <tr>
-                <th>Name</th><th>Email</th><th>Joined</th><th>Submissions</th><th>Latest Pathway</th>
+                <th>Student ID</th><th>Name</th><th>Email</th><th>Joined</th><th>Submissions</th><th>Latest Pathway</th>
                 <th class="no-print">Actions</th>
             </tr>
             <?php foreach ($students as $s): ?>
                 <tr>
+                    <td><?= htmlspecialchars($s['student_id'] ?? '—') ?></td>
                     <td><?= htmlspecialchars($s['full_name']) ?></td>
                     <td><?= htmlspecialchars($s['email']) ?></td>
                     <td style="white-space:nowrap;"><?= date('j M Y', strtotime($s['registered_at'])) ?></td>
@@ -155,16 +156,18 @@ include __DIR__ . '/partials/navbar.php';
     </div>
 </div>
 <script>
-function filterTable(tableId, searchVal, pathwayVal, noResultsId, countId, searchCol, pathwayCol) {
+function filterTable(tableId, searchVal, pathwayVal, noResultsId, countId, searchCols, pathwayCol) {
     var rows = document.querySelectorAll('#' + tableId + ' tr:not(:first-child)');
     var visible = 0;
     rows.forEach(function(row) {
         var cells = row.querySelectorAll('td');
         if (!cells.length) return;
-        var name  = (cells[searchCol] ? cells[searchCol].textContent : '') + ' ' +
-                    (cells[searchCol + 1] ? cells[searchCol + 1].textContent : '');
+        var searchable = '';
+        searchCols.forEach(function(col) {
+            searchable += (cells[col] ? cells[col].textContent : '') + ' ';
+        });
         var pathway = cells[pathwayCol] ? cells[pathwayCol].textContent.trim() : '';
-        var matchSearch  = !searchVal  || name.toLowerCase().includes(searchVal.toLowerCase());
+        var matchSearch  = !searchVal  || searchable.toLowerCase().includes(searchVal.toLowerCase());
         var matchPathway = !pathwayVal || pathway.includes(pathwayVal);
         row.style.display = (matchSearch && matchPathway) ? '' : 'none';
         if (matchSearch && matchPathway) visible++;
@@ -179,7 +182,7 @@ function filterStudents() {
         document.getElementById('student-search').value,
         document.getElementById('student-pathway-filter').value,
         'no-students', 'student-count',
-        0, 4
+        [0, 1, 2], 5
     );
 }
 
@@ -189,7 +192,7 @@ function filterRecs() {
         document.getElementById('rec-search').value,
         document.getElementById('rec-pathway-filter').value,
         'no-recs', 'rec-count',
-        0, 2
+        [0, 1], 2
     );
 }
 

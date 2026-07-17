@@ -48,13 +48,13 @@ $recent = $pdo->query(
 // submitted any data (FR7: administrator visibility into all students).
 $students = $pdo->query(
     'SELECT
-        u.user_id, u.full_name, u.email, u.created_at AS registered_at,
+        u.user_id, u.student_id, u.full_name, u.email, u.created_at AS registered_at,
         COUNT(r.recommendation_id) AS submission_count,
         MAX(r.created_at) AS latest_submission_at
      FROM users u
      LEFT JOIN recommendations r ON r.user_id = u.user_id
      WHERE u.role = "student"
-     GROUP BY u.user_id, u.full_name, u.email, u.created_at
+     GROUP BY u.user_id, u.student_id, u.full_name, u.email, u.created_at
      ORDER BY u.created_at DESC'
 )->fetchAll();
 

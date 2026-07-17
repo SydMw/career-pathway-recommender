@@ -13,6 +13,7 @@ if (!empty($_SESSION['student_id'])) {
     $navbar_greeting = $navbar_greeting . ' (' . $_SESSION['student_id'] . ')';
 }
 $navbar_links = [
+    ['href' => 'student_profile.php', 'text' => 'My Profile'],
     ['href' => 'logout.php', 'text' => 'Logout'],
 ];
 include __DIR__ . '/partials/navbar.php';

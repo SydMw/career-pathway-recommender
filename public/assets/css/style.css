@@ -266,13 +266,10 @@ button:disabled {
     font-size: 12px;
     font-weight: 700;
     color: white;
+    background: var(--primary-dark);
     margin-left: 8px;
     vertical-align: middle;
 }
-
-.badge-stem    { background: var(--stem); }
-.badge-social  { background: var(--social); }
-.badge-arts    { background: var(--arts); }
 
 /* Confidence progress bar */
 .confidence-bar-wrap {

@@ -35,7 +35,7 @@ body {
 /* ---- Navbar ---- */
 .navbar {
     background: linear-gradient(135deg, var(--primary-dark) 0%, var(--primary) 60%, var(--primary-light) 100%);
-    color: rgb(255, 255, 255);
+    color: white;
     padding: 16px 28px;
     display: flex;
     justify-content: space-between;
@@ -58,7 +58,7 @@ body {
     transition: background 0.2s, color 0.2s;
 }
 
-.navbar a:hover { background: rgba(255,255,255,0.18); color: rgb(255, 255, 255); }
+.navbar a:hover { background: rgba(255,255,255,0.18); color: white; }
 
 /* ---- Layout ---- */
 .container {
@@ -117,20 +117,20 @@ textarea {
     font-size: 14px;
     font-family: inherit;
     transition: border-color 0.2s, box-shadow 0.2s;
-    background: rgb(250, 250, 250);
+    background: whitesmoke;
 }
 
 input:focus, select:focus, textarea:focus {
     outline: none;
     border-color: var(--primary-light);
     box-shadow: 0 0 0 3px rgba(60,179,113,0.15);
-    background: rgb(255, 255, 255);
+    background: white;
 }
 
 /* ---- Buttons ---- */
 button, .btn {
     background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);
-    color: rgb(255, 255, 255);
+    color: white;
     border: none;
     padding: 11px 22px;
     border-radius: 8px;
@@ -161,7 +161,7 @@ button:active, .btn:active { transform: translateY(0); }
     width: 32px;
     height: 32px;
     border-radius: 50%;
-    background: rgb(241, 245, 249);
+    background: aliceblue;
     color: var(--muted);
     font-size: 20px;
     line-height: 1;
@@ -185,7 +185,7 @@ button:active, .btn:active { transform: translateY(0); }
 }
 
 .btn-secondary {
-    background: rgb(255, 255, 255);
+    background: white;
     color: var(--primary);
     border: 2px solid var(--primary);
     padding: 9px 20px;
@@ -201,12 +201,12 @@ button:active, .btn:active { transform: translateY(0); }
 
 .btn-secondary:hover {
     background: var(--primary);
-    color: rgb(255, 255, 255);
+    color: white;
     transform: translateY(-1px);
 }
 
 button:disabled {
-    background: rgb(156, 163, 175);
+    background: darkgray;
     cursor: not-allowed;
     transform: none;
     box-shadow: none;
@@ -217,7 +217,7 @@ button:disabled {
 .error {
     background: var(--danger-bg);
     color: var(--danger);
-    border: 1px solid rgb(245, 198, 198);
+    border: 1px solid pink;
     padding: 11px 16px;
     border-radius: 8px;
     margin-top: 16px;
@@ -243,7 +243,7 @@ button:disabled {
 
 /* ---- Recommendation result ---- */
 .result {
-    background: linear-gradient(135deg, rgb(234, 246, 241) 0%, rgb(240, 250, 246) 100%);
+    background: linear-gradient(135deg, honeydew 0%, mintcream 100%);
     border: 1px solid var(--success-border);
     border-radius: 12px;
     padding: 20px 24px;
@@ -265,7 +265,7 @@ button:disabled {
     border-radius: 20px;
     font-size: 12px;
     font-weight: 700;
-    color: rgb(255, 255, 255);
+    color: white;
     margin-left: 8px;
     vertical-align: middle;
 }
@@ -276,7 +276,7 @@ button:disabled {
 
 /* Confidence progress bar */
 .confidence-bar-wrap {
-    background: rgb(209, 250, 229);
+    background: honeydew;
     border-radius: 8px;
     height: 12px;
     margin: 10px 0 4px;
@@ -314,7 +314,7 @@ table {
 
 .table-scroll table th,
 .table-scroll table td {
-    border-bottom: 1px solid rgb(241, 245, 249);
+    border-bottom: 1px solid aliceblue;
 }
 
 .table-scroll table th:first-child,
@@ -322,12 +322,12 @@ table {
     position: sticky;
     left: 0;
     z-index: 2;
-    background: rgb(255, 255, 255);
+    background: white;
     box-shadow: 3px 0 6px rgba(0,0,0,0.08);
 }
 
 .table-scroll table th:first-child {
-    background: rgb(248, 250, 252);
+    background: ghostwhite;
     z-index: 3;
 }
 
@@ -344,11 +344,11 @@ th {
 
 td {
     padding: 10px 12px;
-    border-bottom: 1px solid rgb(241, 245, 249);
+    border-bottom: 1px solid aliceblue;
     transition: background 0.15s;
 }
 
-tr:hover td { background: rgb(248, 250, 252); }
+tr:hover td { background: ghostwhite; }
 
 /* ---- Stats grid ---- */
 .stats-grid {
@@ -425,7 +425,7 @@ a:hover { color: var(--primary-dark); }
     list-style: none;
     margin: 8px 0 0;
     padding: 10px 14px;
-    background: rgb(248, 250, 252);
+    background: ghostwhite;
     border: 1px solid var(--border);
     border-radius: 8px;
     font-size: 13px;
@@ -451,8 +451,8 @@ a:hover { color: var(--primary-dark); }
     .print-only { display: block; }
 
     html, body {
-        background: rgb(255, 255, 255) !important;
-        color: rgb(0, 0, 0);
+        background: white !important;
+        color: black;
         margin: 0 !important;
         padding: 0 !important;
         height: auto !important;
@@ -480,13 +480,13 @@ a:hover { color: var(--primary-dark); }
     }
 
     .card {
-        border: 1px solid rgb(204, 204, 204) !important;
+        border: 1px solid lightgray !important;
         box-shadow: none !important;
         break-inside: avoid;
         page-break-inside: avoid;
         transform: none !important;
         margin-top: 12px !important;
-        background: rgb(255, 255, 255) !important;
+        background: white !important;
         backdrop-filter: none !important;
     }
 

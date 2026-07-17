@@ -11,6 +11,7 @@
 $navbar_admin = true;
 $navbar_greeting = 'Hi, ' . $_SESSION['full_name'];
 $navbar_links = [
+    ['href' => 'admin_trash.php', 'text' => 'Trash'],
     ['href' => 'logout.php', 'text' => 'Logout'],
 ];
 include __DIR__ . '/partials/navbar.php';
@@ -106,7 +107,7 @@ include __DIR__ . '/partials/navbar.php';
                            style="color:var(--danger);font-size:13px;">Reset Password</a>
                         &nbsp;&nbsp;
                         <a href="admin_delete_student.php?id=<?= (int) $s['user_id'] ?>"
-                           style="color:var(--danger);font-size:13px;">Delete</a>
+                           style="color:var(--danger);font-size:13px;">Move to Trash</a>
                     </td>
                 </tr>
             <?php endforeach; ?>

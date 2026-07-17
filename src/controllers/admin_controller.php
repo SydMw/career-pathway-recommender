@@ -21,7 +21,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['retrain'])) {
 
 $totals = $pdo->query(
     'SELECT
-        (SELECT COUNT(*) FROM users WHERE role = "student") AS total_students,
+        (SELECT COUNT(*) FROM users WHERE role = "student" AND deleted_at IS NULL) AS total_students,
         (SELECT COUNT(*) FROM recommendations) AS total_recommendations'
 )->fetch();
 
@@ -40,6 +40,7 @@ $recent = $pdo->query(
      JOIN users u ON u.user_id = r.user_id
      JOIN pathways p ON p.pathway_id = r.pathway_id
      JOIN academic_records a ON a.record_id = r.record_id
+     WHERE u.deleted_at IS NULL
      ORDER BY r.created_at DESC
      LIMIT 50'
 )->fetchAll();
@@ -53,7 +54,7 @@ $students = $pdo->query(
         MAX(r.created_at) AS latest_submission_at
      FROM users u
      LEFT JOIN recommendations r ON r.user_id = u.user_id
-     WHERE u.role = "student"
+     WHERE u.role = "student" AND u.deleted_at IS NULL
      GROUP BY u.user_id, u.student_id, u.full_name, u.email, u.created_at
      ORDER BY u.created_at DESC'
 )->fetchAll();

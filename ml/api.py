@@ -180,6 +180,8 @@ def fetch_real_student_data() -> pd.DataFrame:
                 FROM academic_records a
                 JOIN recommendations r ON r.record_id = a.record_id
                 JOIN pathways p ON p.pathway_id = r.pathway_id
+                JOIN users u ON u.user_id = a.user_id
+                WHERE u.deleted_at IS NULL
                 """
             )
             rows = cur.fetchall()

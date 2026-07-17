@@ -22,7 +22,7 @@ include __DIR__ . '/partials/navbar.php';
         <a href="admin_reset_password.php?id=<?= (int) $student['user_id'] ?>"
            class="btn-secondary">Reset Student Password</a>
         <a href="admin_delete_student.php?id=<?= (int) $student['user_id'] ?>"
-           class="btn-danger">Delete Student</a>
+           class="btn-danger">Move to Trash</a>
     </div>
 
     <div id="report-content">

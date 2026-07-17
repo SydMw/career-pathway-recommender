@@ -14,7 +14,8 @@ CREATE TABLE users (
     role ENUM('student', 'admin') NOT NULL DEFAULT 'student',
     failed_login_attempts INT NOT NULL DEFAULT 0,
     locked_until TIMESTAMP NULL DEFAULT NULL,
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    deleted_at TIMESTAMP NULL DEFAULT NULL
 );
 
 -- Reference list of CBC pathways the model can predict

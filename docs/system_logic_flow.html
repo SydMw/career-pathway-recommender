@@ -1,0 +1,397 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>System Logic Flow — Career Pathway Recommender</title>
+<style>
+  :root{
+    --bg:#eef1ec; --surface:#ffffff; --surface-2:#e4e8e1;
+    --ink:#1c2321; --ink-soft:#4b554f; --border:#cbd2c7;
+    --accent:#1f5e52; --accent-soft:#dceae6;
+    --warn:#9c4a1d; --warn-soft:#f3e3d6;
+    --danger:#8c2f2a; --danger-soft:#f5e1de;
+    --purple:#5c4d8c; --purple-soft:#e7e2f3;
+    --font-display: Georgia, 'Iowan Old Style', 'Palatino Linotype', 'Book Antiqua', serif;
+    --font-body: -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+    --font-mono: 'SF Mono', 'Cascadia Code', Consolas, 'Liberation Mono', monospace;
+  }
+  @media (prefers-color-scheme: dark){
+    :root{
+      --bg:#12181a; --surface:#1b2326; --surface-2:#212b2e;
+      --ink:#e7ece9; --ink-soft:#a9b6b0; --border:#33403f;
+      --accent:#5fbfa9; --accent-soft:#1e3630;
+      --warn:#e1976a; --warn-soft:#3a2a1d;
+      --danger:#e08078; --danger-soft:#3a211f;
+      --purple:#b3a4e0; --purple-soft:#2c2740;
+    }
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    font-family:var(--font-body); color:var(--ink); background:var(--bg);
+    margin:0; padding:0 0 3rem; line-height:1.6;
+  }
+  .wrap{max-width:860px; margin:0 auto; padding:0 1.25rem;}
+
+  header.top{padding:2.25rem 0 1.25rem;}
+  .eyebrow{
+    font-family:var(--font-mono); font-size:12px; letter-spacing:.06em;
+    text-transform:uppercase; color:var(--accent); margin:0 0 .5rem;
+  }
+  h1{
+    font-family:var(--font-display); font-weight:400; font-size:28px;
+    margin:0 0 .35rem; text-wrap:balance; color:var(--ink);
+  }
+  .sub{color:var(--ink-soft); font-size:14.5px; margin:0; max-width:62ch;}
+
+  .lifecycle{
+    display:flex; flex-wrap:wrap; align-items:center; gap:6px;
+    margin:1.75rem 0; font-family:var(--font-mono); font-size:12px;
+  }
+  .lifecycle .node{
+    background:var(--surface); border:0.5px solid var(--border); border-radius:8px;
+    padding:6px 10px; color:var(--ink-soft);
+  }
+  .lifecycle .arrow{color:var(--border);}
+
+  nav.jump{
+    display:flex; flex-wrap:wrap; gap:8px; margin:0 0 2.25rem;
+  }
+  nav.jump a{
+    font-family:var(--font-mono); font-size:12.5px; color:var(--ink-soft);
+    text-decoration:none; border:0.5px solid var(--border); border-radius:100px;
+    padding:5px 12px; background:var(--surface);
+  }
+  nav.jump a:hover{border-color:var(--accent); color:var(--accent);}
+
+  section.step{
+    background:var(--surface); border:0.5px solid var(--border);
+    border-radius:12px; padding:1.4rem 1.5rem; margin-bottom:1rem;
+    scroll-margin-top:1rem;
+  }
+  .step-head{display:flex; align-items:baseline; gap:.6rem; margin-bottom:.35rem;}
+  .step-num{
+    font-family:var(--font-mono); font-size:12px; color:var(--accent);
+    background:var(--accent-soft); border-radius:6px; padding:2px 7px;
+  }
+  .step-title{
+    font-family:var(--font-display); font-size:19px; margin:0;
+    text-wrap:balance;
+  }
+  .step-sub{color:var(--ink-soft); font-size:13.5px; margin:.15rem 0 0;}
+
+  .chain{
+    display:flex; flex-wrap:wrap; align-items:center; gap:6px;
+    margin:1rem 0; font-family:var(--font-mono); font-size:12.5px;
+  }
+  .chain .f{
+    background:var(--surface-2); border-radius:6px; padding:3px 9px; color:var(--ink);
+  }
+  .chain .f.ctl{ color:var(--accent); }
+  .chain .f.ext{ color:var(--purple); background:var(--purple-soft); }
+  .chain .sep{color:var(--ink-soft);}
+
+  p.body{font-size:14.5px; margin:.75rem 0;}
+  p.body:first-of-type{margin-top:0;}
+
+  pre{
+    font-family:var(--font-mono); font-size:12.5px; line-height:1.6;
+    background:var(--surface-2); border:0.5px solid var(--border);
+    border-radius:8px; padding:.85rem 1rem; margin:.9rem 0 0;
+    overflow-x:auto; white-space:pre;
+  }
+
+  h2.section-title{
+    font-family:var(--font-display); font-weight:400; font-size:21px;
+    margin:2.5rem 0 1rem; color:var(--ink); text-wrap:balance;
+  }
+
+  .tablewrap{overflow-x:auto; border:0.5px solid var(--border); border-radius:12px;}
+  table{width:100%; border-collapse:collapse; font-size:13.5px; background:var(--surface);}
+  th,td{text-align:left; padding:.6rem .9rem; border-bottom:0.5px solid var(--border); vertical-align:top;}
+  th{font-size:11.5px; text-transform:uppercase; letter-spacing:.03em; color:var(--ink-soft); font-weight:600; background:var(--surface-2); white-space:nowrap;}
+  tr:last-child td{border-bottom:none;}
+  td .path{font-family:var(--font-mono); font-size:12.5px; color:var(--accent); background:var(--accent-soft); padding:1px 6px; border-radius:4px; white-space:nowrap;}
+
+  .path{font-family:var(--font-mono); font-size:13px; color:var(--accent); background:var(--accent-soft); padding:1px 6px; border-radius:4px;}
+
+  footer.note{
+    margin-top:2.5rem; padding-top:1.25rem; border-top:0.5px solid var(--border);
+    font-size:13px; color:var(--ink-soft);
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header class="top">
+    <p class="eyebrow">Career Pathway Recommender — architecture reference</p>
+    <h1>System logic flow</h1>
+    <p class="sub">Every request the same way: page in <span class="path">public/</span> requires its controller, the controller does the thinking, the page renders what the controller decided. This traces that chain end to end, in the order things actually run.</p>
+  </header>
+
+  <div class="lifecycle">
+    <span class="node">Browser request</span><span class="arrow">→</span>
+    <span class="node">public/*.php (view)</span><span class="arrow">→</span>
+    <span class="node">require src/controllers/*_controller.php</span><span class="arrow">→</span>
+    <span class="node">config/ (db, session, helpers)</span><span class="arrow">→</span>
+    <span class="node">MySQL + Flask :5001</span><span class="arrow">→</span>
+    <span class="node">variables set</span><span class="arrow">→</span>
+    <span class="node">view renders HTML</span>
+  </div>
+
+  <nav class="jump">
+    <a href="#s0">0 · Entry</a>
+    <a href="#s1">1 · Register</a>
+    <a href="#s2">2 · Login</a>
+    <a href="#s3">3 · Session guard</a>
+    <a href="#s4">4 · Recommendation</a>
+    <a href="#s5">5 · Feedback</a>
+    <a href="#s6">6 · Profile edit</a>
+    <a href="#s7">7 · Admin dashboard</a>
+    <a href="#s8">8 · Delete / trash</a>
+    <a href="#s9">9 · Reset password</a>
+    <a href="#s10">10 · Reports</a>
+    <a href="#s11">11 · Logout / timeout</a>
+    <a href="#s12">12 · Training pipeline</a>
+    <a href="#config">Shared config</a>
+  </nav>
+
+  <section class="step" id="s0">
+    <div class="step-head"><span class="step-num">0</span><h3 class="step-title">Entry point</h3></div>
+    <p class="step-sub">Anonymous visitor lands on the site</p>
+    <div class="chain"><span class="f">index.php</span><span class="sep">requires</span><span class="f">session.php</span></div>
+    <p class="body">Just enough logic to redirect someone who's already logged in straight to their dashboard; everyone else sees the landing page with Login / Register links.</p>
+    <pre>if (!empty($_SESSION['user_id'])) {
+    header('Location: ' . ($_SESSION['role'] === 'admin' ? 'admin_dashboard.php' : 'student_dashboard.php'));
+    exit;
+}</pre>
+  </section>
+
+  <section class="step" id="s1">
+    <div class="step-head"><span class="step-num">1</span><h3 class="step-title">Registration</h3></div>
+    <p class="step-sub">New student creates an account</p>
+    <div class="chain">
+      <span class="f">register.php</span><span class="sep">→ require →</span>
+      <span class="f ctl">register_controller.php</span><span class="sep">→ requires →</span>
+      <span class="f">db.php</span><span class="f">session.php</span><span class="f">helpers.php</span>
+    </div>
+    <p class="body">Validates name/email/password (shared <span class="path">validate_password_strength()</span>), checks the email isn't taken, hashes the password, generates a student ID like <span class="path">STU-2026-0001</span> via <span class="path">generate_student_id()</span>, inserts the row, then logs the student straight in.</p>
+    <pre>$hash = password_hash($password, PASSWORD_DEFAULT);
+$student_id = generate_student_id($pdo);
+$pdo->prepare('INSERT INTO users (student_id, full_name, email, password_hash, role)
+               VALUES (?, ?, ?, ?, ?)')->execute([$student_id, $full_name, $email, $hash, 'student']);
+
+$_SESSION['user_id'] = (int) $pdo->lastInsertId();
+$_SESSION['role'] = 'student';
+header('Location: student_dashboard.php');</pre>
+  </section>
+
+  <section class="step" id="s2">
+    <div class="step-head"><span class="step-num">2</span><h3 class="step-title">Login</h3></div>
+    <p class="step-sub">Returning user signs in</p>
+    <div class="chain">
+      <span class="f">login.php</span><span class="sep">→ require →</span>
+      <span class="f ctl">login_controller.php</span><span class="sep">→ requires →</span>
+      <span class="f">db.php</span><span class="f">session.php</span>
+    </div>
+    <p class="body">Looks up the email (excluding soft-deleted accounts), checks a lockout timestamp first, then verifies the password. Five wrong attempts locks the account for 5 minutes — tracked with plain columns on <span class="path">users</span>, not a session or cache.</p>
+    <pre>if ($user && $locked_until_ts && $locked_until_ts > time()) {
+    $error = "Too many failed attempts. Try again in $minutes_left minute(s).";
+} elseif (!password_verify($password, $user['password_hash'])) {
+    $attempts = $user['failed_login_attempts'] + 1;
+    if ($attempts >= MAX_FAILED_ATTEMPTS) { /* set locked_until = now + 5 min */ }
+} else {
+    $_SESSION['user_id'] = $user['user_id'];
+    $_SESSION['role'] = $user['role'];
+    header('Location: ' . ($user['role'] === 'admin' ? 'admin_dashboard.php' : 'student_dashboard.php'));
+}</pre>
+  </section>
+
+  <section class="step" id="s3">
+    <div class="step-head"><span class="step-num">3</span><h3 class="step-title">Session guard — runs on every single request after login</h3></div>
+    <p class="step-sub">src/config/session.php</p>
+    <p class="body">Every controller requires this file before doing anything else. Three jobs, in order: start (or resume) the PHP session; check whether the logged-in user has been idle past <span class="path">SESSION_TIMEOUT_SECONDS</span> (600s) and force them out if so; then refresh the activity timestamp for this request. <span class="path">require_login()</span> / <span class="path">require_role('admin')</span> are called explicitly by whichever controller needs them, and <span class="path">require_csrf()</span> guards every POST.</p>
+    <pre>if (!empty($_SESSION['user_id']) && !empty($_SESSION['last_activity'])
+    && (time() - $_SESSION['last_activity']) > SESSION_TIMEOUT_SECONDS) {
+    session_unset(); session_destroy(); session_start();
+    $_SESSION['timeout_message'] = 'You were logged out after 10 minutes of inactivity...';
+    header('Location: login.php'); exit;
+}
+$_SESSION['last_activity'] = time();</pre>
+  </section>
+
+  <section class="step" id="s4">
+    <div class="step-head"><span class="step-num">4</span><h3 class="step-title">Submit scores → get a recommendation</h3></div>
+    <p class="step-sub">The core feature — FR4/FR5/FR6</p>
+    <div class="chain">
+      <span class="f">student_dashboard.php</span><span class="sep">→ require →</span>
+      <span class="f ctl">student_controller.php</span><span class="sep">→ requires →</span>
+      <span class="f">db.php</span><span class="f">session.php</span><span class="f">ml_client.php</span><span class="f">helpers.php</span><span class="f">constants.php</span>
+    </div>
+    <p class="body">Five subject scores + an interest are validated against <span class="path">SUBJECTS</span> / <span class="path">ALLOWED_INTERESTS</span> (constants.php), then it's a strict three-step sequence:</p>
+    <pre>// 1. Save the raw submission
+INSERT INTO academic_records (user_id, math_score, ..., interests) VALUES (...);
+$record_id = $pdo->lastInsertId();
+
+// 2. Ask the ML service for a prediction (HTTP call, see below)
+$prediction = get_recommendation(['math_score' => ..., 'interest' => $interest]);
+
+// 3. Save the result, linked back to the submission that produced it
+INSERT INTO recommendations (user_id, record_id, pathway_id, confidence, explanation, model_used)
+VALUES (?, ?, ?, ?, ?, ?);</pre>
+    <p class="body"><span class="path">get_recommendation()</span> in <span class="path">ml_client.php</span> is a plain cURL POST to the Flask service:</p>
+    <div class="chain">
+      <span class="f">ml_client.php</span><span class="sep">→ HTTP POST →</span>
+      <span class="f ext">ml/api.py :: /predict</span><span class="sep">→ loads →</span>
+      <span class="f ext">ml/model/*.joblib</span>
+    </div>
+    <p class="body">Inside Flask: the Decision Tree scores the student's own profile (content-based), a KNN model scores what similar peers in the training set ended up choosing (collaborative), and the two are blended 70/30.</p>
+    <pre>content_proba = model.predict_proba(row)[0]                    # Decision Tree
+collab_proba  = collab_knn.predict_proba(row_scaled)[0]         # peer KNN
+blended = 0.7 * content_proba + 0.3 * collab_proba
+predicted_pathway = label_encoder.inverse_transform([argmax(blended)])[0]</pre>
+    <p class="body">Flask returns pathway + confidence + a plain-English explanation (which subject area drove it, whether stated interest matched) back over HTTP as JSON; PHP decodes it and runs step 3 above.</p>
+  </section>
+
+  <section class="step" id="s5">
+    <div class="step-head"><span class="step-num">5</span><h3 class="step-title">Rate a recommendation</h3></div>
+    <p class="step-sub">Same controller as step 4, separate POST branch</p>
+    <p class="body">A 1–5 rating with an optional comment, checked against ownership first (<span class="path">WHERE recommendation_id = ? AND user_id = ?</span>) so a student can't rate someone else's result, then inserted into <span class="path">feedback</span> — a real quality signal, independent of the model's own confidence score.</p>
+  </section>
+
+  <section class="step" id="s6">
+    <div class="step-head"><span class="step-num">6</span><h3 class="step-title">Edit profile</h3></div>
+    <p class="step-sub">Name, email, optional password change</p>
+    <div class="chain">
+      <span class="f">student_profile.php</span><span class="sep">→ require →</span>
+      <span class="f ctl">student_profile_controller.php</span><span class="sep">→ requires →</span>
+      <span class="f">db.php</span><span class="f">session.php</span><span class="f">helpers.php</span>
+    </div>
+    <p class="body">Name/email update on their own; a password change additionally requires the current password to <span class="path">password_verify()</span> correctly before <span class="path">validate_password_strength()</span> even runs — same helper function used at registration and admin reset.</p>
+  </section>
+
+  <section class="step" id="s7">
+    <div class="step-head"><span class="step-num">7</span><h3 class="step-title">Admin dashboard + retrain</h3></div>
+    <p class="step-sub">FR7 (visibility) / FR8 (retraining)</p>
+    <div class="chain">
+      <span class="f">admin_dashboard.php</span><span class="sep">→ require →</span>
+      <span class="f ctl">admin_controller.php</span><span class="sep">→ requires →</span>
+      <span class="f">db.php</span><span class="f">session.php</span><span class="f">ml_client.php</span><span class="f">helpers.php</span>
+    </div>
+    <p class="body">On GET: five queries build the whole page — totals, breakdown by pathway, 50 most recent recommendations, the full student roster (left-joined so students with zero submissions still show up), and a PHP-side pass to find each student's <em>latest</em> pathway (avoids a fragile correlated subquery).</p>
+    <p class="body">On POST (<span class="path">retrain</span>): calls <span class="path">trigger_retrain()</span> → Flask <span class="path">/retrain</span>, which blends the synthetic baseline CSV with real accumulated submissions, re-trains all three models, and hot-swaps them into the running Flask process.</p>
+    <pre># ml/api.py :: /retrain
+baseline = pd.read_csv("ml/data/students.csv")
+real_data = fetch_real_student_data()          # academic_records + recommendations, real users only
+combined = pd.concat([baseline, real_data])
+results = train_and_save(combined)             # ml/train_model.py
+reload_models()                                # swaps the in-memory model without restarting Flask</pre>
+  </section>
+
+  <section class="step" id="s8">
+    <div class="step-head"><span class="step-num">8</span><h3 class="step-title">Delete / trash / restore a student</h3></div>
+    <p class="step-sub">Soft delete, 30-day recovery window</p>
+    <div class="chain">
+      <span class="f">admin_delete_student.php</span><span class="sep">→</span>
+      <span class="f ctl">admin_delete_student_controller.php</span><span class="sep">·</span>
+      <span class="f">admin_trash.php</span><span class="sep">→</span>
+      <span class="f ctl">admin_trash_controller.php</span>
+    </div>
+    <p class="body">Delete requires typing the student's full name to confirm, then just sets a timestamp — no row is removed:</p>
+    <pre>UPDATE users SET deleted_at = NOW() WHERE user_id = ? AND role = ?</pre>
+    <p class="body">Every query elsewhere in the system filters <span class="path">WHERE deleted_at IS NULL</span>, so a trashed student vanishes from login, the roster, dashboard totals, and the retrain pool without their data actually being gone. Restore just sets it back to <span class="path">NULL</span>.</p>
+  </section>
+
+  <section class="step" id="s9">
+    <div class="step-head"><span class="step-num">9</span><h3 class="step-title">Admin resets a student's password</h3></div>
+    <div class="chain">
+      <span class="f">admin_reset_password.php</span><span class="sep">→ require →</span>
+      <span class="f ctl">admin_reset_password_controller.php</span>
+    </div>
+    <p class="body">Same <span class="path">validate_password_strength()</span> helper, then clears the lockout state along with setting the new hash — so a reset also un-sticks anyone who got locked out.</p>
+    <pre>UPDATE users SET password_hash = ?, failed_login_attempts = 0, locked_until = NULL WHERE user_id = ?</pre>
+  </section>
+
+  <section class="step" id="s10">
+    <div class="step-head"><span class="step-num">10</span><h3 class="step-title">Printable reports</h3></div>
+    <div class="chain">
+      <span class="f">admin_student_report.php</span><span class="sep">·</span>
+      <span class="f">admin_pathway_report.php</span>
+    </div>
+    <p class="body">Two read-only views: one student's full recommendation history, or one pathway's aggregate stats (average scores + confidence across everyone recommended into it). Both are plain GET pages with an <span class="path">?id=</span> / <span class="path">?pathway=</span> query param, no state changes.</p>
+  </section>
+
+  <section class="step" id="s11">
+    <div class="step-head"><span class="step-num">11</span><h3 class="step-title">Logout, and the inactivity timeout</h3></div>
+    <div class="chain">
+      <span class="f">logout.php</span><span class="sep">·</span>
+      <span class="f">partials/navbar.php</span><span class="sep">→ fetch →</span>
+      <span class="f">keep_alive.php</span>
+    </div>
+    <p class="body">Manual logout just destroys the session. The navbar (included on every authenticated page) also carries a client-side countdown: in the last 60 seconds before the 10-minute mark it shows a "stay signed in" banner; clicking it pings <span class="path">keep_alive.php</span>, which is nothing but a re-include of <span class="path">session.php</span> — the same refresh that happens on every normal page load. If nothing's clicked, the page sends itself to <span class="path">logout.php</span> when the clock hits zero.</p>
+  </section>
+
+  <section class="step" id="s12">
+    <div class="step-head"><span class="step-num">12</span><h3 class="step-title">Training pipeline — where the models in step 4 and step 7 actually come from</h3></div>
+    <p class="step-sub">ml/features.py + ml/train_model.py</p>
+    <div class="chain">
+      <span class="f ext">train_model.py</span><span class="sep">imports</span>
+      <span class="f ext">features.py</span><span class="sep">·</span>
+      <span class="f ext">api.py</span><span class="sep">imports</span>
+      <span class="f ext">features.py</span>
+    </div>
+    <p class="body"><span class="path">features.py</span> is nothing but a six-item list — but it's the thing that keeps training and prediction from silently drifting apart. Both files build a row in exactly this column order; if one ever reordered it independently, the model would still run, just score every prediction against the wrong columns.</p>
+    <pre>FEATURES = ["math_score", "english_score", "science_score",
+            "humanities_score", "creative_arts_score", "interest_encoded"]</pre>
+    <p class="body"><span class="path">load_data()</span> turns the raw CSV (or a blended DataFrame, when called from <span class="path">/retrain</span>) into model-ready arrays: interests and pathways are text, so each gets its own <span class="path">LabelEncoder</span> — the same two encoder objects get saved and reused at prediction time, so <span class="path">"technology"</span> always maps to the same integer.</p>
+    <pre>interest_encoder = LabelEncoder()
+df["interest_encoded"] = interest_encoder.fit_transform(df["interest"])
+label_encoder = LabelEncoder()
+df["pathway_encoded"] = label_encoder.fit_transform(df["pathway"])
+X = df[FEATURES]           # the 6 columns, in the exact order above
+y = df["pathway_encoded"]</pre>
+    <p class="body"><span class="path">train_and_save()</span> does an 80/20 stratified split, then trains three classifiers side by side purely to compare them — accuracy, macro precision/recall/F1, and 5-fold cross-validation for each, written to <span class="path">ml/model/metrics.json</span> (the file that shows as changed after every retrain).</p>
+    <pre>dt  = DecisionTreeClassifier(max_depth=6, min_samples_leaf=10, random_state=42)
+rf  = RandomForestClassifier(n_estimators=200, max_depth=10, random_state=42)
+knn = KNeighborsClassifier(n_neighbors=9)
+
+for name, model in [("Decision Tree", dt), ("Random Forest", rf), ("KNN", knn)]:
+    model.fit(X_train, y_train)
+    acc, report = evaluate(name, model, X_test, y_test, label_encoder)
+    cv_scores = cross_val_score(model, X, y, cv=5)</pre>
+    <p class="body">Only the Decision Tree gets deployed — shallow on purpose (<span class="path">max_depth=6</span>) so its decision path stays readable enough to explain to a student, per FR5. The Random Forest and this first KNN never leave <span class="path">metrics.json</span>; they exist purely as a "how would a fancier model have done" comparison for the report.</p>
+    <pre>joblib.dump(dt, "ml/model/decision_tree.joblib")
+joblib.dump(interest_encoder, "ml/model/interest_encoder.joblib")
+joblib.dump(label_encoder, "ml/model/label_encoder.joblib")</pre>
+    <p class="body">A second, separate KNN is then built — this is the one that actually runs live in every prediction (the "collaborative" half of the blend back in step 4). It's trained on the <em>full</em> dataset rather than the 80% training split, and on <span class="path">StandardScaler</span>-scaled features rather than raw scores, so no single subject's scale dominates distance calculations. Don't confuse it with the benchmark KNN above — same algorithm, different job, different neighbor count.</p>
+    <pre>scaler = StandardScaler()
+X_scaled = scaler.fit_transform(X)
+collab_knn = KNeighborsClassifier(n_neighbors=25)   # "the 25 most similar students"
+collab_knn.fit(X_scaled, y)
+joblib.dump(scaler, "ml/model/collab_scaler.joblib")
+joblib.dump(collab_knn, "ml/model/collab_knn.joblib")</pre>
+    <p class="body">Two ways this function gets called: directly as <span class="path">python ml/train_model.py</span> (the <span class="path">if __name__ == "__main__"</span> guard, no arguments, always trains on the synthetic CSV) — or from inside Flask's <span class="path">/retrain</span> route in step 7, passed the synthetic-plus-real blended DataFrame instead. Same function, same five saved <span class="path">.joblib</span> files, different input.</p>
+  </section>
+
+  <h2 class="section-title" id="config">Shared config layer</h2>
+  <p class="body" style="margin-top:-0.5rem;">Every controller pulls from these — nothing above duplicates this logic, it's required fresh each time.</p>
+  <div class="tablewrap">
+    <table>
+      <tr><th>File</th><th>Responsibility</th></tr>
+      <tr><td class="path">config/db.php</td><td>Opens the one PDO connection ($pdo), used by every controller that touches MySQL.</td></tr>
+      <tr><td class="path">config/session.php</td><td>Session start, inactivity timeout check, require_login(), require_role(), CSRF token + verification.</td></tr>
+      <tr><td class="path">config/helpers.php</td><td>pathway_badge_class(), validate_password_strength(), generate_student_id() — small cross-cutting logic shared by 2+ controllers.</td></tr>
+      <tr><td class="path">config/ml_client.php</td><td>get_recommendation() and trigger_retrain() — the only two places PHP ever talks to Flask, both plain cURL.</td></tr>
+      <tr><td class="path">config/constants.php</td><td>SUBJECTS and ALLOWED_INTERESTS — one source of truth shared by the form (student_dashboard.php) and its validation (student_controller.php).</td></tr>
+    </table>
+  </div>
+
+  <footer class="note">
+    <span class="path">ml/api.py</span> is the Flask process itself (port 5001, started by <span class="path">start_ml.bat</span>) — step 12 covers what actually produces the <span class="path">.joblib</span> files it loads.
+  </footer>
+
+</div>
+</body>
+</html>

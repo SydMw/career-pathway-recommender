@@ -370,13 +370,6 @@ tr:hover td { background: ghostwhite; }
     background-clip: text;
 }
 
-/* ---- Form row ---- */
-.form-row {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 16px;
-}
-
 /* ---- Misc ---- */
 .muted { color: var(--muted); font-size: 13px; }
 a { color: var(--primary); }

@@ -199,6 +199,28 @@ button:active, .btn:active { transform: translateY(0); }
     transition: background 0.2s, color 0.2s, transform 0.15s;
 }
 
+.btn-danger {
+    background: white;
+    color: var(--danger);
+    border: 2px solid var(--danger);
+    padding: 9px 20px;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    margin-top: 20px;
+    margin-left: 16px;
+    text-decoration: none;
+    display: inline-block;
+    transition: background 0.2s, color 0.2s, transform 0.15s;
+}
+
+.btn-danger:hover {
+    background: var(--danger);
+    color: white;
+    transform: translateY(-1px);
+}
+
 .btn-secondary:hover {
     background: var(--primary);
     color: white;

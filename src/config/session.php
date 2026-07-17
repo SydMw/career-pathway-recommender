@@ -1,7 +1,23 @@
 <?php
+const SESSION_TIMEOUT_SECONDS = 600; // log out after 10 minutes of inactivity
+
 if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
+
+// Logged-in users are timed out after a period of inactivity; anonymous
+// visitors (login/register pages) are untouched since they have no
+// last_activity to check yet.
+if (!empty($_SESSION['user_id']) && !empty($_SESSION['last_activity'])
+    && (time() - $_SESSION['last_activity']) > SESSION_TIMEOUT_SECONDS) {
+    session_unset();
+    session_destroy();
+    session_start();
+    $_SESSION['timeout_message'] = 'You were logged out after 10 minutes of inactivity. Please sign in again.';
+    header('Location: /career_system/public/login.php');
+    exit;
+}
+$_SESSION['last_activity'] = time();
 
 function require_login(): void
 {

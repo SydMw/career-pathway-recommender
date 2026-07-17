@@ -12,11 +12,6 @@
     --danger-bg: mistyrose;
     --success-bg: honeydew;
     --success-border: paleturquoise;
-
-    /* pathway accent colours */
-    --stem: royalblue;
-    --social: seagreen;
-    --arts: peru;
 }
 
 * { box-sizing: border-box; margin: 0; padding: 0; }

@@ -411,6 +411,27 @@ a:hover { color: var(--primary-dark); }
     font-size: 13px;
 }
 
+/* ---- Session timeout warning ---- */
+.session-warning {
+    display: none;
+    background: cornsilk;
+    color: chocolate;
+    border-bottom: 1px solid burlywood;
+    padding: 10px 24px;
+    font-size: 13.5px;
+    align-items: center;
+    justify-content: center;
+    gap: 14px;
+}
+
+.session-warning.visible { display: flex; }
+
+.session-warning button {
+    margin: 0;
+    padding: 6px 16px;
+    font-size: 13px;
+}
+
 /* ---- Password rules checklist ---- */
 .password-rules {
     list-style: none;

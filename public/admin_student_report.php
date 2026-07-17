@@ -21,6 +21,8 @@ include __DIR__ . '/partials/navbar.php';
         <button type="button" onclick="window.print()">Print or Save as PDF</button>
         <a href="admin_reset_password.php?id=<?= (int) $student['user_id'] ?>"
            class="btn-secondary">Reset Student Password</a>
+        <a href="admin_delete_student.php?id=<?= (int) $student['user_id'] ?>"
+           style="color:var(--danger);margin-left:16px;">Delete Student</a>
     </div>
 
     <div id="report-content">
@@ -30,6 +32,7 @@ include __DIR__ . '/partials/navbar.php';
         <div class="card">
             <h2><?= htmlspecialchars($student['full_name']) ?></h2>
             <table>
+                <tr><th>Student ID</th><td><?= htmlspecialchars($student['student_id'] ?? '—') ?></td></tr>
                 <tr><th>Email</th><td><?= htmlspecialchars($student['email']) ?></td></tr>
                 <tr><th>Member since</th><td><?= date('j F Y', strtotime($student['created_at'])) ?></td></tr>
                 <tr><th>Total Submissions</th><td><?= count($history) ?></td></tr>

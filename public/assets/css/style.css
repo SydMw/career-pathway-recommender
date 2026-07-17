@@ -25,16 +25,11 @@ body {
     font-family: 'Segoe UI', Arial, sans-serif;
     color: var(--text);
     min-height: 100vh;
-    background:
-        linear-gradient(rgba(15, 40, 30, 0.72), rgba(15, 40, 30, 0.72)),
-        url('../images/mku_campus.jpg') center center / cover fixed no-repeat;
+    background: var(--bg);
 }
 
-/* Cards sit on a frosted white surface so text stays readable over the photo */
 .card, .auth-card, .stat-box {
-    background: rgba(255, 255, 255, 0.94);
-    backdrop-filter: blur(6px);
-    -webkit-backdrop-filter: blur(6px);
+    background: var(--card-bg);
 }
 
 /* ---- Navbar ---- */

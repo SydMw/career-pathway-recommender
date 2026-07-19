@@ -150,10 +150,10 @@
     <a href="#s5">5 · Feedback</a>
     <a href="#s6">6 · Profile edit</a>
     <a href="#s7">7 · Admin dashboard</a>
-    <a href="#s8">8 · Delete / trash</a>
+    <a href="#s8">8 · Delete student</a>
     <a href="#s9">9 · Reset password</a>
     <a href="#s10">10 · Reports</a>
-    <a href="#s11">11 · Logout / timeout</a>
+    <a href="#s11">11 · Logout</a>
     <a href="#s12">12 · Training pipeline</a>
     <a href="#config">Shared config</a>
   </nav>
@@ -196,7 +196,7 @@ header('Location: student_dashboard.php');</pre>
       <span class="f ctl">login_controller.php</span><span class="sep">→ requires →</span>
       <span class="f">db.php</span><span class="f">session.php</span>
     </div>
-    <p class="body">Looks up the email (excluding soft-deleted accounts), checks a lockout timestamp first, then verifies the password. Five wrong attempts locks the account for 5 minutes — tracked with plain columns on <span class="path">users</span>, not a session or cache.</p>
+    <p class="body">Looks up the email, checks a lockout timestamp first, then verifies the password. Five wrong attempts locks the account for 5 minutes — tracked with plain columns on <span class="path">users</span>, not a session or cache.</p>
     <pre>if ($user && $locked_until_ts && $locked_until_ts > time()) {
     $error = "Too many failed attempts. Try again in $minutes_left minute(s).";
 } elseif (!password_verify($password, $user['password_hash'])) {

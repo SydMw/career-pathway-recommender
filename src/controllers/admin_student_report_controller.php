@@ -23,7 +23,7 @@ if (!$student) {
 $history_stmt = $pdo->prepare(
     'SELECT r.confidence, r.explanation, r.created_at, r.model_used, p.name AS pathway,
         a.math_score, a.english_score, a.science_score, a.humanities_score,
-        a.creative_arts_score, a.interests
+        a.creative_arts_score, a.interest
      FROM recommendations r
      JOIN pathways p ON p.pathway_id = r.pathway_id
      JOIN academic_records a ON a.record_id = r.record_id

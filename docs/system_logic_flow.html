@@ -228,7 +228,7 @@ header('Location: student_dashboard.php');</pre>
     </div>
     <p class="body">Five subject scores + an interest are validated against <span class="path">SUBJECTS</span> / <span class="path">ALLOWED_INTERESTS</span> (constants.php), then it's a strict three-step sequence:</p>
     <pre>// 1. Save the raw submission
-INSERT INTO academic_records (user_id, math_score, ..., interests) VALUES (...);
+INSERT INTO academic_records (user_id, math_score, ..., interest) VALUES (...);
 $record_id = $pdo->lastInsertId();
 
 // 2. Ask the ML service for a prediction (HTTP call, see below)

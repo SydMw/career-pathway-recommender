@@ -73,7 +73,7 @@ include __DIR__ . '/partials/navbar.php';
                             <td><?= htmlspecialchars($r['science_score']) ?></td>
                             <td><?= htmlspecialchars($r['humanities_score']) ?></td>
                             <td><?= htmlspecialchars($r['creative_arts_score']) ?></td>
-                            <td><?= htmlspecialchars(ucfirst($r['interests'])) ?></td>
+                            <td><?= htmlspecialchars(ucfirst($r['interest'])) ?></td>
                             <td style="white-space:nowrap;"><?= date('j M Y, H:i', strtotime($r['created_at'])) ?></td>
                         </tr>
                     <?php endforeach; ?>

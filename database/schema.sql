@@ -1,10 +1,6 @@
--- AI-Powered Career and Pathway Recommendation System
--- Database schema (MySQL)
-
 CREATE DATABASE IF NOT EXISTS career_system CHARACTER SET utf8mb4;
 USE career_system;
 
--- D1: User Accounts
 CREATE TABLE users (
     user_id INT AUTO_INCREMENT PRIMARY KEY,
     student_id VARCHAR(20) UNIQUE,
@@ -38,7 +34,7 @@ CREATE TABLE academic_records (
     science_score DECIMAL(5,2) NOT NULL,
     humanities_score DECIMAL(5,2) NOT NULL,
     creative_arts_score DECIMAL(5,2) NOT NULL,
-    interests VARCHAR(255) NOT NULL COMMENT 'comma separated interest tags',
+    interest VARCHAR(255) NOT NULL COMMENT 'the student''s single selected interest category (e.g. technology, science, business, arts, sports, humanities)',
     submitted_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY (user_id) REFERENCES users(user_id) ON DELETE CASCADE
 );

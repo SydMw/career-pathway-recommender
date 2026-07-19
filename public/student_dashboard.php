@@ -115,7 +115,7 @@ include __DIR__ . '/partials/navbar.php';
                         <span class="badge <?= $bc ?>"><?= htmlspecialchars($h['pathway']) ?></span>
                         &nbsp;<?= htmlspecialchars($h['confidence']) ?>% confidence
                     </h3>
-                    <p class="muted" style="margin-top:6px;"><?= date('j F Y \a\t H:i', strtotime($h['created_at'])) ?> &nbsp;&bull;&nbsp; Interest: <?= htmlspecialchars(ucfirst($h['interests'])) ?></p>
+                    <p class="muted" style="margin-top:6px;"><?= date('j F Y \a\t H:i', strtotime($h['created_at'])) ?> &nbsp;&bull;&nbsp; Interest: <?= htmlspecialchars(ucfirst($h['interest'])) ?></p>
                     <p style="margin-top:8px;"><?= htmlspecialchars($h['explanation']) ?></p>
                     <table>
                         <tr>

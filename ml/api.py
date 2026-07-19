@@ -175,7 +175,7 @@ def fetch_real_student_data() -> pd.DataFrame:
             cur.execute(
                 """
                 SELECT a.math_score, a.english_score, a.science_score,
-                       a.humanities_score, a.creative_arts_score, a.interests AS interest,
+                       a.humanities_score, a.creative_arts_score, a.interest,
                        p.name AS pathway
                 FROM academic_records a
                 JOIN recommendations r ON r.record_id = a.record_id

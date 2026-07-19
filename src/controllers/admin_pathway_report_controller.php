@@ -22,7 +22,7 @@ if (!$pathway) {
 $recs_stmt = $pdo->prepare(
     'SELECT u.full_name, u.email, r.confidence, r.created_at,
         a.math_score, a.english_score, a.science_score, a.humanities_score,
-        a.creative_arts_score, a.interests
+        a.creative_arts_score, a.interest
      FROM recommendations r
      JOIN users u ON u.user_id = r.user_id
      JOIN academic_records a ON a.record_id = r.record_id

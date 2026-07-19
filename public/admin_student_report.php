@@ -54,7 +54,7 @@ include __DIR__ . '/partials/navbar.php';
                         </h3>
                         <p class="muted" style="margin-top:6px;">
                             <?= date('j F Y \a\t H:i', strtotime($h['created_at'])) ?> &nbsp;&bull;&nbsp;
-                            Interest: <?= htmlspecialchars(ucfirst($h['interests'])) ?>
+                            Interest: <?= htmlspecialchars(ucfirst($h['interest'])) ?>
                         </p>
                         <p style="margin-top:8px;"><?= htmlspecialchars($h['explanation']) ?></p>
                         <div class="table-scroll">

@@ -56,7 +56,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['feedback_submit'])) {
         // FR6: store submitted academic & interest data
         $stmt = $pdo->prepare(
             'INSERT INTO academic_records
-                (user_id, math_score, english_score, science_score, humanities_score, creative_arts_score, interests)
+                (user_id, math_score, english_score, science_score, humanities_score, creative_arts_score, interest)
              VALUES (?, ?, ?, ?, ?, ?, ?)'
         );
         $stmt->execute([
@@ -110,7 +110,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['feedback_submit'])) {
 $history_stmt = $pdo->prepare(
     'SELECT r.confidence, r.explanation, r.created_at, p.name AS pathway,
         a.math_score, a.english_score, a.science_score, a.humanities_score,
-        a.creative_arts_score, a.interests
+        a.creative_arts_score, a.interest
      FROM recommendations r
      JOIN pathways p ON p.pathway_id = r.pathway_id
      JOIN academic_records a ON a.record_id = r.record_id

@@ -399,25 +399,6 @@ a:hover { color: var(--primary-dark); }
     font-size: 13px;
 }
 
-/* ---- Password rules checklist ---- */
-.password-rules {
-    list-style: none;
-    margin: 8px 0 0;
-    padding: 10px 14px;
-    background: ghostwhite;
-    border: 1px solid var(--border);
-    border-radius: 8px;
-    font-size: 13px;
-    color: var(--muted);
-}
-
-.password-rules li { padding: 3px 0; padding-left: 22px; position: relative; }
-.password-rules li::before { content: '○'; position: absolute; left: 0; }
-.password-rules li.rule-pass { color: var(--primary); }
-.password-rules li.rule-pass::before { content: '✓'; font-weight: 700; }
-.password-rules li.rule-fail { color: var(--danger); }
-.password-rules li.rule-fail::before { content: '✗'; font-weight: 700; }
-
 /* ---- Print ---- */
 .print-only { display: none; }
 

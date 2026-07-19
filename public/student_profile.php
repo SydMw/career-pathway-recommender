@@ -45,13 +45,6 @@ include __DIR__ . '/partials/navbar.php';
 
             <label for="new_password">New Password</label>
             <input type="password" id="new_password" name="new_password" minlength="8">
-            <ul class="password-rules" id="pw-rules">
-                <li id="r-len">At least 8 characters</li>
-                <li id="r-upper">One uppercase letter (A–Z)</li>
-                <li id="r-lower">One lowercase letter (a–z)</li>
-                <li id="r-num">One number (0–9)</li>
-                <li id="r-special">One special character (! @ # $ % etc.)</li>
-            </ul>
 
             <label for="confirm_password">Confirm New Password</label>
             <input type="password" id="confirm_password" name="confirm_password" minlength="8">
@@ -61,30 +54,5 @@ include __DIR__ . '/partials/navbar.php';
         </form>
     </div>
 </div>
-<script>
-const pw = document.getElementById('new_password');
-if (pw) {
-    const rules = {
-        'r-len':     v => v.length >= 8,
-        'r-upper':   v => /[A-Z]/.test(v),
-        'r-lower':   v => /[a-z]/.test(v),
-        'r-num':     v => /[0-9]/.test(v),
-        'r-special': v => /[\W_]/.test(v),
-    };
-    pw.addEventListener('input', function () {
-        Object.entries(rules).forEach(([id, fn]) => {
-            const el = document.getElementById(id);
-            if (!el) return;
-            if (fn(this.value)) {
-                el.classList.add('rule-pass');
-                el.classList.remove('rule-fail');
-            } else {
-                el.classList.add('rule-fail');
-                el.classList.remove('rule-pass');
-            }
-        });
-    });
-}
-</script>
 </body>
 </html>

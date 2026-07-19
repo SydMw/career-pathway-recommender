@@ -102,9 +102,6 @@ include __DIR__ . '/partials/navbar.php';
                     <td class="no-print" style="white-space:nowrap;">
                         <a href="admin_student_report.php?id=<?= (int) $s['user_id'] ?>">View Report</a>
                         &nbsp;&nbsp;
-                        <a href="admin_reset_password.php?id=<?= (int) $s['user_id'] ?>"
-                           style="color:var(--danger);font-size:13px;">Reset Password</a>
-                        &nbsp;&nbsp;
                         <a href="admin_delete_student.php?id=<?= (int) $s['user_id'] ?>"
                            style="color:var(--danger);font-size:13px;">Delete Student</a>
                     </td>

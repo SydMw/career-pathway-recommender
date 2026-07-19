@@ -13,16 +13,16 @@
     --success-bg: honeydew;
     --success-border: paleturquoise;
 
-    --shadow-navbar: black;
-    --navbar-link: white;
-    --navbar-link-hover-bg: white;
-    --shadow-card: black;
-    --shadow-hover: black;
-    --focus-ring: mediumseagreen;
-    --shadow-button: seagreen;
-    --shadow-button-hover: seagreen;
-    --stat-box-bg: white;
-    --shadow-stat-box: black;
+    --shadow-navbar: #0000002e;
+    --navbar-link: #ffffffe0;
+    --navbar-link-hover-bg: #ffffff2e;
+    --shadow-card: #0000000f;
+    --shadow-hover: #0000001a;
+    --focus-ring: #3cb37126;
+    --shadow-button: #2e8b5740;
+    --shadow-button-hover: #2e8b574d;
+    --stat-box-bg: #fffffff0;
+    --shadow-stat-box: #0000000d;
 }
 
 * { box-sizing: border-box; margin: 0; padding: 0; }

@@ -10,7 +10,7 @@ if ($student_id === 0) {
     die('Missing student ID.');
 }
 
-$stmt = $pdo->prepare('SELECT user_id, student_id, full_name, email FROM users WHERE user_id = ? AND role = ? AND deleted_at IS NULL');
+$stmt = $pdo->prepare('SELECT user_id, student_id, full_name, email FROM users WHERE user_id = ? AND role = ?');
 $stmt->execute([$student_id, 'student']);
 $student = $stmt->fetch();
 
@@ -34,11 +34,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if ($confirmation !== $student['full_name']) {
         $error = 'Please type the student\'s full name exactly to confirm deletion.';
     } else {
-        // Soft delete: the student and their records stay in the database
-        // for 30 days (recoverable from the trash page) before being
-        // permanently purged.
-        $del = $pdo->prepare('UPDATE users SET deleted_at = NOW() WHERE user_id = ? AND role = ?');
+        // Permanent delete: ON DELETE CASCADE removes their academic
+        // records, recommendations, and feedback along with the account.
+        $del = $pdo->prepare('DELETE FROM users WHERE user_id = ? AND role = ?');
         $del->execute([$student_id, 'student']);
-        $success = 'Student moved to trash. They can be restored within 30 days, after which the deletion becomes permanent.';
+        $success = 'Student and all of their records have been permanently deleted.';
     }
 }

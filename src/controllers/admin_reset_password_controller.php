@@ -10,7 +10,7 @@ if ($student_id === 0) {
     die('Missing student ID.');
 }
 
-$stmt = $pdo->prepare('SELECT user_id, full_name, email FROM users WHERE user_id = ? AND role = ? AND deleted_at IS NULL');
+$stmt = $pdo->prepare('SELECT user_id, full_name, email FROM users WHERE user_id = ? AND role = ?');
 $stmt->execute([$student_id, 'student']);
 $student = $stmt->fetch();
 

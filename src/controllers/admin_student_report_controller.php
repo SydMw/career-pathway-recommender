@@ -11,7 +11,7 @@ if (!$student_id) {
     die('Missing or invalid student id.');
 }
 
-$student_stmt = $pdo->prepare('SELECT user_id, student_id, full_name, email, created_at FROM users WHERE user_id = ? AND role = "student" AND deleted_at IS NULL');
+$student_stmt = $pdo->prepare('SELECT user_id, student_id, full_name, email, created_at FROM users WHERE user_id = ? AND role = "student"');
 $student_stmt->execute([$student_id]);
 $student = $student_stmt->fetch();
 

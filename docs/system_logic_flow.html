@@ -287,17 +287,15 @@ reload_models()                                # swaps the in-memory model witho
   </section>
 
   <section class="step" id="s8">
-    <div class="step-head"><span class="step-num">8</span><h3 class="step-title">Delete / trash / restore a student</h3></div>
-    <p class="step-sub">Soft delete, 30-day recovery window</p>
+    <div class="step-head"><span class="step-num">8</span><h3 class="step-title">Delete a student</h3></div>
+    <p class="step-sub">Permanent — no trash, no restore</p>
     <div class="chain">
       <span class="f">admin_delete_student.php</span><span class="sep">→</span>
-      <span class="f ctl">admin_delete_student_controller.php</span><span class="sep">·</span>
-      <span class="f">admin_trash.php</span><span class="sep">→</span>
-      <span class="f ctl">admin_trash_controller.php</span>
+      <span class="f ctl">admin_delete_student_controller.php</span>
     </div>
-    <p class="body">Delete requires typing the student's full name to confirm, then just sets a timestamp — no row is removed:</p>
-    <pre>UPDATE users SET deleted_at = NOW() WHERE user_id = ? AND role = ?</pre>
-    <p class="body">Every query elsewhere in the system filters <span class="path">WHERE deleted_at IS NULL</span>, so a trashed student vanishes from login, the roster, dashboard totals, and the retrain pool without their data actually being gone. Restore just sets it back to <span class="path">NULL</span>.</p>
+    <p class="body">Delete requires typing the student's full name to confirm, then removes the row outright:</p>
+    <pre>DELETE FROM users WHERE user_id = ? AND role = ?</pre>
+    <p class="body">The foreign keys on <span class="path">academic_records</span> and <span class="path">recommendations</span> are <span class="path">ON DELETE CASCADE</span>, so their submissions, recommendations, and feedback are removed automatically along with the account. There's no soft-delete flag anywhere in the schema — once confirmed, this cannot be undone.</p>
   </section>
 
   <section class="step" id="s9">

@@ -26,7 +26,7 @@ $recs_stmt = $pdo->prepare(
      FROM recommendations r
      JOIN users u ON u.user_id = r.user_id
      JOIN academic_records a ON a.record_id = r.record_id
-     WHERE r.pathway_id = ? AND u.deleted_at IS NULL
+     WHERE r.pathway_id = ?
      ORDER BY r.created_at DESC'
 );
 $recs_stmt->execute([$pathway['pathway_id']]);
@@ -39,8 +39,7 @@ $avg_stmt = $pdo->prepare(
         AVG(a.creative_arts_score) AS avg_arts, AVG(r.confidence) AS avg_confidence
      FROM recommendations r
      JOIN academic_records a ON a.record_id = r.record_id
-     JOIN users u ON u.user_id = r.user_id
-     WHERE r.pathway_id = ? AND u.deleted_at IS NULL'
+     WHERE r.pathway_id = ?'
 );
 $avg_stmt->execute([$pathway['pathway_id']]);
 $averages = $avg_stmt->fetch();

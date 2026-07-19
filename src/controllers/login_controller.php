@@ -4,10 +4,6 @@ require __DIR__ . '/../config/db.php';
 require __DIR__ . '/../config/session.php';
 
 $error = null;
-if (!empty($_SESSION['timeout_message'])) {
-    $error = $_SESSION['timeout_message'];
-    unset($_SESSION['timeout_message']);
-}
 
 const MAX_FAILED_ATTEMPTS = 5;
 const LOCKOUT_MINUTES = 5;

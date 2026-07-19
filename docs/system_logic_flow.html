@@ -212,14 +212,10 @@ header('Location: student_dashboard.php');</pre>
   <section class="step" id="s3">
     <div class="step-head"><span class="step-num">3</span><h3 class="step-title">Session guard — runs on every single request after login</h3></div>
     <p class="step-sub">src/config/session.php</p>
-    <p class="body">Every controller requires this file before doing anything else. Three jobs, in order: start (or resume) the PHP session; check whether the logged-in user has been idle past <span class="path">SESSION_TIMEOUT_SECONDS</span> (600s) and force them out if so; then refresh the activity timestamp for this request. <span class="path">require_login()</span> / <span class="path">require_role('admin')</span> are called explicitly by whichever controller needs them, and <span class="path">require_csrf()</span> guards every POST.</p>
-    <pre>if (!empty($_SESSION['user_id']) && !empty($_SESSION['last_activity'])
-    && (time() - $_SESSION['last_activity']) > SESSION_TIMEOUT_SECONDS) {
-    session_unset(); session_destroy(); session_start();
-    $_SESSION['timeout_message'] = 'You were logged out after 10 minutes of inactivity...';
-    header('Location: login.php'); exit;
-}
-$_SESSION['last_activity'] = time();</pre>
+    <p class="body">Every controller requires this file before doing anything else: start (or resume) the PHP session, then provide the functions other controllers call explicitly — <span class="path">require_login()</span> / <span class="path">require_role('admin')</span> for access control, and <span class="path">require_csrf()</span> guarding every POST.</p>
+    <pre>if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}</pre>
   </section>
 
   <section class="step" id="s4">
@@ -324,13 +320,11 @@ reload_models()                                # swaps the in-memory model witho
   </section>
 
   <section class="step" id="s11">
-    <div class="step-head"><span class="step-num">11</span><h3 class="step-title">Logout, and the inactivity timeout</h3></div>
+    <div class="step-head"><span class="step-num">11</span><h3 class="step-title">Logout</h3></div>
     <div class="chain">
-      <span class="f">logout.php</span><span class="sep">·</span>
-      <span class="f">partials/navbar.php</span><span class="sep">→ fetch →</span>
-      <span class="f">keep_alive.php</span>
+      <span class="f">logout.php</span>
     </div>
-    <p class="body">Manual logout just destroys the session. The navbar (included on every authenticated page) also carries a client-side countdown: in the last 60 seconds before the 10-minute mark it shows a "stay signed in" banner; clicking it pings <span class="path">keep_alive.php</span>, which is nothing but a re-include of <span class="path">session.php</span> — the same refresh that happens on every normal page load. If nothing's clicked, the page sends itself to <span class="path">logout.php</span> when the clock hits zero.</p>
+    <p class="body">One line — destroys the session and redirects to <span class="path">login.php</span>. There is no automatic inactivity timeout; a session stays valid until the user logs out or closes the browser (session cookie).</p>
   </section>
 
   <section class="step" id="s12">
@@ -381,7 +375,7 @@ joblib.dump(collab_knn, "ml/model/collab_knn.joblib")</pre>
     <table>
       <tr><th>File</th><th>Responsibility</th></tr>
       <tr><td class="path">config/db.php</td><td>Opens the one PDO connection ($pdo), used by every controller that touches MySQL.</td></tr>
-      <tr><td class="path">config/session.php</td><td>Session start, inactivity timeout check, require_login(), require_role(), CSRF token + verification.</td></tr>
+      <tr><td class="path">config/session.php</td><td>Session start, require_login(), require_role(), CSRF token + verification.</td></tr>
       <tr><td class="path">config/helpers.php</td><td>pathway_badge_class(), validate_password_strength(), generate_student_id() — small cross-cutting logic shared by 2+ controllers.</td></tr>
       <tr><td class="path">config/ml_client.php</td><td>get_recommendation() and trigger_retrain() — the only two places PHP ever talks to Flask, both plain cURL.</td></tr>
       <tr><td class="path">config/constants.php</td><td>SUBJECTS and ALLOWED_INTERESTS — one source of truth shared by the form (student_dashboard.php) and its validation (student_controller.php).</td></tr>

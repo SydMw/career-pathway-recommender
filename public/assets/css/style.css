@@ -35,16 +35,16 @@ body {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    box-shadow: 0 2px 12px rgba(0,0,0,0.18);
+    box-shadow: 0 2px 12px #0000002e;
     position: sticky;
     top: 0;
     z-index: 100;
 }
 
-.navbar .brand { font-size: 17px; font-weight: 700; letter-spacing: 0.3px; }
+.navbar .brand { font-size: 21px; font-weight: 700; letter-spacing: 0.3px; }
 
 .navbar a {
-    color: rgba(255,255,255,0.88);
+    color: #ffffffe0;
     text-decoration: none;
     margin-left: 18px;
     font-size: 14px;
@@ -53,7 +53,7 @@ body {
     transition: background 0.2s, color 0.2s;
 }
 
-.navbar a:hover { background: rgba(255,255,255,0.18); color: white; }
+.navbar a:hover { background: #ffffff2e; color: white; }
 
 /* ---- Layout ---- */
 .container {
@@ -75,11 +75,11 @@ body {
     border-radius: 14px;
     padding: 28px 32px;
     margin-bottom: 24px;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+    box-shadow: 0 2px 8px #0000000f;
     transition: box-shadow 0.25s, transform 0.25s;
 }
 
-.card:hover { box-shadow: 0 6px 24px rgba(0,0,0,0.10); transform: translateY(-2px); }
+.card:hover { box-shadow: 0 6px 24px #0000001a; transform: translateY(-2px); }
 
 .auth-card { max-width: 440px; margin: 56px auto 0; }
 
@@ -118,7 +118,7 @@ textarea {
 input:focus, select:focus, textarea:focus {
     outline: none;
     border-color: var(--primary-light);
-    box-shadow: 0 0 0 3px rgba(60,179,113,0.15);
+    box-shadow: 0 0 0 3px #3cb37126;
     background: white;
 }
 
@@ -136,14 +136,14 @@ button, .btn {
     text-decoration: none;
     display: inline-block;
     transition: opacity 0.2s, transform 0.15s, box-shadow 0.2s;
-    box-shadow: 0 2px 8px rgba(46,139,87,0.25);
+    box-shadow: 0 2px 8px #2e8b5740;
     letter-spacing: 0.2px;
 }
 
 button:hover, .btn:hover {
     opacity: 0.92;
     transform: translateY(-1px);
-    box-shadow: 0 4px 16px rgba(46,139,87,0.30);
+    box-shadow: 0 4px 16px #2e8b574d;
 }
 
 button:active, .btn:active { transform: translateY(0); }
@@ -345,16 +345,16 @@ tr:hover td { background: ghostwhite; }
 }
 
 .stat-box {
-    background: rgba(255, 255, 255, 0.94);
+    background: #fffffff0;
     border: 1px solid var(--border);
     border-radius: 14px;
     padding: 22px 18px;
     text-align: center;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+    box-shadow: 0 2px 8px #0000000d;
     transition: transform 0.2s, box-shadow 0.2s;
 }
 
-.stat-box:hover { transform: translateY(-3px); box-shadow: 0 6px 20px rgba(0,0,0,0.10); }
+.stat-box:hover { transform: translateY(-3px); box-shadow: 0 6px 20px #0000001a; }
 
 .stat-box .value {
     font-size: 32px;

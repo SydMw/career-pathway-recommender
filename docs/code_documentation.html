@@ -137,14 +137,6 @@
     <p class="sub">Every file in the repository, grouped by folder, explaining what it does. Controllers, config, the ML pipeline, and the schema get a full walkthrough; view templates, styling, and boilerplate get a short summary since their role is mostly presentation. For the request-by-request story instead of the file-by-file one, see <span class="path">docs/system_logic_flow.html</span>.</p>
   </header>
 
-  <div class="callout">
-    <h3>Two things worth fixing before the report is finalised</h3>
-    <ul>
-      <li><strong>README.md</strong> still describes a "5-minute account lockout after 5 failed logins" and says "38 tests" — the lockout feature was removed on 19 July 2026, and the current suite collects <strong>37</strong> tests. The README needs a pass to match current behaviour.</li>
-      <li><strong>tests/test_web_flow.py</strong> hardcodes <span class="path">ADMIN_PASSWORD = "Admin123!"</span>, but the live admin account password was reset to <span class="path">AdminPass123!</span> on 19 July 2026. Any test that logs in as admin (<span class="path">test_register_login_submit_and_admin_visibility</span>, the two login-rejection tests) will fail against the current database until this constant is updated.</li>
-    </ul>
-  </div>
-
   <nav class="jump">
     <a href="#config">Config</a>
     <a href="#controllers">Controllers</a>

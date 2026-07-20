@@ -39,7 +39,7 @@ career_system/
 ├── src/
 │   ├── config/        # Database connection, session, CSRF, ML client
 │   └── controllers/   # Business logic for auth, student, admin modules
-└── tests/             # Automated test suite (38 tests)
+└── tests/             # Automated test suite (37 tests)
 ```
 
 ## Features
@@ -103,7 +103,7 @@ With XAMPP and the AI engine running:
 pytest tests\ -v
 ```
 
-The test suite covers registration, login, lockout, input validation, role-based access, and the full student recommendation flow.
+The test suite covers registration, login, input validation, role-based access, and the full student recommendation flow.
 
 ## Security Features
 
@@ -111,4 +111,3 @@ The test suite covers registration, login, lockout, input validation, role-based
 - All forms are protected against CSRF attacks
 - All database queries use parameterised statements (no SQL injection)
 - Role-based access control prevents students from accessing admin pages
-- Failed login attempts trigger a 5-minute account lockout after 5 tries

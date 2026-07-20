@@ -15,7 +15,7 @@ import requests
 
 BASE_URL = "http://localhost/career_system/public"
 ADMIN_EMAIL = "admin@career.local"
-ADMIN_PASSWORD = "Admin123!"  # seeded per README setup instructions
+ADMIN_PASSWORD = "AdminPass123!"  # reset 19 July 2026, see docs/code_documentation.html
 
 
 def extract_csrf(html: str) -> str:

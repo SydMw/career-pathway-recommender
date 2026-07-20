@@ -2,22 +2,11 @@
 // Administrator Module: delete a student account (FR7 extension)
 require __DIR__ . '/../config/db.php';
 require __DIR__ . '/../config/session.php';
+require __DIR__ . '/../config/helpers.php';
 require_role('admin');
 
 $student_id = (int) ($_GET['id'] ?? 0);
-if ($student_id === 0) {
-    http_response_code(400);
-    die('Missing student ID.');
-}
-
-$stmt = $pdo->prepare('SELECT user_id, student_id, full_name, email FROM users WHERE user_id = ? AND role = ?');
-$stmt->execute([$student_id, 'student']);
-$student = $stmt->fetch();
-
-if (!$student) {
-    http_response_code(404);
-    die('Student not found.');
-}
+$student = require_student_by_id($pdo, $student_id);
 
 $count_stmt = $pdo->prepare('SELECT COUNT(*) FROM academic_records WHERE user_id = ?');
 $count_stmt->execute([$student_id]);

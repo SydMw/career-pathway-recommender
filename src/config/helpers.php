@@ -30,6 +30,27 @@ function validate_password_strength(string $password, string $label = 'Password'
     return null;
 }
 
+// Looks up a student by their user_id (from ?id= on an admin action page),
+// exiting with 400/404 if it's missing or doesn't resolve to a real
+// student. Shared by every admin controller that acts on one specific
+// student — the caller gets back the fetched row.
+function require_student_by_id(PDO $pdo, int $student_id): array
+{
+    if ($student_id === 0) {
+        http_response_code(400);
+        die('Missing student ID.');
+    }
+    $stmt = $pdo->prepare('SELECT user_id, student_id, full_name, email FROM users WHERE user_id = ? AND role = ?');
+    $stmt->execute([$student_id, 'student']);
+    $student = $stmt->fetch();
+
+    if (!$student) {
+        http_response_code(404);
+        die('Student not found.');
+    }
+    return $student;
+}
+
 // Generates the next student ID, e.g. STU001 a single global sequence,
 // not scoped to a year. Takes the highest existing number rather than
 // counting rows, since permanent deletion (admin_delete_student_controller.php)

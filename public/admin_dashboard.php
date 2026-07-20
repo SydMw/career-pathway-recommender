@@ -22,7 +22,7 @@ include __DIR__ . '/partials/navbar.php';
     </div>
 
     <div id="report-content">
-    <h1 class="print-only">Career Pathway Recommender &mdash; Administrator Report</h1>
+    <h1 class="print-only">Career Pathway Recommender; Administrator Report</h1>
     <p class="muted print-only">Generated <?= date('j F Y \a\t H:i') ?> by <?= htmlspecialchars($_SESSION['full_name']) ?></p>
 
     <div class="stats-grid">

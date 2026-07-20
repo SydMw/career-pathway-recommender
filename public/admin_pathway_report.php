@@ -39,14 +39,14 @@ include __DIR__ . '/partials/navbar.php';
                 <div class="table-scroll">
                 <table>
                     <tr>
-                        <th>Student</th><th>Email</th><th>Confidence</th>
+                        <th>Student</th><th>Student ID</th><th>Confidence</th>
                         <th>Maths</th><th>English</th><th>Science</th><th>Humanities</th><th>Arts</th>
                         <th>Interest</th><th>Date</th>
                     </tr>
                     <?php foreach ($recommendations as $r): ?>
                         <tr>
                             <td><?= htmlspecialchars($r['full_name']) ?></td>
-                            <td><?= htmlspecialchars($r['email']) ?></td>
+                            <td><?= htmlspecialchars($r['student_id'] ?? '—') ?></td>
                             <td><?= htmlspecialchars($r['confidence']) ?>%</td>
                             <td><?= htmlspecialchars($r['math_score']) ?></td>
                             <td><?= htmlspecialchars($r['english_score']) ?></td>

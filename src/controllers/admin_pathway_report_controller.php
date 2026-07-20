@@ -20,7 +20,7 @@ if (!$pathway) {
 }
 
 $recs_stmt = $pdo->prepare(
-    'SELECT u.full_name, u.email, r.confidence, r.created_at,
+    'SELECT u.full_name, u.student_id, r.confidence, r.created_at,
         a.math_score, a.english_score, a.science_score, a.humanities_score,
         a.creative_arts_score, a.interest
      FROM recommendations r

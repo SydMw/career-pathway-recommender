@@ -177,7 +177,7 @@
       <span class="f ctl">register_controller.php</span><span class="sep">→ requires →</span>
       <span class="f">db.php</span><span class="f">session.php</span><span class="f">helpers.php</span>
     </div>
-    <p class="body">Validates name/email/password (shared <span class="path">validate_password_strength()</span>), checks the email isn't taken, hashes the password, generates a student ID like <span class="path">STU-2026-0001</span> via <span class="path">generate_student_id()</span>, inserts the row, then logs the student straight in.</p>
+    <p class="body">Validates name/email/password (shared <span class="path">validate_password_strength()</span>), checks the email isn't taken, hashes the password, generates a student ID like <span class="path">STU001</span> via <span class="path">generate_student_id()</span>, inserts the row, then logs the student straight in.</p>
     <pre>$hash = password_hash($password, PASSWORD_DEFAULT);
 $student_id = generate_student_id($pdo);
 $pdo->prepare('INSERT INTO users (student_id, full_name, email, password_hash, role)

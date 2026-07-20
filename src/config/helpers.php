@@ -30,18 +30,17 @@ function validate_password_strength(string $password, string $label = 'Password'
     return null;
 }
 
-// Generates the next student ID for this year, e.g. STU-2026-0001.
-// Takes the highest existing number for the year rather than counting
-// rows, since permanent deletion (admin_delete_student_controller.php)
-// can leave gaps — a COUNT(*)-based next ID would collide with an
+// Generates the next student ID, e.g. STU001 a single global sequence,
+// not scoped to a year. Takes the highest existing number rather than
+// counting rows, since permanent deletion (admin_delete_student_controller.php)
+// can leave gaps a COUNT(*) based next ID would collide with an
 // existing higher one once any student has been deleted.
 function generate_student_id(PDO $pdo): string
 {
-    $year = date('Y');
     $stmt = $pdo->prepare(
-        "SELECT MAX(CAST(SUBSTRING(student_id, 10) AS UNSIGNED)) FROM users WHERE student_id LIKE ?"
+        "SELECT MAX(CAST(SUBSTRING(student_id, 4) AS UNSIGNED)) FROM users WHERE student_id LIKE 'STU%'"
     );
-    $stmt->execute(["STU-$year-%"]);
+    $stmt->execute();
     $next = (int) $stmt->fetchColumn() + 1;
-    return sprintf('STU-%s-%04d', $year, $next);
+    return sprintf('STU%03d', $next);
 }

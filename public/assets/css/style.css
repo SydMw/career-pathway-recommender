@@ -273,6 +273,14 @@ button:disabled {
     margin-left: 8px;
 }
 
+.result-explanation { margin-top: 10px; }
+
+.confidence-label {
+    margin-top: 12px;
+    font-size: 13px;
+    color: var(--muted);
+}
+
 /* Confidence progress bar */
 .confidence-bar-wrap {
     background: honeydew;
@@ -394,6 +402,8 @@ a:hover { color: var(--primary-dark); }
 
 /* ---- Print ---- */
 .print-only { display: none; }
+.print-title { font-size: 20px; margin-bottom: 4px; }
+.print-header-meta { margin-bottom: 16px; }
 
 @page {
     size: landscape;

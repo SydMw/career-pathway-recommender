@@ -50,13 +50,13 @@ include __DIR__ . '/partials/navbar.php';
                     Recommended Pathway:
                     <span class="badge <?= $badge_class ?>"><?= htmlspecialchars($result['pathway']) ?></span>
                 </h3>
-                <p style="margin-top:10px;"><?= htmlspecialchars($result['explanation']) ?></p>
-                <p style="margin-top:12px;font-size:13px;color:var(--muted);">How confident is the system?</p>
+                <p class="result-explanation"><?= htmlspecialchars($result['explanation']) ?></p>
+                <p class="confidence-label">How confident is the system?</p>
                 <div class="confidence-bar-wrap">
                     <div class="confidence-bar" id="conf-bar" data-value="<?= (int) $result['confidence'] ?>"></div>
                 </div>
                 <p><strong><?= htmlspecialchars($result['confidence']) ?>%</strong></p>
-                <table style="margin-top:16px;">
+                <table>
                     <tr><th>Pathway</th><th>How well you match</th></tr>
                     <?php foreach ($result['ranking'] as $r): ?>
                         <tr><td><?= htmlspecialchars($r['pathway']) ?></td><td><?= htmlspecialchars($r['score']) ?>%</td></tr>
@@ -77,8 +77,8 @@ include __DIR__ . '/partials/navbar.php';
 
     <div id="report-content">
     <div class="card">
-        <h1 class="print-only" style="font-size:20px;margin-bottom:4px;">Career Pathway Recommendation Report</h1>
-        <p class="muted print-only" style="margin-bottom:16px;">
+        <h1 class="print-only print-title">Career Pathway Recommendation Report</h1>
+        <p class="muted print-only print-header-meta">
             Student: <?= htmlspecialchars($_SESSION['full_name']) ?><br>
             Generated: <?= date('j F Y \a\t H:i') ?>
         </p>

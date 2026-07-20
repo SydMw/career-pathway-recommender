@@ -137,6 +137,8 @@ def predict():
 
     explanation = build_explanation(scores, interest, predicted_pathway)
     peer_pct = round(float(collab_proba[pred_idx]) * 100, 1)
+    # Only surface the peer stat once it's a clear plurality — below 40%
+    # the collaborative signal is too weak to support the explanation.
     if peer_pct >= 40:
         explanation += f" Additionally, {peer_pct}% of students with a similar academic profile also pursued {predicted_pathway}."
 

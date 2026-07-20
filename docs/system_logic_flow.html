@@ -366,7 +366,7 @@ joblib.dump(collab_knn, "ml/model/collab_knn.joblib")</pre>
       <tr><th>File</th><th>Responsibility</th></tr>
       <tr><td class="path">config/db.php</td><td>Opens the one PDO connection ($pdo), used by every controller that touches MySQL.</td></tr>
       <tr><td class="path">config/session.php</td><td>Session start, require_login(), require_role(), CSRF token + verification.</td></tr>
-      <tr><td class="path">config/helpers.php</td><td>pathway_badge_class(), validate_password_strength(), generate_student_id() — small cross-cutting logic shared by 2+ controllers.</td></tr>
+      <tr><td class="path">config/helpers.php</td><td>pathway_badge_class(), validate_password_strength(), generate_student_id(), require_student_by_id() — small cross-cutting logic shared by 2+ controllers.</td></tr>
       <tr><td class="path">config/ml_client.php</td><td>get_recommendation() and trigger_retrain() — the only two places PHP ever talks to Flask, both plain cURL.</td></tr>
       <tr><td class="path">config/constants.php</td><td>SUBJECTS and ALLOWED_INTERESTS — one source of truth shared by the form (student_dashboard.php) and its validation (student_controller.php).</td></tr>
     </table>

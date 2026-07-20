@@ -34,9 +34,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $error = 'Passwords do not match. Please try again.';
     } else {
         $hashed = password_hash($new_password, PASSWORD_DEFAULT);
-        $upd = $pdo->prepare(
-            'UPDATE users SET password_hash = ?, failed_login_attempts = 0, locked_until = NULL WHERE user_id = ?'
-        );
+        $upd = $pdo->prepare('UPDATE users SET password_hash = ? WHERE user_id = ?');
         $upd->execute([$hashed, $student_id]);
         $success = 'Password reset successfully. Please share the new password with the student securely.';
     }

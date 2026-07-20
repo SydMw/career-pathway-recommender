@@ -196,12 +196,11 @@ header('Location: student_dashboard.php');</pre>
       <span class="f ctl">login_controller.php</span><span class="sep">→ requires →</span>
       <span class="f">db.php</span><span class="f">session.php</span>
     </div>
-    <p class="body">Looks up the email, checks a lockout timestamp first, then verifies the password. Five wrong attempts locks the account for 5 minutes — tracked with plain columns on <span class="path">users</span>, not a session or cache.</p>
-    <pre>if ($user && $locked_until_ts && $locked_until_ts > time()) {
-    $error = "Too many failed attempts. Try again in $minutes_left minute(s).";
+    <p class="body">Looks up the email, then verifies the password. No lockout — wrong-password attempts aren't tracked or counted anywhere.</p>
+    <pre>if (!$user) {
+    $error = 'No account found with that email address...';
 } elseif (!password_verify($password, $user['password_hash'])) {
-    $attempts = $user['failed_login_attempts'] + 1;
-    if ($attempts >= MAX_FAILED_ATTEMPTS) { /* set locked_until = now + 5 min */ }
+    $error = 'Incorrect password. Please try again.';
 } else {
     $_SESSION['user_id'] = $user['user_id'];
     $_SESSION['role'] = $user['role'];
@@ -304,8 +303,8 @@ reload_models()                                # swaps the in-memory model witho
       <span class="f">admin_reset_password.php</span><span class="sep">→ require →</span>
       <span class="f ctl">admin_reset_password_controller.php</span>
     </div>
-    <p class="body">Same <span class="path">validate_password_strength()</span> helper, then clears the lockout state along with setting the new hash — so a reset also un-sticks anyone who got locked out.</p>
-    <pre>UPDATE users SET password_hash = ?, failed_login_attempts = 0, locked_until = NULL WHERE user_id = ?</pre>
+    <p class="body">Same <span class="path">validate_password_strength()</span> helper as registration and profile edit, then just sets the new hash.</p>
+    <pre>UPDATE users SET password_hash = ? WHERE user_id = ?</pre>
   </section>
 
   <section class="step" id="s10">

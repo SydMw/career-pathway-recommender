@@ -104,36 +104,6 @@ def test_login_rejects_wrong_password():
     assert "Incorrect password" in resp.text
 
 
-def test_login_locks_account_after_repeated_failures():
-    session = requests.Session()
-    for _ in range(5):
-        login_page = session.get(f"{BASE_URL}/login.php", timeout=5)
-        token = extract_csrf(login_page.text)
-        resp = session.post(
-            f"{BASE_URL}/login.php",
-            data={"email": ADMIN_EMAIL, "password": "wrong-password", "csrf_token": token},
-            timeout=5,
-        )
-    assert "too many failed attempts" in resp.text.lower()
-
-    # Even the correct password should now be rejected until the lock expires.
-    login_page = session.get(f"{BASE_URL}/login.php", timeout=5)
-    token = extract_csrf(login_page.text)
-    locked_resp = session.post(
-        f"{BASE_URL}/login.php",
-        data={"email": ADMIN_EMAIL, "password": ADMIN_PASSWORD, "csrf_token": token},
-        timeout=5,
-    )
-    assert "too many failed attempts" in locked_resp.text.lower()
-    # Lock window should be close to the configured 5 minutes, not skewed by
-    # a PHP/MySQL timezone mismatch (regression check).
-    assert "try again in 1 minute" in locked_resp.text.lower() \
-        or "try again in 2 minute" in locked_resp.text.lower() \
-        or "try again in 3 minute" in locked_resp.text.lower() \
-        or "try again in 4 minute" in locked_resp.text.lower() \
-        or "try again in 5 minute" in locked_resp.text.lower()
-
-
 # --- Negative test cases: deliberately wrong/invalid data ----------------
 # Each of these MUST fail (registration/login/submission rejected, with a
 # clear error message) for the system to be considered correct.

@@ -52,12 +52,3 @@ CREATE TABLE recommendations (
 
 CREATE INDEX idx_academic_user ON academic_records(user_id);
 CREATE INDEX idx_recommendation_user ON recommendations(user_id);
-
-CREATE TABLE feedback (
-    feedback_id INT AUTO_INCREMENT PRIMARY KEY,
-    recommendation_id INT NOT NULL,
-    rating TINYINT NOT NULL COMMENT '1 (poor) to 5 (excellent)',
-    comments TEXT,
-    submitted_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    FOREIGN KEY (recommendation_id) REFERENCES recommendations(recommendation_id) ON DELETE CASCADE
-);

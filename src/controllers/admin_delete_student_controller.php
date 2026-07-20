@@ -35,7 +35,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $error = 'Please type the student\'s full name exactly to confirm deletion.';
     } else {
         // Permanent delete: ON DELETE CASCADE removes their academic
-        // records, recommendations, and feedback along with the account.
+        // records and recommendations along with the account.
         $del = $pdo->prepare('DELETE FROM users WHERE user_id = ? AND role = ?');
         $del->execute([$student_id, 'student']);
         $success = 'Student and all of their records have been permanently deleted.';

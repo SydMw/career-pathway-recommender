@@ -147,14 +147,13 @@
     <a href="#s2">2 · Login</a>
     <a href="#s3">3 · Session guard</a>
     <a href="#s4">4 · Recommendation</a>
-    <a href="#s5">5 · Feedback</a>
-    <a href="#s6">6 · Profile edit</a>
-    <a href="#s7">7 · Admin dashboard</a>
-    <a href="#s8">8 · Delete student</a>
-    <a href="#s9">9 · Reset password</a>
-    <a href="#s10">10 · Reports</a>
-    <a href="#s11">11 · Logout</a>
-    <a href="#s12">12 · Training pipeline</a>
+    <a href="#s5">5 · Profile edit</a>
+    <a href="#s6">6 · Admin dashboard</a>
+    <a href="#s7">7 · Delete student</a>
+    <a href="#s8">8 · Reset password</a>
+    <a href="#s9">9 · Reports</a>
+    <a href="#s10">10 · Logout</a>
+    <a href="#s11">11 · Training pipeline</a>
     <a href="#config">Shared config</a>
   </nav>
 
@@ -251,13 +250,7 @@ predicted_pathway = label_encoder.inverse_transform([argmax(blended)])[0]</pre>
   </section>
 
   <section class="step" id="s5">
-    <div class="step-head"><span class="step-num">5</span><h3 class="step-title">Rate a recommendation</h3></div>
-    <p class="step-sub">Same controller as step 4, separate POST branch</p>
-    <p class="body">A 1–5 rating with an optional comment, checked against ownership first (<span class="path">WHERE recommendation_id = ? AND user_id = ?</span>) so a student can't rate someone else's result, then inserted into <span class="path">feedback</span> — a real quality signal, independent of the model's own confidence score.</p>
-  </section>
-
-  <section class="step" id="s6">
-    <div class="step-head"><span class="step-num">6</span><h3 class="step-title">Edit profile</h3></div>
+    <div class="step-head"><span class="step-num">5</span><h3 class="step-title">Edit profile</h3></div>
     <p class="step-sub">Name, email, optional password change</p>
     <div class="chain">
       <span class="f">student_profile.php</span><span class="sep">→ require →</span>
@@ -267,8 +260,8 @@ predicted_pathway = label_encoder.inverse_transform([argmax(blended)])[0]</pre>
     <p class="body">Name/email update on their own; a password change additionally requires the current password to <span class="path">password_verify()</span> correctly before <span class="path">validate_password_strength()</span> even runs — same helper function used at registration and admin reset.</p>
   </section>
 
-  <section class="step" id="s7">
-    <div class="step-head"><span class="step-num">7</span><h3 class="step-title">Admin dashboard + retrain</h3></div>
+  <section class="step" id="s6">
+    <div class="step-head"><span class="step-num">6</span><h3 class="step-title">Admin dashboard + retrain</h3></div>
     <p class="step-sub">FR7 (visibility) / FR8 (retraining)</p>
     <div class="chain">
       <span class="f">admin_dashboard.php</span><span class="sep">→ require →</span>
@@ -285,8 +278,8 @@ results = train_and_save(combined)             # ml/train_model.py
 reload_models()                                # swaps the in-memory model without restarting Flask</pre>
   </section>
 
-  <section class="step" id="s8">
-    <div class="step-head"><span class="step-num">8</span><h3 class="step-title">Delete a student</h3></div>
+  <section class="step" id="s7">
+    <div class="step-head"><span class="step-num">7</span><h3 class="step-title">Delete a student</h3></div>
     <p class="step-sub">Permanent — no trash, no restore</p>
     <div class="chain">
       <span class="f">admin_delete_student.php</span><span class="sep">→</span>
@@ -294,11 +287,11 @@ reload_models()                                # swaps the in-memory model witho
     </div>
     <p class="body">Delete requires typing the student's full name to confirm, then removes the row outright:</p>
     <pre>DELETE FROM users WHERE user_id = ? AND role = ?</pre>
-    <p class="body">The foreign keys on <span class="path">academic_records</span> and <span class="path">recommendations</span> are <span class="path">ON DELETE CASCADE</span>, so their submissions, recommendations, and feedback are removed automatically along with the account. There's no soft-delete flag anywhere in the schema — once confirmed, this cannot be undone.</p>
+    <p class="body">The foreign keys on <span class="path">academic_records</span> and <span class="path">recommendations</span> are <span class="path">ON DELETE CASCADE</span>, so their submissions and recommendations are removed automatically along with the account. There's no soft-delete flag anywhere in the schema — once confirmed, this cannot be undone.</p>
   </section>
 
-  <section class="step" id="s9">
-    <div class="step-head"><span class="step-num">9</span><h3 class="step-title">Admin resets a student's password</h3></div>
+  <section class="step" id="s8">
+    <div class="step-head"><span class="step-num">8</span><h3 class="step-title">Admin resets a student's password</h3></div>
     <div class="chain">
       <span class="f">admin_reset_password.php</span><span class="sep">→ require →</span>
       <span class="f ctl">admin_reset_password_controller.php</span>
@@ -307,8 +300,8 @@ reload_models()                                # swaps the in-memory model witho
     <pre>UPDATE users SET password_hash = ? WHERE user_id = ?</pre>
   </section>
 
-  <section class="step" id="s10">
-    <div class="step-head"><span class="step-num">10</span><h3 class="step-title">Printable reports</h3></div>
+  <section class="step" id="s9">
+    <div class="step-head"><span class="step-num">9</span><h3 class="step-title">Printable reports</h3></div>
     <div class="chain">
       <span class="f">admin_student_report.php</span><span class="sep">·</span>
       <span class="f">admin_pathway_report.php</span>
@@ -316,16 +309,16 @@ reload_models()                                # swaps the in-memory model witho
     <p class="body">Two read-only views: one student's full recommendation history, or one pathway's aggregate stats (average scores + confidence across everyone recommended into it). Both are plain GET pages with an <span class="path">?id=</span> / <span class="path">?pathway=</span> query param, no state changes.</p>
   </section>
 
-  <section class="step" id="s11">
-    <div class="step-head"><span class="step-num">11</span><h3 class="step-title">Logout</h3></div>
+  <section class="step" id="s10">
+    <div class="step-head"><span class="step-num">10</span><h3 class="step-title">Logout</h3></div>
     <div class="chain">
       <span class="f">logout.php</span>
     </div>
     <p class="body">One line — destroys the session and redirects to <span class="path">login.php</span>. There is no automatic inactivity timeout; a session stays valid until the user logs out or closes the browser (session cookie).</p>
   </section>
 
-  <section class="step" id="s12">
-    <div class="step-head"><span class="step-num">12</span><h3 class="step-title">Training pipeline — where the models in step 4 and step 7 actually come from</h3></div>
+  <section class="step" id="s11">
+    <div class="step-head"><span class="step-num">11</span><h3 class="step-title">Training pipeline — where the models in step 4 and step 6 actually come from</h3></div>
     <p class="step-sub">ml/features.py + ml/train_model.py</p>
     <div class="chain">
       <span class="f ext">train_model.py</span><span class="sep">imports</span>
@@ -363,7 +356,7 @@ collab_knn = KNeighborsClassifier(n_neighbors=25)   # "the 25 most similar stude
 collab_knn.fit(X_scaled, y)
 joblib.dump(scaler, "ml/model/collab_scaler.joblib")
 joblib.dump(collab_knn, "ml/model/collab_knn.joblib")</pre>
-    <p class="body">Two ways this function gets called: directly as <span class="path">python ml/train_model.py</span> (the <span class="path">if __name__ == "__main__"</span> guard, no arguments, always trains on the synthetic CSV) — or from inside Flask's <span class="path">/retrain</span> route in step 7, passed the synthetic-plus-real blended DataFrame instead. Same function, same five saved <span class="path">.joblib</span> files, different input.</p>
+    <p class="body">Two ways this function gets called: directly as <span class="path">python ml/train_model.py</span> (the <span class="path">if __name__ == "__main__"</span> guard, no arguments, always trains on the synthetic CSV) — or from inside Flask's <span class="path">/retrain</span> route in step 6, passed the synthetic-plus-real blended DataFrame instead. Same function, same five saved <span class="path">.joblib</span> files, different input.</p>
   </section>
 
   <h2 class="section-title" id="config">Shared config layer</h2>
@@ -380,7 +373,7 @@ joblib.dump(collab_knn, "ml/model/collab_knn.joblib")</pre>
   </div>
 
   <footer class="note">
-    <span class="path">ml/api.py</span> is the Flask process itself (port 5001, started by <span class="path">start_ml.bat</span>) — step 12 covers what actually produces the <span class="path">.joblib</span> files it loads.
+    <span class="path">ml/api.py</span> is the Flask process itself (port 5001, started by <span class="path">start_ml.bat</span>) — step 11 covers what actually produces the <span class="path">.joblib</span> files it loads.
   </footer>
 
 </div>

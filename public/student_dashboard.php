@@ -23,8 +23,6 @@ include __DIR__ . '/partials/navbar.php';
         <h2>Find Your Recommended Pathway</h2>
         <p class="muted">Enter your scores out of 100 for each subject and choose your main area of interest. The system will recommend the best CBC pathway for you.</p>
         <?php if ($error): ?><div class="error"><?= htmlspecialchars($error) ?></div><?php endif; ?>
-        <?php if ($feedback_message): ?><div class="success"><?= htmlspecialchars($feedback_message) ?></div><?php endif; ?>
-        <?php if ($feedback_error): ?><div class="error"><?= htmlspecialchars($feedback_error) ?></div><?php endif; ?>
         <form method="post" action="student_dashboard.php" id="recommendation-form">
             <?= csrf_field() ?>
             <?php foreach (SUBJECTS as $field => $label): ?>
@@ -64,25 +62,6 @@ include __DIR__ . '/partials/navbar.php';
                         <tr><td><?= htmlspecialchars($r['pathway']) ?></td><td><?= htmlspecialchars($r['score']) ?>%</td></tr>
                     <?php endforeach; ?>
                 </table>
-
-                <?php if (!empty($result['recommendation_id'])): ?>
-                    <form method="post" action="student_dashboard.php" style="margin-top:18px;border-top:1px solid var(--border);padding-top:16px;">
-                        <?= csrf_field() ?>
-                        <input type="hidden" name="recommendation_id" value="<?= (int) $result['recommendation_id'] ?>">
-                        <label for="rating">Was this recommendation helpful?</label>
-                        <select id="rating" name="rating" required>
-                            <option value="">Rate it from 1 to 5</option>
-                            <option value="5">5 — Very helpful</option>
-                            <option value="4">4 — Helpful</option>
-                            <option value="3">3 — Somewhat helpful</option>
-                            <option value="2">2 — Not very helpful</option>
-                            <option value="1">1 — Not helpful at all</option>
-                        </select>
-                        <label for="comments">Anything you'd like to add? (optional)</label>
-                        <textarea id="comments" name="comments" rows="2" placeholder="What did you think of this recommendation?"></textarea>
-                        <button type="submit" name="feedback_submit" value="1">Send Feedback</button>
-                    </form>
-                <?php endif; ?>
             </div>
             <script>
                 var bar = document.getElementById('conf-bar');

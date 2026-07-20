@@ -461,9 +461,10 @@ a:hover { color: var(--primary-dark); }
         backdrop-filter: none !important;
     }
 
-    /* Badges and bars keep colour in print */
+    /* Badges, bars, and stat numbers keep colour in print */
     .badge,
-    .confidence-bar { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+    .confidence-bar,
+    .stat-box .value { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
 }
 
 /* ---- Responsive ---- */

@@ -1,0 +1,450 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Code Documentation — Career Pathway Recommender</title>
+<style>
+  :root{
+    --bg:#eef1ec; --surface:#ffffff; --surface-2:#e4e8e1;
+    --ink:#1c2321; --ink-soft:#4b554f; --border:#cbd2c7;
+    --accent:#1f5e52; --accent-soft:#dceae6;
+    --warn:#9c4a1d; --warn-soft:#f3e3d6;
+    --danger:#8c2f2a; --danger-soft:#f5e1de;
+    --purple:#5c4d8c; --purple-soft:#e7e2f3;
+    --font-display: Georgia, 'Iowan Old Style', 'Palatino Linotype', 'Book Antiqua', serif;
+    --font-body: -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+    --font-mono: 'SF Mono', 'Cascadia Code', Consolas, 'Liberation Mono', monospace;
+  }
+  @media (prefers-color-scheme: dark){
+    :root{
+      --bg:#12181a; --surface:#1b2326; --surface-2:#212b2e;
+      --ink:#e7ece9; --ink-soft:#a9b6b0; --border:#33403f;
+      --accent:#5fbfa9; --accent-soft:#1e3630;
+      --warn:#e1976a; --warn-soft:#3a2a1d;
+      --danger:#e08078; --danger-soft:#3a211f;
+      --purple:#b3a4e0; --purple-soft:#2c2740;
+    }
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    font-family:var(--font-body); color:var(--ink); background:var(--bg);
+    margin:0; padding:0 0 3rem; line-height:1.6;
+  }
+  .wrap{max-width:900px; margin:0 auto; padding:0 1.25rem;}
+
+  header.top{padding:2.25rem 0 1.25rem;}
+  .eyebrow{
+    font-family:var(--font-mono); font-size:12px; letter-spacing:.06em;
+    text-transform:uppercase; color:var(--accent); margin:0 0 .5rem;
+  }
+  h1{
+    font-family:var(--font-display); font-weight:400; font-size:28px;
+    margin:0 0 .35rem; text-wrap:balance; color:var(--ink);
+  }
+  .sub{color:var(--ink-soft); font-size:14.5px; margin:0; max-width:66ch;}
+  .sub a{color:var(--accent);}
+
+  nav.jump{
+    display:flex; flex-wrap:wrap; gap:8px; margin:1.75rem 0 2.25rem;
+  }
+  nav.jump a{
+    font-family:var(--font-mono); font-size:12.5px; color:var(--ink-soft);
+    text-decoration:none; border:0.5px solid var(--border); border-radius:100px;
+    padding:5px 12px; background:var(--surface);
+  }
+  nav.jump a:hover{border-color:var(--accent); color:var(--accent);}
+
+  .callout{
+    background:var(--warn-soft); border:0.5px solid var(--warn);
+    border-radius:12px; padding:1.1rem 1.4rem; margin-bottom:2rem;
+  }
+  .callout h3{
+    font-family:var(--font-display); font-weight:400; font-size:16px;
+    margin:0 0 .5rem; color:var(--warn);
+  }
+  .callout ul{margin:0; padding-left:1.2rem; font-size:13.5px; color:var(--ink);}
+  .callout li{margin-bottom:.4rem;}
+  .callout li:last-child{margin-bottom:0;}
+
+  h2.section-title{
+    font-family:var(--font-display); font-weight:400; font-size:22px;
+    margin:2.75rem 0 .4rem; color:var(--ink); text-wrap:balance;
+    scroll-margin-top:1rem;
+  }
+  p.section-sub{color:var(--ink-soft); font-size:13.5px; margin:0 0 1.1rem; max-width:66ch;}
+
+  .file{
+    background:var(--surface); border:0.5px solid var(--border);
+    border-radius:12px; padding:1.2rem 1.4rem; margin-bottom:.85rem;
+    scroll-margin-top:1rem;
+  }
+  .file-head{display:flex; align-items:baseline; gap:.6rem; flex-wrap:wrap; margin-bottom:.3rem;}
+  .file-name{
+    font-family:var(--font-mono); font-size:14px; font-weight:600; color:var(--accent);
+  }
+  .file-role{font-size:13px; color:var(--ink-soft);}
+
+  p.body{font-size:14px; margin:.6rem 0;}
+  p.body:first-of-type{margin-top:.4rem;}
+  .file ul.funcs{margin:.5rem 0; padding-left:1.1rem; font-size:13.5px;}
+  .file ul.funcs li{margin-bottom:.45rem;}
+  .file ul.funcs code{
+    font-family:var(--font-mono); font-size:12.5px; color:var(--accent);
+    background:var(--accent-soft); padding:1px 5px; border-radius:4px;
+  }
+
+  pre{
+    font-family:var(--font-mono); font-size:12.5px; line-height:1.6;
+    background:var(--surface-2); border:0.5px solid var(--border);
+    border-radius:8px; padding:.85rem 1rem; margin:.7rem 0 0;
+    overflow-x:auto; white-space:pre;
+  }
+
+  .brief{padding:.85rem 1.4rem;}
+  .brief .file-head{margin-bottom:0;}
+  .brief p.body{margin:.35rem 0 0; font-size:13.5px;}
+
+  .path{font-family:var(--font-mono); font-size:13px; color:var(--accent); background:var(--accent-soft); padding:1px 6px; border-radius:4px;}
+  code.inline{font-family:var(--font-mono); font-size:12.5px; color:var(--accent); background:var(--accent-soft); padding:1px 5px; border-radius:4px;}
+
+  .tablewrap{overflow-x:auto; border:0.5px solid var(--border); border-radius:12px; margin:.9rem 0;}
+  table{width:100%; border-collapse:collapse; font-size:13.5px; background:var(--surface);}
+  th,td{text-align:left; padding:.6rem .9rem; border-bottom:0.5px solid var(--border); vertical-align:top;}
+  th{font-size:11.5px; text-transform:uppercase; letter-spacing:.03em; color:var(--ink-soft); font-weight:600; background:var(--surface-2); white-space:nowrap;}
+  tr:last-child td{border-bottom:none;}
+
+  .badge{
+    font-family:var(--font-mono); font-size:11px; text-transform:uppercase; letter-spacing:.03em;
+    padding:2px 8px; border-radius:100px; white-space:nowrap;
+  }
+  .badge.cascade{background:var(--accent-soft); color:var(--accent);}
+  .badge.restrict{background:var(--purple-soft); color:var(--purple);}
+
+  footer.note{
+    margin-top:2.5rem; padding-top:1.25rem; border-top:0.5px solid var(--border);
+    font-size:13px; color:var(--ink-soft);
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header class="top">
+    <p class="eyebrow">Career Pathway Recommender — code reference</p>
+    <h1>Code documentation</h1>
+    <p class="sub">Every file in the repository, grouped by folder, explaining what it does. Controllers, config, the ML pipeline, and the schema get a full walkthrough; view templates, styling, and boilerplate get a short summary since their role is mostly presentation. For the request-by-request story instead of the file-by-file one, see <span class="path">docs/system_logic_flow.html</span>.</p>
+  </header>
+
+  <div class="callout">
+    <h3>Two things worth fixing before the report is finalised</h3>
+    <ul>
+      <li><strong>README.md</strong> still describes a "5-minute account lockout after 5 failed logins" and says "38 tests" — the lockout feature was removed on 19 July 2026, and the current suite collects <strong>37</strong> tests. The README needs a pass to match current behaviour.</li>
+      <li><strong>tests/test_web_flow.py</strong> hardcodes <span class="path">ADMIN_PASSWORD = "Admin123!"</span>, but the live admin account password was reset to <span class="path">AdminPass123!</span> on 19 July 2026. Any test that logs in as admin (<span class="path">test_register_login_submit_and_admin_visibility</span>, the two login-rejection tests) will fail against the current database until this constant is updated.</li>
+    </ul>
+  </div>
+
+  <nav class="jump">
+    <a href="#config">Config</a>
+    <a href="#controllers">Controllers</a>
+    <a href="#views">Views</a>
+    <a href="#partials">Partials</a>
+    <a href="#assets">Assets</a>
+    <a href="#ml">ML engine</a>
+    <a href="#database">Database</a>
+    <a href="#tests">Tests</a>
+    <a href="#root">Project root</a>
+  </nav>
+
+  <!-- ============================================================ -->
+  <h2 class="section-title" id="config">Config — <span class="path">src/config/</span></h2>
+  <p class="section-sub">Shared plumbing every controller pulls in. Nothing here renders HTML; it's connections, session state, and small helper functions reused across modules.</p>
+
+  <div class="file">
+    <div class="file-head"><span class="file-name">db.php</span><span class="file-role">database connection</span></div>
+    <p class="body">Opens the PDO connection to the <span class="path">career_system</span> MySQL database and exposes it as <code class="inline">$pdo</code>. Sets <code class="inline">ERRMODE_EXCEPTION</code> so a bad query throws instead of failing silently, and <code class="inline">FETCH_ASSOC</code> so every query result comes back as a plain associative array. If the connection itself fails, it stops the request with a 500 rather than letting a null <code class="inline">$pdo</code> cause confusing errors downstream.</p>
+  </div>
+
+  <div class="file">
+    <div class="file-head"><span class="file-name">session.php</span><span class="file-role">session bootstrap, access control, CSRF</span></div>
+    <p class="body">Starts (or resumes) the PHP session, then defines the four functions every controller relies on for security:</p>
+    <ul class="funcs">
+      <li><code>require_login()</code> — redirects to the login page if nobody's signed in.</li>
+      <li><code>require_role($role)</code> — calls <code>require_login()</code> first, then returns 403 Forbidden if the signed-in user's role doesn't match. This is the line that keeps students out of admin pages and vice versa.</li>
+      <li><code>csrf_token()</code> / <code>csrf_field()</code> — generates a random 32-byte token per session and renders it as a hidden form field.</li>
+      <li><code>require_csrf()</code> — checks the submitted token against the session token with <code>hash_equals()</code> (constant-time comparison, avoids timing attacks) and returns 403 if it doesn't match. Every controller that handles a POST calls this before touching the database.</li>
+    </ul>
+  </div>
+
+  <div class="file">
+    <div class="file-head"><span class="file-name">ml_client.php</span><span class="file-role">HTTP bridge to the Flask ML service</span></div>
+    <p class="body">PHP has no idea how the AI model works — it just makes two cURL calls to the Python service on port 5001:</p>
+    <ul class="funcs">
+      <li><code>get_recommendation($payload)</code> — POSTs scores + interest to <span class="path">/predict</span>, returns the decoded JSON (pathway, confidence, explanation, ranking) or an <code>['error' => ...]</code> array if the service is unreachable or rejects the input.</li>
+      <li><code>trigger_retrain()</code> — POSTs to <span class="path">/retrain</span> with a 120-second timeout (retraining three models on ~3,000+ rows takes longer than a normal request).</li>
+    </ul>
+    <p class="body">Both functions fail soft: if the ML service is down, the caller gets back an error message to show the user rather than a crash. In <span class="path">student_controller.php</span> this specifically means the student's scores are still saved even if the recommendation step fails.</p>
+  </div>
+
+  <div class="file">
+    <div class="file-head"><span class="file-name">helpers.php</span><span class="file-role">small shared utilities</span></div>
+    <ul class="funcs">
+      <li><code>pathway_badge_class($pathway)</code> — maps a pathway name to a CSS class (<code class="inline">badge-stem</code>, <code class="inline">badge-social</code>, <code class="inline">badge-arts</code>) so the colored pill renders consistently everywhere a pathway is shown.</li>
+      <li><code>validate_password_strength($password, $label)</code> — enforces the 8-char minimum, uppercase, lowercase, digit, and special-character rules. Shared by registration, admin password reset, and profile password change so the rule only lives in one place.</li>
+      <li><code>require_student_by_id($pdo, $id)</code> — looks up a student by <span class="path">?id=</span> and 404s if it's not a real student account. Used by every admin action that targets one specific student (delete, reset password).</li>
+      <li><code>generate_student_id($pdo)</code> — takes the highest existing numeric suffix on a <span class="path">STU%</span> ID and adds one, producing <span class="path">STU001</span>, <span class="path">STU002</span>, etc. Uses <code class="inline">MAX()</code> rather than <code class="inline">COUNT(*)</code> deliberately: counting rows would generate a duplicate ID once a student has been deleted and left a gap in the sequence.</li>
+    </ul>
+  </div>
+
+  <div class="file">
+    <div class="file-head"><span class="file-name">constants.php</span><span class="file-role">shared value lists</span></div>
+    <p class="body">Defines <code class="inline">SUBJECTS</code> (the five score fields, each mapped to its display label) and <code class="inline">ALLOWED_INTERESTS</code> (the six valid interest categories). Both the score-validation loop in <span class="path">student_controller.php</span> and the form fields in <span class="path">student_dashboard.php</span> read from these same arrays, so a new subject or interest only needs to be added in one place.</p>
+  </div>
+
+  <!-- ============================================================ -->
+  <h2 class="section-title" id="controllers">Controllers — <span class="path">src/controllers/</span></h2>
+  <p class="section-sub">Every controller is required at the top of its matching page in <span class="path">public/</span>, runs before any HTML is output, and leaves behind plain PHP variables (<span class="path">$error</span>, <span class="path">$result</span>, <span class="path">$history</span>, …) for the view to print. None of them echo HTML themselves.</p>
+
+  <div class="file">
+    <div class="file-head"><span class="file-name">login_controller.php</span><span class="file-role">FR1 — authentication</span></div>
+    <p class="body">On POST: looks up the email, then <code class="inline">password_verify()</code>s the submitted password against the stored bcrypt hash. Three outcomes — no such email, wrong password, or success — each with a distinct, specific error message rather than a generic "invalid credentials", which is a deliberate usability choice (and is exactly what <span class="path">test_web_flow.py</span> asserts on). On success it writes <code class="inline">user_id</code>, <code class="inline">student_id</code>, <code class="inline">full_name</code>, and <code class="inline">role</code> into <code class="inline">$_SESSION</code> and redirects to the admin or student dashboard based on role.</p>
+  </div>
+
+  <div class="file">
+    <div class="file-head"><span class="file-name">register_controller.php</span><span class="file-role">FR1 — account creation</span></div>
+    <p class="body">Validates all fields are present, the email is well-formed, the password passes <code class="inline">validate_password_strength()</code>, and the two password fields match. Checks the email isn't already registered, then hashes the password with <code class="inline">password_hash()</code> (bcrypt), generates a student ID via <code class="inline">generate_student_id()</code>, inserts the new row, and logs the student straight in — no separate "verify your email" step.</p>
+  </div>
+
+  <div class="file">
+    <div class="file-head"><span class="file-name">student_controller.php</span><span class="file-role">FR2–FR6 — the core recommendation flow</span></div>
+    <p class="body">This is the file the supervisor asked to see the "two-insert flow" in. On POST, after validating every score is a number 0–100 and the interest is one of <code class="inline">ALLOWED_INTERESTS</code>, it runs a strict three-step sequence:</p>
+    <pre>1. INSERT INTO academic_records (...)      -- save the raw submission first
+   $record_id = $pdo->lastInsertId();
+
+2. $prediction = get_recommendation($ml_payload);   -- HTTP call to Flask :5001
+
+3. INSERT INTO recommendations (user_id, record_id, pathway_id,
+                                 confidence, explanation, model_used)
+   VALUES (?, ?, ?, ?, ?, ?);</pre>
+    <p class="body">The order matters: scores are saved <em>before</em> the ML call, so if the Flask service is down the student's data isn't lost — they just see "recommendation engine temporarily unavailable, your scores were saved". The <code class="inline">record_id</code> from step 1 is what links a recommendation back to the exact scores that produced it (see the schema relationships below). At the bottom of the file, a separate query pulls the student's full recommendation history (joining <span class="path">recommendations</span> + <span class="path">pathways</span> + <span class="path">academic_records</span>) for display, regardless of whether this request was a GET or a fresh POST.</p>
+  </div>
+
+  <div class="file">
+    <div class="file-head"><span class="file-name">student_profile_controller.php</span><span class="file-role">self-service profile edit</span></div>
+    <p class="body">Lets a student update their own name, email, and optionally password. Email uniqueness is checked against every <em>other</em> account (<code class="inline">WHERE email = ? AND user_id != ?</code>). A password change only happens if either password field was filled in, and requires the <em>current</em> password to verify first — changing name/email alone never touches <code class="inline">password_hash</code>.</p>
+  </div>
+
+  <div class="file">
+    <div class="file-head"><span class="file-name">admin_controller.php</span><span class="file-role">FR7/FR8 — dashboard data + retrain trigger</span></div>
+    <p class="body">Powers the admin dashboard. Four separate queries build the page: overall totals (student count, recommendation count), a pathway breakdown, the 50 most recent recommendations, and the full student roster with a submission count per student (a <code class="inline">LEFT JOIN</code> so students with zero submissions still show up). A student's <em>latest</em> pathway is computed in PHP rather than SQL — the query pulls every recommendation ordered newest-first, and a simple loop keeps only the first (most recent) row per <code class="inline">user_id</code>, which sidesteps a fragile correlated subquery for "latest row per group" in MySQL. If the retrain button was submitted, it calls <code class="inline">trigger_retrain()</code> before any of that, so a fresh retrain result can display above the stats.</p>
+  </div>
+
+  <div class="file">
+    <div class="file-head"><span class="file-name">admin_student_report_controller.php</span><span class="file-role">FR7 — per-student printable report</span></div>
+    <p class="body">Validates the <span class="path">?id=</span> query param is a real integer, looks up the student, 404s if not found, then pulls their full recommendation history the same way <span class="path">student_controller.php</span> does for a student viewing their own history.</p>
+  </div>
+
+  <div class="file">
+    <div class="file-head"><span class="file-name">admin_pathway_report_controller.php</span><span class="file-role">FR7 — per-pathway printable report</span></div>
+    <p class="body">Looks up the pathway by name from <span class="path">?pathway=</span>, 404s if it doesn't exist, then pulls every recommendation for that pathway across all students, newest first.</p>
+  </div>
+
+  <div class="file">
+    <div class="file-head"><span class="file-name">admin_reset_password_controller.php</span><span class="file-role">admin resets a student's password</span></div>
+    <p class="body">Same strength validation as registration, hashes the new password, and updates that one row. No email is sent — the success message explicitly reminds the admin to share the new password with the student directly, since there's no automated password-reset flow.</p>
+  </div>
+
+  <div class="file">
+    <div class="file-head"><span class="file-name">admin_delete_student_controller.php</span><span class="file-role">permanent student deletion</span></div>
+    <p class="body">Requires the admin to type the student's exact full name into a text field as a confirmation gate before anything happens. On match, it runs a single <code class="inline">DELETE FROM users WHERE user_id = ? AND role = 'student'</code> — the <code class="inline">role = 'student'</code> guard exists so this endpoint can never delete an admin account even if the ID were tampered with. The delete is permanent: <span class="path">academic_records</span> and <span class="path">recommendations</span> for that user disappear too, via <code class="inline">ON DELETE CASCADE</code> in the schema (see Database section), not extra PHP code.</p>
+  </div>
+
+  <!-- ============================================================ -->
+  <h2 class="section-title" id="views">Views — <span class="path">public/*.php</span></h2>
+  <p class="section-sub">Each page follows the same pattern: <code class="inline">require</code> its controller at the very top (which does all the thinking and can redirect before any HTML is sent), then print HTML using the variables the controller set. Logic here is limited to loops over already-fetched data and small display decisions.</p>
+
+  <div class="file brief">
+    <div class="file-head"><span class="file-name">index.php</span><span class="file-role">landing page</span></div>
+    <p class="body">No controller — just a session check that bounces a logged-in user straight to their dashboard, otherwise shows a static overview of the four "modules" with login/register links.</p>
+  </div>
+
+  <div class="file brief">
+    <div class="file-head"><span class="file-name">login.php</span> / <span class="file-name">register.php</span></div>
+    <p class="body">Thin wrappers around their controllers — a form, an error banner if <code class="inline">$error</code> is set, nothing else.</p>
+  </div>
+
+  <div class="file brief">
+    <div class="file-head"><span class="file-name">logout.php</span></div>
+    <p class="body">No controller, no view — five lines: start the session, <code class="inline">session_destroy()</code>, redirect to login.</p>
+  </div>
+
+  <div class="file">
+    <div class="file-head"><span class="file-name">student_dashboard.php</span><span class="file-role">the score-submission form + result + history</span></div>
+    <p class="body">Renders the five score inputs and interest dropdown (looped from <code class="inline">SUBJECTS</code> / <code class="inline">ALLOWED_INTERESTS</code> in constants.php, so the form can never drift from what the controller validates). If <code class="inline">$result</code> is set, shows the recommended pathway, the confidence bar (animated via a few lines of inline JS that widens it from 0% after a 100ms delay, for the fill animation), and the ranking table across all three pathways. Below that, <span class="path">partials/history_card.php</span> renders every past submission. A hidden print-only header (<span class="path">.print-only</span>) only becomes visible via the CSS <code class="inline">@media print</code> rules when the student clicks "Print or Save as PDF".</p>
+  </div>
+
+  <div class="file brief">
+    <div class="file-head"><span class="file-name">student_profile.php</span></div>
+    <p class="body">Profile edit form pre-filled with the student's current name/email, plus optional password-change fields, wrapping <span class="path">student_profile_controller.php</span>.</p>
+  </div>
+
+  <div class="file">
+    <div class="file-head"><span class="file-name">admin_dashboard.php</span><span class="file-role">stats, retrain button, student roster, recent activity</span></div>
+    <p class="body">The largest view in the app. Besides looping over the data the controller fetched, it has real client-side logic: a shared <code class="inline">filterTable()</code> JS function does live search + pathway filtering on both the student table and the recommendations table without a page reload or server round-trip — it just walks the table rows, checks each row's text against the search box and dropdown, and toggles <code class="inline">display: none</code>. <code class="inline">filterStudents()</code> and <code class="inline">filterRecs()</code> are thin wrappers that call it with each table's specific column indexes, and both run once on page load to set the initial "X of Y shown" count.</p>
+  </div>
+
+  <div class="file brief">
+    <div class="file-head"><span class="file-name">admin_student_report.php</span> / <span class="file-name">admin_pathway_report.php</span></div>
+    <p class="body">Printable report pages — a close button, a print button, and (for the student report) links to reset password / delete student. The pathway report's table is only rendered if <code class="inline">$recommendations</code> isn't empty; otherwise a "no students yet" message shows instead.</p>
+  </div>
+
+  <div class="file brief">
+    <div class="file-head"><span class="file-name">admin_reset_password.php</span> / <span class="file-name">admin_delete_student.php</span></div>
+    <p class="body">Small forms guarding a destructive/sensitive action. The delete page shows a plain-language warning ("this cannot be undone") naming exactly how many records will go with the account, before the confirmation field.</p>
+  </div>
+
+  <!-- ============================================================ -->
+  <h2 class="section-title" id="partials">Partials — <span class="path">public/partials/</span></h2>
+  <p class="section-sub">Reusable HTML fragments included by multiple pages, so a layout only has to be written once.</p>
+
+  <div class="file brief">
+    <div class="file-head"><span class="file-name">navbar.php</span></div>
+    <p class="body">Reads three optional variables the including page sets beforehand — <code class="inline">$navbar_admin</code>, <code class="inline">$navbar_greeting</code>, <code class="inline">$navbar_links</code> — and renders the top bar accordingly. Every page includes this rather than repeating the markup.</p>
+  </div>
+
+  <div class="file brief">
+    <div class="file-head"><span class="file-name">history_card.php</span></div>
+    <p class="body">Loops over <code class="inline">$history</code> (a set of joined recommendation + academic_record rows) and renders one card per past submission: pathway badge, confidence, timestamp, explanation text, and the five scores in a small table. Used by both <span class="path">student_dashboard.php</span> (student viewing their own history) and <span class="path">admin_student_report.php</span> (admin viewing any student's history) — same markup, different caller.</p>
+  </div>
+
+  <!-- ============================================================ -->
+  <h2 class="section-title" id="assets">Assets — <span class="path">public/assets/</span></h2>
+
+  <div class="file brief">
+    <div class="file-head"><span class="file-name">css/style.css</span></div>
+    <p class="body">One stylesheet for the whole app — CSS custom properties for the color palette at the top, then cards, forms, buttons, tables, the confidence bar, and a dedicated <code class="inline">@media print</code> block that hides the navbar/buttons (<span class="path">.no-print</span>) and reveals report-only headers (<span class="path">.print-only</span>) when a page is printed or saved as PDF.</p>
+  </div>
+
+  <div class="file brief">
+    <div class="file-head"><span class="file-name">js/student.js</span></div>
+    <p class="body">One listener: on submitting the recommendation form, if the form passes native HTML5 validation, disable the submit button and change its text to "Generating recommendation…" — feedback during the round trip to the ML API so the student doesn't wonder if their click registered or double-submit.</p>
+  </div>
+
+  <!-- ============================================================ -->
+  <h2 class="section-title" id="ml">ML engine — <span class="path">ml/*.py</span></h2>
+  <p class="section-sub">A separate Flask process on port 5001, called over HTTP by <span class="path">ml_client.php</span>. Nothing here talks to PHP directly.</p>
+
+  <div class="file">
+    <div class="file-head"><span class="file-name">features.py</span><span class="file-role">single source of truth for feature order</span></div>
+    <p class="body">Just a list — <code class="inline">FEATURES = [math_score, english_score, science_score, humanities_score, creative_arts_score, interest_encoded]</code>. Both <span class="path">train_model.py</span> and <span class="path">api.py</span> import this instead of each hardcoding their own copy, because the order here has to exactly match the order values are packed into a row at prediction time — a mismatch would silently feed the model the wrong column as "math score".</p>
+  </div>
+
+  <div class="file">
+    <div class="file-head"><span class="file-name">generate_data.py</span><span class="file-role">synthetic training data generator</span></div>
+    <p class="body">Produces the 3,000-row baseline dataset used until enough real student submissions accumulate. For each synthetic student: draws five subject scores from a normal distribution, then <em>biases</em> the relevant scores upward based on a randomly chosen interest (e.g. "technology" pushes math and science up), so the dataset has a genuine, learnable pattern rather than pure noise. The pathway label is computed with the same subject-strength + interest-bonus logic as <code class="inline">build_explanation()</code> in <span class="path">api.py</span> — deliberately, so the label a human counselor would assign and the label the model explains its predictions against are the same reasoning. 8% of rows get their label randomly reassigned afterward ("label noise") so the dataset isn't trivially separable, which would make the reported accuracy meaningless.</p>
+  </div>
+
+  <div class="file">
+    <div class="file-head"><span class="file-name">train_model.py</span><span class="file-role">trains and benchmarks all three models</span></div>
+    <ul class="funcs">
+      <li><code>load_data(df)</code> — encodes the <code class="inline">interest</code> and <code class="inline">pathway</code> text columns to integers via <code class="inline">LabelEncoder</code>, returns X (features) / y (encoded pathway).</li>
+      <li><code>evaluate(...)</code> — computes accuracy, macro precision/recall/F1, and prints a confusion matrix for one model.</li>
+      <li><code>train_and_save(df)</code> — the main entry point. Splits 80/20 train/test (stratified so all three pathways are proportionally represented in both splits), trains Decision Tree, Random Forest, and KNN, evaluates each with both a held-out test set and 5-fold cross-validation, then <strong>only the Decision Tree</strong> is saved for production use (<span class="path">ml/model/decision_tree.joblib</span>) — Random Forest and KNN's numbers are recorded in <span class="path">metrics.json</span> purely as benchmarks proving the simpler, interpretable model is competitive. Separately, it fits a second KNN (<code class="inline">n_neighbors=25</code>) over <em>scaled</em> features across the whole population — this is the "collaborative filtering" component used at prediction time, distinct from the benchmark KNN above which is evaluated the same way as the other two models.</li>
+    </ul>
+    <p class="body">Called both directly (<code class="inline">python ml/train_model.py</code>, using the synthetic CSV) and by <span class="path">api.py</span>'s <span class="path">/retrain</span> endpoint (passing in a DataFrame that blends real submissions with the synthetic baseline).</p>
+  </div>
+
+  <div class="file">
+    <div class="file-head"><span class="file-name">api.py</span><span class="file-role">the Flask HTTP service — where predictions actually happen</span></div>
+    <p class="body">Loads all five saved model files once at startup (the Decision Tree, its two encoders, the collaborative scaler, and the collaborative KNN) into module-level variables, so a prediction doesn't re-read files from disk on every request.</p>
+    <ul class="funcs">
+      <li><code>build_explanation(scores, interest, predicted_pathway)</code> — generates the plain-English "why" text. Computes an average score per pathway area (STEM = avg of math+science, etc.), checks whether the strongest area matches the prediction and whether the stated interest maps to it, and composes a sentence from whichever of those are true. Falls back to "this pathway best balances your subject scores and interest" if neither condition holds, so the explanation is never empty.</li>
+      <li><code>predict()</code> — the <span class="path">/predict</span> route. Validates every field is present, the interest is a known category, and every score is a number between 0 and 100 (returning 400 with a specific message otherwise — this is what <span class="path">test_ml_api.py</span>'s rejection tests check). Runs the Decision Tree and the collaborative KNN independently, blends their probability outputs 70/30 (<code class="inline">CONTENT_WEIGHT</code> / <code class="inline">COLLAB_WEIGHT</code>), and picks the highest-probability pathway from the blend. Appends a second sentence to the explanation ("X% of students with a similar academic profile also pursued...") only when that peer agreement is 40% or higher — below that the collaborative signal is too weak to be worth stating as a supporting fact.</li>
+      <li><code>reload_models()</code> — re-reads all five joblib files from disk; called after a retrain so the running Flask process picks up the newly trained model without needing a restart.</li>
+      <li><code>fetch_real_student_data()</code> — a direct MySQL query (via <code class="inline">pymysql</code>, separate from PHP's PDO connection) joining <span class="path">academic_records</span> → <span class="path">recommendations</span> → <span class="path">pathways</span> to pull every real submission and the pathway it was given.</li>
+      <li><code>retrain()</code> — the <span class="path">/retrain</span> route. Loads the synthetic baseline CSV, fetches real data, concatenates them (falling back to baseline-only if there are zero real submissions yet), calls <code class="inline">train_and_save()</code>, reloads the in-memory models, and returns the new metrics as JSON for the admin dashboard to display.</li>
+      <li><code>health()</code> — trivial <span class="path">/health</span> endpoint returning <code class="inline">{"status": "ok"}</code>, used by <span class="path">test_ml_api.py</span> to confirm the Flask service is actually running before the other tests bother making requests.</li>
+    </ul>
+  </div>
+
+  <div class="file brief">
+    <div class="file-head"><span class="file-name">model/metrics.json</span></div>
+    <p class="body">Not code — the output of the last training run (accuracy/precision/recall/F1/cross-validation score per model). Overwritten every time <span class="path">train_and_save()</span> runs, so the numbers here always reflect the currently-loaded model, not a fixed historical figure.</p>
+  </div>
+
+  <!-- ============================================================ -->
+  <h2 class="section-title" id="database">Database — <span class="path">database/schema.sql</span></h2>
+  <p class="section-sub">Single source of truth for the schema — no migration files exist; this script is run once against a fresh MySQL instance to create everything, including the three fixed pathway rows.</p>
+
+  <div class="tablewrap">
+    <table>
+      <tr><th>Table</th><th>Holds</th><th>Key columns</th></tr>
+      <tr><td><span class="path">users</span></td><td>Every account — students and the one admin</td><td><code class="inline">user_id</code> PK, <code class="inline">student_id</code> (e.g. STU001, null for admin), <code class="inline">role</code> enum('student','admin'), <code class="inline">password_hash</code></td></tr>
+      <tr><td><span class="path">pathways</span></td><td>The 3 fixed CBC pathways — seeded by this script, never edited via the UI</td><td><code class="inline">pathway_id</code> PK, <code class="inline">name</code>, <code class="inline">description</code></td></tr>
+      <tr><td><span class="path">academic_records</span></td><td>One row per score submission</td><td><code class="inline">record_id</code> PK, <code class="inline">user_id</code> FK, five score columns, <code class="inline">interest</code></td></tr>
+      <tr><td><span class="path">recommendations</span></td><td>One row per AI result, tied to the submission that produced it</td><td><code class="inline">recommendation_id</code> PK, <code class="inline">user_id</code> FK, <code class="inline">record_id</code> FK, <code class="inline">pathway_id</code> FK, <code class="inline">confidence</code>, <code class="inline">explanation</code></td></tr>
+    </table>
+  </div>
+
+  <p class="body" style="margin-top:1.2rem;">How they relate (this is the answer to "explain the table relationships"):</p>
+  <div class="tablewrap">
+    <table>
+      <tr><th>Relationship</th><th>Cardinality</th><th>On delete</th></tr>
+      <tr><td><span class="path">users</span> → <span class="path">academic_records</span></td><td>1 → many</td><td><span class="badge cascade">cascade</span></td></tr>
+      <tr><td><span class="path">users</span> → <span class="path">recommendations</span></td><td>1 → many</td><td><span class="badge cascade">cascade</span></td></tr>
+      <tr><td><span class="path">academic_records</span> → <span class="path">recommendations</span></td><td>1 → 1 in practice (one recommendation generated per submission)</td><td><span class="badge cascade">cascade</span></td></tr>
+      <tr><td><span class="path">pathways</span> → <span class="path">recommendations</span></td><td>1 → many</td><td><span class="badge restrict">no cascade</span></td></tr>
+    </table>
+  </div>
+  <p class="body">The two <code class="inline">CASCADE</code> rules on <span class="path">user_id</span> are what makes <span class="path">admin_delete_student_controller.php</span>'s single <code class="inline">DELETE FROM users</code> statement sufficient — MySQL removes the student's academic records and recommendations automatically, no extra PHP delete statements needed. <span class="path">pathways</span> deliberately has no cascade: it's reference data seeded once, never deleted through the app, so there's nothing to cascade from it. Two indexes (<code class="inline">idx_academic_user</code>, <code class="inline">idx_recommendation_user</code>) speed up the very common "all records/recommendations for this user" lookups used throughout the controllers.</p>
+
+  <!-- ============================================================ -->
+  <h2 class="section-title" id="tests">Tests — <span class="path">tests/*.py</span></h2>
+  <p class="section-sub">37 tests across three files, each testing a different layer.</p>
+
+  <div class="file">
+    <div class="file-head"><span class="file-name">test_unit_ml_logic.py</span><span class="file-role">9 tests — pure functions, no server or database needed</span></div>
+    <p class="body">Imports <code class="inline">build_explanation()</code> and <code class="inline">generate_student()</code> directly and calls them in-process. Checks the explanation text cites the right reasons under different score/interest/pathway combinations and is never empty, and that synthetic student generation stays within valid ranges and produces the expected interest bias (technology-interested synthetic students average higher math scores).</p>
+  </div>
+
+  <div class="file">
+    <div class="file-head"><span class="file-name">test_ml_api.py</span><span class="file-role">14 tests — the Flask service over real HTTP, requires <span class="path">python ml/api.py</span> running</span></div>
+    <p class="body">Covers the happy path (<span class="path">/predict</span> with a strong-STEM profile actually returns STEM, confidence is 0–100, ranking covers all three pathways) plus a deliberately long list of negative cases that must all return 400: missing fields, unknown interest, out-of-range scores (parametrized: too high, negative, just over/under the boundary), non-numeric score, null score, empty interest string, and a SQL-injection-style string in the interest field (this one exists specifically to confirm <span class="path">/predict</span> never touches SQL at all, so there's nothing to inject into). One <code class="inline">@pytest.mark.slow</code> test actually calls <span class="path">/retrain</span> end-to-end and checks the returned accuracy is above 70%.</p>
+  </div>
+
+  <div class="file">
+    <div class="file-head"><span class="file-name">test_web_flow.py</span><span class="file-role">14 tests — the PHP app over real HTTP, requires Apache + MySQL + Flask all running</span></div>
+    <p class="body">The main test, <code class="inline">test_register_login_submit_and_admin_visibility</code>, is a full smoke test: register a fresh student, submit strong-STEM scores and confirm the recommendation comes back STEM, confirm a request with a forged CSRF token is rejected with 403, then log in as admin and confirm the new student's email shows up in the dashboard. Every other test targets one specific rejection path — wrong password, unregistered email, each individual password-strength rule, mismatched passwords, duplicate email, out-of-range scores, invalid interest, and a student trying to load the admin dashboard directly (expects 403). Test student accounts use <code class="inline">student_&#123;uuid&#125;@test.com</code> addresses and are not cleaned up automatically, so running this file repeatedly accumulates junk rows in the live database — <code class="inline">DELETE FROM users WHERE email LIKE '%@test.com'</code> clears them.</p>
+  </div>
+
+  <!-- ============================================================ -->
+  <h2 class="section-title" id="root">Project root</h2>
+
+  <div class="file brief">
+    <div class="file-head"><span class="file-name">README.md</span></div>
+    <p class="body">Project overview, setup instructions, and a model performance table for anyone opening the repo fresh. Currently out of date in two places — see the callout at the top of this page.</p>
+  </div>
+
+  <div class="file brief">
+    <div class="file-head"><span class="file-name">start_ml.bat</span></div>
+    <p class="body">Double-click convenience script: opens the login page in the default browser, then starts <span class="path">python ml/api.py</span> in the same window (kept open — closing it stops the AI engine).</p>
+  </div>
+
+  <div class="file brief">
+    <div class="file-head"><span class="file-name">pytest.ini</span></div>
+    <p class="body">Registers the <span class="path">slow</span> marker (used on the retrain test) so pytest doesn't warn about an unrecognized marker.</p>
+  </div>
+
+  <div class="file brief">
+    <div class="file-head"><span class="file-name">.gitignore</span></div>
+    <p class="body">Keeps generated/local files out of version control — the usual Python cache directories, and machine-specific paths that shouldn't be committed.</p>
+  </div>
+
+  <footer class="note">
+    Written 20 July 2026, covering the codebase as of commit <span class="path">1f2fda0</span>. If files are added, removed, or substantially rewritten, this page needs a pass to stay accurate — same caveat as <span class="path">system_logic_flow.html</span>.
+  </footer>
+
+</div>
+</body>
+</html>

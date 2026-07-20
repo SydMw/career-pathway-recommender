@@ -31,15 +31,3 @@ $recs_stmt = $pdo->prepare(
 );
 $recs_stmt->execute([$pathway['pathway_id']]);
 $recommendations = $recs_stmt->fetchAll();
-
-$avg_stmt = $pdo->prepare(
-    'SELECT
-        AVG(a.math_score) AS avg_math, AVG(a.english_score) AS avg_english,
-        AVG(a.science_score) AS avg_science, AVG(a.humanities_score) AS avg_humanities,
-        AVG(a.creative_arts_score) AS avg_arts, AVG(r.confidence) AS avg_confidence
-     FROM recommendations r
-     JOIN academic_records a ON a.record_id = r.record_id
-     WHERE r.pathway_id = ?'
-);
-$avg_stmt->execute([$pathway['pathway_id']]);
-$averages = $avg_stmt->fetch();

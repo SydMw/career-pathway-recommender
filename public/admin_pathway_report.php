@@ -31,26 +31,6 @@ include __DIR__ . '/partials/navbar.php';
             <p class="muted" style="margin-top:8px;"><?= count($recommendations) ?> student(s) have been recommended this pathway</p>
         </div>
 
-        <?php if (!empty($recommendations)): ?>
-        <div class="card">
-            <h2>Average Profile of Students on This Pathway</h2>
-            <table>
-                <tr>
-                    <th>Math</th><th>English</th><th>Science</th>
-                    <th>Humanities</th><th>Creative Arts</th><th>Confidence</th>
-                </tr>
-                <tr>
-                    <td><?= round($averages['avg_math'], 1) ?></td>
-                    <td><?= round($averages['avg_english'], 1) ?></td>
-                    <td><?= round($averages['avg_science'], 1) ?></td>
-                    <td><?= round($averages['avg_humanities'], 1) ?></td>
-                    <td><?= round($averages['avg_arts'], 1) ?></td>
-                    <td><?= round($averages['avg_confidence'], 1) ?>%</td>
-                </tr>
-            </table>
-        </div>
-        <?php endif; ?>
-
         <div class="card">
             <h2>Students Recommended <?= htmlspecialchars($pathway['name']) ?></h2>
             <?php if (empty($recommendations)): ?>

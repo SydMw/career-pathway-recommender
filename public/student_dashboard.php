@@ -33,8 +33,8 @@ include __DIR__ . '/partials/navbar.php';
             <label for="interest">Primary interest</label>
             <select id="interest" name="interest" required>
                 <option value="">Select your main interest</option>
-                <?php foreach (ALLOWED_INTERESTS as $i): ?>
-                    <option value="<?= htmlspecialchars($i) ?>"><?= htmlspecialchars(ucfirst($i)) ?></option>
+                <?php foreach (ALLOWED_INTERESTS as $interest): ?>
+                    <option value="<?= htmlspecialchars($interest) ?>"><?= htmlspecialchars(ucfirst($interest)) ?></option>
                 <?php endforeach; ?>
             </select>
 

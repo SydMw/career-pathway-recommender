@@ -42,13 +42,11 @@ include __DIR__ . '/partials/navbar.php';
         </form>
         <script src="assets/js/student.js"></script>
 
-        <?php if ($result):
-            $badge_class = pathway_badge_class($result['pathway']);
-        ?>
+        <?php if ($result): ?>
             <div class="result no-print">
                 <h3>
                     Recommended Pathway:
-                    <span class="badge <?= $badge_class ?>"><?= htmlspecialchars($result['pathway']) ?></span>
+                    <span class="badge"><?= htmlspecialchars($result['pathway']) ?></span>
                 </h3>
                 <p class="result-explanation"><?= htmlspecialchars($result['explanation']) ?></p>
                 <p class="confidence-label">How confident is the system?</p>

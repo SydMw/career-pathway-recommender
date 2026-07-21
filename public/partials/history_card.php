@@ -6,12 +6,10 @@
  * joining recommendations + pathways + academic_records.
  */
 ?>
-<?php foreach ($history as $h):
-    $bc = pathway_badge_class($h['pathway']);
-?>
+<?php foreach ($history as $h): ?>
     <div class="result" style="margin-bottom: 16px;">
         <h3>
-            <span class="badge <?= $bc ?>"><?= htmlspecialchars($h['pathway']) ?></span>
+            <span class="badge"><?= htmlspecialchars($h['pathway']) ?></span>
             &nbsp;<?= htmlspecialchars($h['confidence']) ?>% confidence
         </h3>
         <p class="muted" style="margin-top:6px;">

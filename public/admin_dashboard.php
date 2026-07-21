@@ -133,13 +133,11 @@ include __DIR__ . '/partials/navbar.php';
                 <th>Maths</th><th>English</th><th>Science</th><th>Humanities</th><th>Arts</th>
                 <th>Date</th>
             </tr>
-            <?php foreach ($recent as $r):
-                $bc = pathway_badge_class($r['pathway']);
-            ?>
+            <?php foreach ($recent as $r): ?>
                 <tr>
                     <td><?= htmlspecialchars($r['full_name']) ?></td>
                     <td><?= htmlspecialchars($r['email']) ?></td>
-                    <td><span class="badge <?= $bc ?>"><?= htmlspecialchars($r['pathway']) ?></span></td>
+                    <td><span class="badge"><?= htmlspecialchars($r['pathway']) ?></span></td>
                     <td><?= htmlspecialchars($r['confidence']) ?>%</td>
                     <td><?= htmlspecialchars($r['math_score']) ?></td>
                     <td><?= htmlspecialchars($r['english_score']) ?></td>

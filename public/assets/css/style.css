@@ -266,7 +266,7 @@ button:disabled {
     to   { opacity: 1; transform: scale(1); }
 }
 
-/* Pathway colour badges */
+/* Pathway badge */
 .result h3 { font-size: 17px; }
 
 .badge {

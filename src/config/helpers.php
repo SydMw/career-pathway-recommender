@@ -1,13 +1,4 @@
 <?php
-function pathway_badge_class(string $pathway): string
-{
-    return match ($pathway) {
-        'STEM' => 'badge-stem',
-        'Social Sciences' => 'badge-social',
-        default => 'badge-arts',
-    };
-}
-
 // Checks password strength rules shared by registration, admin reset, and
 // profile edit. Returns an error message, or null if the password passes.
 function validate_password_strength(string $password, string $label = 'Password'): ?string

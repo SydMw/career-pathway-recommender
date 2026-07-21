@@ -39,7 +39,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $_SESSION['full_name'] = $full_name;
             $_SESSION['role'] = 'student';
 
-            header('Location: /career_system/public/student_dashboard.php');
+            header('Location: ' . APP_URL . '/student_dashboard.php');
             exit;
         }
     }

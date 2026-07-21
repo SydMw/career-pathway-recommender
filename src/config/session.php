@@ -1,4 +1,8 @@
 <?php
+// Base path the app is served from, so a redirect only has to change here
+// if the project ever moves off http://localhost/career_system/public/.
+const APP_URL = '/career_system/public';
+
 if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
@@ -6,7 +10,7 @@ if (session_status() === PHP_SESSION_NONE) {
 function require_login(): void
 {
     if (empty($_SESSION['user_id'])) {
-        header('Location: /career_system/public/login.php');
+        header('Location: ' . APP_URL . '/login.php');
         exit;
     }
 }

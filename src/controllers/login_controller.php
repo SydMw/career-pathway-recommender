@@ -25,9 +25,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $_SESSION['role'] = $user['role'];
 
         if ($user['role'] === 'admin') {
-            header('Location: /career_system/public/admin_dashboard.php');
+            header('Location: ' . APP_URL . '/admin_dashboard.php');
         } else {
-            header('Location: /career_system/public/student_dashboard.php');
+            header('Location: ' . APP_URL . '/student_dashboard.php');
         }
         exit;
     }

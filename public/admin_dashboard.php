@@ -113,19 +113,7 @@ include __DIR__ . '/partials/navbar.php';
     </div>
 
     <div class="card">
-        <div class="table-toolbar no-print">
-            <h2 style="margin-bottom:0;">Recent Recommendations</h2>
-            <div class="toolbar-controls">
-                <input type="text" id="rec-search" placeholder="Search by name or email..." oninput="filterRecs()">
-                <select id="rec-pathway-filter" onchange="filterRecs()">
-                    <option value="">All pathways</option>
-                    <option value="STEM">STEM</option>
-                    <option value="Social Sciences">Social Sciences</option>
-                    <option value="Arts and Sports Science">Arts and Sports Science</option>
-                </select>
-            </div>
-        </div>
-        <p class="muted no-print" id="rec-count"></p>
+        <h2>Recent Recommendations</h2>
         <div class="table-scroll">
         <table id="recs-table">
             <tr>
@@ -149,7 +137,6 @@ include __DIR__ . '/partials/navbar.php';
             <?php endforeach; ?>
         </table>
         </div>
-        <p class="muted" id="no-recs" style="display:none;padding:12px 0;">No recommendations match your search.</p>
     </div>
     </div>
 </div>
@@ -184,18 +171,7 @@ function filterStudents() {
     );
 }
 
-function filterRecs() {
-    filterTable(
-        'recs-table',
-        document.getElementById('rec-search').value,
-        document.getElementById('rec-pathway-filter').value,
-        'no-recs', 'rec-count',
-        [0, 1], 2
-    );
-}
-
 filterStudents();
-filterRecs();
 </script>
 </body>
 </html>

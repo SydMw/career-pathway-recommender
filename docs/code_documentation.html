@@ -282,7 +282,7 @@
 
   <div class="file">
     <div class="file-head"><span class="file-name">admin_dashboard.php</span><span class="file-role">stats, retrain button, student roster, recent activity</span></div>
-    <p class="body">The largest view in the app. Besides looping over the data the controller fetched, it has real client-side logic: a shared <code class="inline">filterTable()</code> JS function does live search + pathway filtering on both the student table and the recommendations table without a page reload or server round-trip — it just walks the table rows, checks each row's text against the search box and dropdown, and toggles <code class="inline">display: none</code>. <code class="inline">filterStudents()</code> and <code class="inline">filterRecs()</code> are thin wrappers that call it with each table's specific column indexes, and both run once on page load to set the initial "X of Y shown" count.</p>
+    <p class="body">The largest view in the app. Besides looping over the data the controller fetched, it has real client-side logic: a <code class="inline">filterTable()</code> JS function does live search + pathway filtering on the student roster table without a page reload or server round-trip — it just walks the table rows, checks each row's text against the search box and dropdown, and toggles <code class="inline">display: none</code>. <code class="inline">filterStudents()</code> is a thin wrapper that calls it with that table's specific column indexes, and runs once on page load to set the initial "X of Y shown" count. The Recent Recommendations table below it is plain, unfiltered — it originally had the same search/dropdown as the student table, removed on 22 July 2026 since only one table needed it.</p>
   </div>
 
   <div class="file brief">

@@ -19,6 +19,7 @@ $navbar_links = [
     ['href' => 'register.php', 'text' => 'Register'],
     ['href' => 'mailto:cbc@gmail.com', 'text' => 'Help'],
     ['href' => 'tel:+254725789632', 'text' => '+254725789632'],
+    ['href' => '#', 'text' => 'For any further inquiries you can visit our physical offices'],
 ];
 include __DIR__ . '/partials/navbar.php';
 ?>

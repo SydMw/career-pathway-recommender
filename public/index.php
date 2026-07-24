@@ -17,9 +17,7 @@ if (!empty($_SESSION['user_id'])) {
 $navbar_links = [
     ['href' => 'login.php', 'text' => 'Login'],
     ['href' => 'register.php', 'text' => 'Register'],
-    ['href' => 'mailto:cbc@gmail.com', 'text' => 'Help'],
-    ['href' => 'tel:+254725789632', 'text' => '+254725789632'],
-    ['href' => '#', 'text' => 'For any further inquiries you can visit our physical offices'],
+    ['href' => 'help.php', 'text' => 'Help'],
 ];
 include __DIR__ . '/partials/navbar.php';
 ?>

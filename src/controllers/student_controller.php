@@ -27,7 +27,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 
     if (!$error) {
-        // FR6: store submitted academic & interest data
+        // store submitted academic & interest data
         $stmt = $pdo->prepare(
             'INSERT INTO academic_records
                 (user_id, math_score, english_score, science_score, humanities_score, creative_arts_score, interest)

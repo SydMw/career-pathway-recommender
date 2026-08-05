@@ -1,5 +1,5 @@
 <?php
-// Thin HTTP client for the Machine Learning Module API (report 3.4.2 / FR4).
+// Thin HTTP client for the Machine Learning Module API
 define('ML_API_URL', 'http://127.0.0.1:5001/predict');
 define('ML_RETRAIN_URL', 'http://127.0.0.1:5001/retrain');
 

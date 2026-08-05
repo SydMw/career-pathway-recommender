@@ -1,5 +1,5 @@
 <?php
-// Database connection (PDO / MySQL) - report Section 3.4.1
+// Database connection (PDO / MySQL) 
 $DB_HOST = 'localhost';
 $DB_NAME = 'career_system';
 $DB_USER = 'root';

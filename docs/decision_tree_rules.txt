@@ -1,0 +1,159 @@
+Interest codes: {'arts': 0, 'business': 1, 'humanities': 2, 'science': 3, 'sports': 4, 'technology': 5}
+Pathway codes : {0: 'Arts and Sports Science', 1: 'STEM', 2: 'Social Sciences'}
+Depth: 6   Leaves: 47
+
+======================================================================
+FULL TREE
+======================================================================
+|--- Interest code <= 2.50
+|   |--- Interest code <= 0.50
+|   |   |--- Creative Arts <= 54.28
+|   |   |   |--- Science <= 61.38
+|   |   |   |   |--- class: Social Sciences
+|   |   |   |--- Science >  61.38
+|   |   |   |   |--- class: STEM
+|   |   |--- Creative Arts >  54.28
+|   |   |   |--- Science <= 84.60
+|   |   |   |   |--- Creative Arts <= 86.44
+|   |   |   |   |   |--- Science <= 70.90
+|   |   |   |   |   |   |--- class: Arts and Sports Science
+|   |   |   |   |   |--- Science >  70.90
+|   |   |   |   |   |   |--- class: Arts and Sports Science
+|   |   |   |   |--- Creative Arts >  86.44
+|   |   |   |   |   |--- class: Arts and Sports Science
+|   |   |   |--- Science >  84.60
+|   |   |   |   |--- class: Arts and Sports Science
+|   |--- Interest code >  0.50
+|   |   |--- Creative Arts <= 75.63
+|   |   |   |--- Science <= 82.03
+|   |   |   |   |--- Humanities <= 48.22
+|   |   |   |   |   |--- English <= 73.44
+|   |   |   |   |   |   |--- class: Arts and Sports Science
+|   |   |   |   |   |--- English >  73.44
+|   |   |   |   |   |   |--- class: Social Sciences
+|   |   |   |   |--- Humanities >  48.22
+|   |   |   |   |   |--- Maths <= 89.15
+|   |   |   |   |   |   |--- class: Social Sciences
+|   |   |   |   |   |--- Maths >  89.15
+|   |   |   |   |   |   |--- class: Social Sciences
+|   |   |   |--- Science >  82.03
+|   |   |   |   |--- Maths <= 62.76
+|   |   |   |   |   |--- English <= 63.70
+|   |   |   |   |   |   |--- class: Social Sciences
+|   |   |   |   |   |--- English >  63.70
+|   |   |   |   |   |   |--- class: Social Sciences
+|   |   |   |   |--- Maths >  62.76
+|   |   |   |   |   |--- class: STEM
+|   |   |--- Creative Arts >  75.63
+|   |   |   |--- Humanities <= 63.93
+|   |   |   |   |--- Humanities <= 57.66
+|   |   |   |   |   |--- class: Arts and Sports Science
+|   |   |   |   |--- Humanities >  57.66
+|   |   |   |   |   |--- English <= 64.92
+|   |   |   |   |   |   |--- class: Arts and Sports Science
+|   |   |   |   |   |--- English >  64.92
+|   |   |   |   |   |   |--- class: Arts and Sports Science
+|   |   |   |--- Humanities >  63.93
+|   |   |   |   |--- Creative Arts <= 91.28
+|   |   |   |   |   |--- English <= 64.76
+|   |   |   |   |   |   |--- class: Arts and Sports Science
+|   |   |   |   |   |--- English >  64.76
+|   |   |   |   |   |   |--- class: Social Sciences
+|   |   |   |   |--- Creative Arts >  91.28
+|   |   |   |   |   |--- class: Arts and Sports Science
+|--- Interest code >  2.50
+|   |--- Creative Arts <= 74.02
+|   |   |--- Science <= 57.42
+|   |   |   |--- Interest code <= 4.50
+|   |   |   |   |--- Interest code <= 3.50
+|   |   |   |   |   |--- Maths <= 64.67
+|   |   |   |   |   |   |--- class: STEM
+|   |   |   |   |   |--- Maths >  64.67
+|   |   |   |   |   |   |--- class: STEM
+|   |   |   |   |--- Interest code >  3.50
+|   |   |   |   |   |--- Creative Arts <= 55.03
+|   |   |   |   |   |   |--- class: Social Sciences
+|   |   |   |   |   |--- Creative Arts >  55.03
+|   |   |   |   |   |   |--- class: Arts and Sports Science
+|   |   |   |--- Interest code >  4.50
+|   |   |   |   |--- Maths <= 68.85
+|   |   |   |   |   |--- Science <= 49.79
+|   |   |   |   |   |   |--- class: Arts and Sports Science
+|   |   |   |   |   |--- Science >  49.79
+|   |   |   |   |   |   |--- class: STEM
+|   |   |   |   |--- Maths >  68.85
+|   |   |   |   |   |--- Maths <= 82.52
+|   |   |   |   |   |   |--- class: STEM
+|   |   |   |   |   |--- Maths >  82.52
+|   |   |   |   |   |   |--- class: STEM
+|   |   |--- Science >  57.42
+|   |   |   |--- Maths <= 55.89
+|   |   |   |   |--- Interest code <= 3.50
+|   |   |   |   |   |--- Humanities <= 77.17
+|   |   |   |   |   |   |--- class: STEM
+|   |   |   |   |   |--- Humanities >  77.17
+|   |   |   |   |   |   |--- class: STEM
+|   |   |   |   |--- Interest code >  3.50
+|   |   |   |   |   |--- Interest code <= 4.50
+|   |   |   |   |   |   |--- class: Arts and Sports Science
+|   |   |   |   |   |--- Interest code >  4.50
+|   |   |   |   |   |   |--- class: STEM
+|   |   |   |--- Maths >  55.89
+|   |   |   |   |--- Creative Arts <= 69.60
+|   |   |   |   |   |--- Maths <= 69.63
+|   |   |   |   |   |   |--- class: STEM
+|   |   |   |   |   |--- Maths >  69.63
+|   |   |   |   |   |   |--- class: STEM
+|   |   |   |   |--- Creative Arts >  69.60
+|   |   |   |   |   |--- Interest code <= 4.50
+|   |   |   |   |   |   |--- class: STEM
+|   |   |   |   |   |--- Interest code >  4.50
+|   |   |   |   |   |   |--- class: STEM
+|   |--- Creative Arts >  74.02
+|   |   |--- Science <= 79.56
+|   |   |   |--- Maths <= 69.19
+|   |   |   |   |--- Creative Arts <= 79.01
+|   |   |   |   |   |--- Science <= 61.10
+|   |   |   |   |   |   |--- class: Arts and Sports Science
+|   |   |   |   |   |--- Science >  61.10
+|   |   |   |   |   |   |--- class: Arts and Sports Science
+|   |   |   |   |--- Creative Arts >  79.01
+|   |   |   |   |   |--- Humanities <= 82.09
+|   |   |   |   |   |   |--- class: Arts and Sports Science
+|   |   |   |   |   |--- Humanities >  82.09
+|   |   |   |   |   |   |--- class: Arts and Sports Science
+|   |   |   |--- Maths >  69.19
+|   |   |   |   |--- Science <= 57.89
+|   |   |   |   |   |--- Interest code <= 4.50
+|   |   |   |   |   |   |--- class: Arts and Sports Science
+|   |   |   |   |   |--- Interest code >  4.50
+|   |   |   |   |   |   |--- class: Arts and Sports Science
+|   |   |   |   |--- Science >  57.89
+|   |   |   |   |   |--- Creative Arts <= 83.92
+|   |   |   |   |   |   |--- class: STEM
+|   |   |   |   |   |--- Creative Arts >  83.92
+|   |   |   |   |   |   |--- class: Arts and Sports Science
+|   |   |--- Science >  79.56
+|   |   |   |--- Creative Arts <= 87.69
+|   |   |   |   |--- Maths <= 52.74
+|   |   |   |   |   |--- class: Arts and Sports Science
+|   |   |   |   |--- Maths >  52.74
+|   |   |   |   |   |--- Creative Arts <= 78.07
+|   |   |   |   |   |   |--- class: STEM
+|   |   |   |   |   |--- Creative Arts >  78.07
+|   |   |   |   |   |   |--- class: STEM
+|   |   |   |--- Creative Arts >  87.69
+|   |   |   |   |--- class: Arts and Sports Science
+
+======================================================================
+PATH TAKEN BY: {'Maths': 85, 'English': 70, 'Science': 88, 'Humanities': 60, 'Creative Arts': 55, 'Interest': 'science'}
+======================================================================
+  1. Is Interest code <= 2.50?  Interest code is 3  ->  NO  (Interest code > 2.50)
+  2. Is Creative Arts <= 74.02?  Creative Arts is 55  ->  YES  (Creative Arts <= 74.02)
+  3. Is Science <= 57.42?  Science is 88  ->  NO  (Science > 57.42)
+  4. Is Maths <= 55.89?  Maths is 85  ->  NO  (Maths > 55.89)
+  5. Is Creative Arts <= 69.60?  Creative Arts is 55  ->  YES  (Creative Arts <= 69.60)
+  6. Is Maths <= 69.63?  Maths is 85  ->  NO  (Maths > 69.63)
+  -> LEAF: STEM
+     probabilities: Arts and Sports Science 3.28%, STEM 94.03%, Social Sciences 2.69%
+     training students that landed in this leaf: 335

@@ -83,12 +83,19 @@ def main():
     print(f"Worked out as: ({CONTENT_WEIGHT} x tree) + ({COLLAB_WEIGHT} x peers), highest wins")
     print()
 
-    # How much evidence sits behind the tree's answer.
+    # How much evidence sits behind the tree's answer. From scikit-learn 1.4
+    # onwards tree_.value holds proportions, so multiply back up to students.
     leaf = tree.apply(row)[0]
     in_leaf = int(tree.tree_.n_node_samples[leaf])
-    print(f"The tree sorted this student into a group of {in_leaf} training students.")
+    stored = tree.tree_.value[leaf][0]
+    counts = stored if stored.sum() > 1.5 else stored * in_leaf
+
+    print(f"The tree sorted this student into a group of {in_leaf} training students,")
+    print("and the percentages above are simply how that group split:")
+    for pathway, count in zip(label_encoder.classes_, counts):
+        print(f"  {round(count):>3} of {in_leaf} went to {pathway}")
     if in_leaf < 20:
-        print("  That is one of its smallest groups, so treat this answer with care.")
+        print("  This is one of the tree's smallest groups, so treat the answer with care.")
 
     # How the neighbours actually voted.
     votes = np.rint(knn_proba * knn.n_neighbors).astype(int)

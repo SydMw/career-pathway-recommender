@@ -12,6 +12,41 @@ N = 3000
 INTERESTS = ["technology", "business", "science", "arts", "sports", "humanities"]
 PATHWAYS = ["STEM", "Social Sciences", "Arts and Sports Science"]
 
+# Share of labels replaced at random, so the dataset is not trivially
+# separable and the models have to generalise rather than memorise.
+NOISE_RATE = 0.08
+
+
+def rule_label(scores, interest):
+    """The labelling rule: strongest relevant subjects plus stated interest.
+
+    Mirrors how a counsellor reasons, and is what every synthetic student's
+    pathway is derived from before noise is applied. Kept as its own function
+    so that anything needing to reason about the rule, such as
+    evaluate_rule_recovery.py, uses this definition rather than a second copy
+    that could drift away from it.
+
+    Deterministic. Given the same scores and interest it always returns the
+    same pathway, with no randomness involved.
+    """
+    stem_strength = (scores["math_score"] + scores["science_score"]) / 2
+    social_strength = (scores["humanities_score"] + scores["english_score"]) / 2
+    arts_strength = scores["creative_arts_score"]
+
+    interest_bonus = {
+        "STEM": 15 if interest in ("technology", "science") else 0,
+        "Social Sciences": 15 if interest in ("business", "humanities") else 0,
+        "Arts and Sports Science": 15 if interest in ("arts", "sports") else 0,
+    }
+
+    pathway_scores = {
+        "STEM": stem_strength + interest_bonus["STEM"],
+        "Social Sciences": social_strength + interest_bonus["Social Sciences"],
+        "Arts and Sports Science": arts_strength + interest_bonus["Arts and Sports Science"],
+    }
+
+    return max(pathway_scores, key=pathway_scores.get)
+
 
 def generate_student(_):
     interest = np.random.choice(INTERESTS, p=[0.20, 0.18, 0.20, 0.14, 0.13, 0.15])
@@ -50,29 +85,10 @@ def generate_student(_):
     }
     scores = {k: float(np.clip(v, 0, 100)) for k, v in scores.items()}
 
-    # Rule-of-thumb labeling that mirrors how counselors actually reason
-    # (strongest relevant subjects + stated interest), plus label noise to
-    # simulate real-world inconsistency the model must generalize over.
-    stem_strength = (scores["math_score"] + scores["science_score"]) / 2
-    social_strength = (scores["humanities_score"] + scores["english_score"]) / 2
-    arts_strength = scores["creative_arts_score"]
+    label = rule_label(scores, interest)
 
-    interest_bonus = {
-        "STEM": 15 if interest in ("technology", "science") else 0,
-        "Social Sciences": 15 if interest in ("business", "humanities") else 0,
-        "Arts and Sports Science": 15 if interest in ("arts", "sports") else 0,
-    }
-
-    pathway_scores = {
-        "STEM": stem_strength + interest_bonus["STEM"],
-        "Social Sciences": social_strength + interest_bonus["Social Sciences"],
-        "Arts and Sports Science": arts_strength + interest_bonus["Arts and Sports Science"],
-    }
-
-    label = max(pathway_scores, key=pathway_scores.get)
-
-    # 8% label noise to avoid a trivially separable dataset.
-    if np.random.rand() < 0.08:
+    # Label noise, to avoid a trivially separable dataset.
+    if np.random.rand() < NOISE_RATE:
         label = np.random.choice(PATHWAYS)
 
     scores["interest"] = interest

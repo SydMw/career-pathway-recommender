@@ -29,9 +29,10 @@ include __DIR__ . '/partials/navbar.php';
         <?php else: ?>
             <p class="muted" style="margin-bottom:18px;">
                 You are about to permanently delete <strong><?= htmlspecialchars($student['full_name']) ?></strong>
-                (<?= htmlspecialchars($student['student_id'] ?? $student['email']) ?>), along with all
-                <?= $submission_count ?> of their academic record submission<?= $submission_count === 1 ? '' : 's' ?>
-                and every recommendation they received. <strong>This cannot be undone.</strong>
+                (<?= htmlspecialchars($student['student_id'] ?? $student['email']) ?>), along with their
+                <?= $submission_count ?> score submission<?= $submission_count === 1 ? '' : 's' ?>
+                and the <?= $recommendation_count ?> recommendation<?= $recommendation_count === 1 ? '' : 's' ?>
+                they received. <strong>This cannot be undone.</strong>
             </p>
 
             <?php if ($error): ?>

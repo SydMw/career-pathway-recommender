@@ -12,6 +12,13 @@ $count_stmt = $pdo->prepare('SELECT COUNT(*) FROM academic_records WHERE user_id
 $count_stmt->execute([$student_id]);
 $submission_count = (int) $count_stmt->fetchColumn();
 
+// Counted separately from the score submissions above, and not always the
+// same number. If the recommendation engine is unreachable the student's
+// scores are still saved, so that submission never gets a recommendation.
+$recommendation_stmt = $pdo->prepare('SELECT COUNT(*) FROM recommendations WHERE user_id = ?');
+$recommendation_stmt->execute([$student_id]);
+$recommendation_count = (int) $recommendation_stmt->fetchColumn();
+
 $error   = '';
 $success = '';
 

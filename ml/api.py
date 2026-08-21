@@ -147,7 +147,10 @@ def predict():
         "confidence": confidence,
         "explanation": explanation,
         "ranking": [{"pathway": p, "score": s} for p, s in ranking],
-        "model_used": "Hybrid (DecisionTree content-based + KNN collaborative)",
+        # Kept short on purpose: recommendations.model_used is VARCHAR(50),
+        # so a longer label is silently truncated on a non-strict MySQL and
+        # rejected outright on one running in strict mode.
+        "model_used": "Hybrid (DecisionTree + KNN)",
         "content_based": {
             "pathway": label_encoder.inverse_transform([int(np.argmax(content_proba))])[0],
             "confidence": round(float(np.max(content_proba)) * 100, 2),

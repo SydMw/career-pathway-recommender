@@ -61,11 +61,11 @@ career_system/
 
 | Model | Accuracy | Precision | Recall | F1 Score |
 |---|---|---|---|---|
-| Decision Tree (used in production) | 81.59% | 81.95% | 81.23% | 81.48% |
-| Random Forest (benchmark) | 87.56% | 87.59% | 87.36% | 87.42% |
-| KNN (benchmark) | 66.99% | 67.39% | 66.91% | 67.10% |
+| Decision Tree (used in production) | 83.61% | 83.94% | 83.28% | 83.50% |
+| Random Forest (benchmark) | 88.25% | 88.34% | 88.05% | 88.17% |
+| KNN (benchmark) | 68.21% | 68.56% | 67.93% | 68.07% |
 
-These figures are from the most recent retrain, which blends the synthetic baseline dataset with real accumulated student submissions. Numbers shift slightly each time the model is retrained as more student data comes in.
+These figures are read straight from `ml/model/metrics.json`, written by the most recent retrain, which blends the synthetic baseline dataset with real accumulated student submissions. Numbers shift slightly each time the model is retrained as more student data comes in.
 
 The Decision Tree was chosen as the main model because it is interpretable. It can explain why it made a recommendation, which matters for students and parents to trust the result. Random Forest scores higher but is a black box of 200 trees, so it is kept only as a benchmark for comparison.
 

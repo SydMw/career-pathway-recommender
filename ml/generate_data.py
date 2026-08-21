@@ -2,11 +2,6 @@
 Generates a synthetic dataset of secondary school student records for the
 AI-Powered Career and Pathway Recommendation System.
 
-Until a real anonymized KNEC/school dataset is available, this produces a
-realistic ~3000-row dataset (matching the sample size described in the
-project report, Section 3.3.3) with believable correlations between subject
-scores, interests, and CBC pathway outcome so the Decision Tree / Random
-Forest / KNN models have a genuine pattern to learn.
 """
 import numpy as np
 import pandas as pd

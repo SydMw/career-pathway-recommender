@@ -1,7 +1,7 @@
 """The model's input feature order.
 
 Both train_model.py and api.py import this list rather than each
-defining their own copy. the order here must match the order values
+defining their own copy. The order here must match the order values
 are packed into a row at prediction time.
 """
 FEATURES = [
